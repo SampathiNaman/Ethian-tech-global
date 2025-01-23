@@ -26,24 +26,24 @@ function Footer() {
                     <div class="mb-10 md:mb-0">
                         <h2 class="text-xl font-bold mb-3">Partnerships</h2>
                         <ul class="list-disc list-inside">
-                            <li>TCS</li>
-                            <li>Accenture</li>
-                            <li>LTIMindtree</li>
+                            <li className='cursor-pointer hover:underline'>TCS</li>
+                            <li className='cursor-pointer hover:underline'>Accenture</li>
+                            <li className='cursor-pointer hover:underline'>LTIMindtree</li>
                         </ul>
                     </div>
                     <div class="mb-10 md:mb-0">
                         <h2 class="text-xl font-bold mb-3">Resources</h2>
                         <ul class="list-disc list-inside">
-                            <li>Blogs</li>
-                            <li>LTIMindtree</li>
+                            <li className='cursor-pointer hover:underline'>Blogs</li>
+                            <li className='cursor-pointer hover:underline'>LTIMindtree</li>
                         </ul>
                     </div>
                     <div>
                         <h2 class="text-xl font-bold mb-3">Enroll</h2>
                         <ul class="list-disc list-inside">
-                            <li>TCS</li>
-                            <li>Accenture</li>
-                            <li>LTIMindtree</li>
+                            <li className='cursor-pointer hover:underline'>TCS</li>
+                            <li className='cursor-pointer hover:underline'>Accenture</li>
+                            <li className='cursor-pointer hover:underline'>LTIMindtree</li>
                         </ul>
                     </div>
                     {/* </div> */}
@@ -58,7 +58,7 @@ function Footer() {
                             <p class="text-sm text-gray-300">© 2025. Ethiantech Global. Ltd. All rights reserved.</p>
                         </div>
                         <div class="flex space-x-5">
-                            <a href="#" class="text-gray-300 text-2xl hover:text-[#D62A91]"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="text-gray-300 text-2xl hover:text-[#D62A91]"><i class="fab fa-facebook "></i></a>
                             <a href="#" class="text-gray-300 text-2xl hover:text-[#D62A91]"><i class="fab fa-youtube"></i></a>
                             <a href="#" class="text-gray-300 text-2xl hover:text-[#D62A91]"><i class="fab fa-instagram"></i></a>
                             <a href="#" class="text-gray-300 text-2xl hover:text-[#D62A91]"><i class="fab fa-linkedin"></i></a>
