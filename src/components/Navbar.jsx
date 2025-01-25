@@ -10,7 +10,7 @@ function Navbar() {
     }
 
     return (
-        <nav className="bg-[#122447] sticky top-0 text-white font-medium shadow-xl">
+        <nav className="bg-[#122447] sticky top-0 text-white font-medium shadow-xl z-10">
             <div className="p-6 flex items-center w-[95%] mx-auto ">
                 {/* Logo */}
                 <div className="text-center md:mx-10 md:basis-1/3">
