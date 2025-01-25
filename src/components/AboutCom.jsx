@@ -1,5 +1,3 @@
-import React from 'react'
-
 function AboutCom() {
     return (
         <div className='w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg grid lg:grid-cols-2 sm:grid-cols-1 gap-y-16 md:gap-x-8 mx-auto mt-12 p-6 md:p-8'>

@@ -1,11 +1,12 @@
 import Navbar from '../components/Navbar'
+import ContactSection from '../components/ContactSection'
 import Footer from '../components/Footer'
 
 function Contact() {
     return (
         <div>
             <Navbar />
-            <div className='text-3xl '> Contact Page </div>
+                <ContactSection />
             <Footer />
         </div>
     )
