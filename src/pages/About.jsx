@@ -1,11 +1,17 @@
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import Members from '../components/Members'
+import AboutCom from '../components/AboutCom'
 
 function About() {
     return (
         <div>
             <Navbar />
-            <div className='text-3xl '> About Page </div>
+
+            <AboutCom />
+            <Members />
+
+
             <Footer />
         </div>
     )
