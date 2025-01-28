@@ -10,8 +10,61 @@ function Members() {
                         <div class="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-4 lg:gap-7">
                             
                             {/* <!-- Team Member 1 --> */}
-                            <div class="bg-white rounded-lg shadow-lg overflow-hidden ">
-                                <img alt="Portrait of Jason Roy, Designer" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/faaDMN9HUWxKbiFShPma0tn7385Ype4TBRkSDcMywe2K8NRoA.jpg" width="300" />
+                            <div class="bg-white rounded-lg shadow-lg overflow-hidden relative ">
+                                <img alt="Portrait of Alisha Kabir, Marketer" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/sfjco7Yk9ZxvbCvnOe6GdOPkNjVgVmi2qrleoi3iDbsF8NRoA.jpg" width="300" />
+                                <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                    <div class="text-white space-x-4">
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-facebook-f">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-twitter">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-google-plus-g">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="https://www.linkedin.com/in/danish-hussain-dar-b06531228/" target="_blank">
+                                            <i class="fab fa-linkedin-in">
+                                            </i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="p-4 text-center">
+                                    <h3 class="text-lg font-semibold">
+                                        Jennifer Lee
+                                    </h3>
+                                    <p class="text-gray-600 text-sm">
+                                        Marketer
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* <!-- Team Member 2 --> */}
+                            <div class="bg-white rounded-lg shadow-lg overflow-hidden relative ">
+                                <img alt="Portrait of Alisha Kabir, Marketer" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/faaDMN9HUWxKbiFShPma0tn7385Ype4TBRkSDcMywe2K8NRoA.jpg" width="300" />
+                                <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                    <div class="text-white space-x-4">
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-facebook-f">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-twitter">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-google-plus-g">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="https://www.linkedin.com/in/danish-hussain-dar-b06531228/" target="_blank">
+                                            <i class="fab fa-linkedin-in">
+                                            </i>
+                                        </a>
+                                    </div>
+                                </div>
                                 <div class="p-4 text-center">
                                     <h3 class="text-lg font-semibold">
                                         Jason Roy
@@ -21,7 +74,107 @@ function Members() {
                                     </p>
                                 </div>
                             </div>
-                            {/* <!-- Team Member 2 --> */}
+
+                            {/* <!-- Team Member 3 --> */}
+                            <div class="bg-white rounded-lg shadow-lg overflow-hidden relative ">
+                                <img alt="Portrait of Alisha Kabir, Marketer" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/lyoxSxSeViR5Zq68f4cGGcD6mJcAXu3Od3GIMr8eaOqO8NRoA.jpg" width="300" />
+                                <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                    <div class="text-white space-x-4">
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-facebook-f">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-twitter">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-google-plus-g">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="https://www.linkedin.com/in/danish-hussain-dar-b06531228/" target="_blank">
+                                            <i class="fab fa-linkedin-in">
+                                            </i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="p-4 text-center">
+                                    <h3 class="text-lg font-semibold">
+                                        Jason Smith
+                                    </h3>
+                                    <p class="text-gray-600 text-sm">
+                                        Marketer
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* <!-- Team Member 4 --> */}
+                            <div class="bg-white rounded-lg shadow-lg overflow-hidden relative ">
+                                <img alt="Portrait of Alisha Kabir, Marketer" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/01SpOn5aiWJ5HFeREQqXbr8b159RHJJu0E8ZQxlzlZr9emIUA.jpg" width="300" />
+                                <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                    <div class="text-white space-x-4">
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-facebook-f">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-twitter">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-google-plus-g">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="https://www.linkedin.com/in/danish-hussain-dar-b06531228/" target="_blank">
+                                            <i class="fab fa-linkedin-in">
+                                            </i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="p-4 text-center">
+                                    <h3 class="text-lg font-semibold">
+                                        Jachlen Khan
+                                    </h3>
+                                    <p class="text-gray-600 text-sm">
+                                        Marketer
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* <!-- Team Member 5 --> */}
+                            <div class="bg-white rounded-lg shadow-lg overflow-hidden relative ">
+                                <img alt="Portrait of Alisha Kabir, Marketer" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/CxPyy4iy9VorFRX5dtFlz05BGlMnqazwKeVSnjLexQMe7NRoA.jpg" width="300" />
+                                <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                    <div class="text-white space-x-4">
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-facebook-f">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-twitter">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-google-plus-g">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="https://www.linkedin.com/in/danish-hussain-dar-b06531228/" target="_blank">
+                                            <i class="fab fa-linkedin-in">
+                                            </i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="p-4 text-center">
+                                    <h3 class="text-lg font-semibold">
+                                        Nusrat Kabir
+                                    </h3>
+                                    <p class="text-gray-600 text-sm">
+                                        Marketer
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* <!-- Team Member 6 --> */}
                             <div class="bg-white rounded-lg shadow-lg overflow-hidden relative ">
                                 <img alt="Portrait of Alisha Kabir, Marketer" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/wOm5iC3xlWLMItmDNU0VoRIUISh1ILJJNCwUokIFJKKgvJCF.jpg" width="300" />
                                 <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
@@ -53,83 +206,74 @@ function Members() {
                                     </p>
                                 </div>
                             </div>
-                            {/* <!-- Team Member 3 --> */}
-                            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                                <img alt="Portrait of Jason Smith, UI Designer" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/lyoxSxSeViR5Zq68f4cGGcD6mJcAXu3Od3GIMr8eaOqO8NRoA.jpg" width="300" />
-                                <div class="p-4 text-center">
-                                    <h3 class="text-lg font-semibold">
-                                        Jason Smith
-                                    </h3>
-                                    <p class="text-gray-600">
-                                        UI Designer
-                                    </p>
-                                </div>
-                            </div>
-
-                            {/* <!-- Team Member 4 --> */}
-                            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                                <img alt="Portrait of Jachlen Khan, Designer" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/01SpOn5aiWJ5HFeREQqXbr8b159RHJJu0E8ZQxlzlZr9emIUA.jpg" width="300" />
-                                <div class="p-4 text-center">
-                                    <h3 class="text-lg font-semibold">
-                                        Jachlen Khan
-                                    </h3>
-                                    <p class="text-gray-600">
-                                        Designer
-                                    </p>
-                                </div>
-                            </div>
-
-                            {/* <!-- Team Member 5 --> */}
-                            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                                <img alt="Portrait of Nusrat Kabir, Designer" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/CxPyy4iy9VorFRX5dtFlz05BGlMnqazwKeVSnjLexQMe7NRoA.jpg" width="300" />
-                                <div class="p-4 text-center">
-                                    <h3 class="text-lg font-semibold">
-                                        Nusrat Kabir
-                                    </h3>
-                                    <p class="text-gray-600">
-                                        Designer
-                                    </p>
-                                </div>
-                            </div>
-
-                            {/* <!-- Team Member 6 --> */}
-                            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                                <img alt="Portrait of Jennifer Lee, Marketer" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/sfjco7Yk9ZxvbCvnOe6GdOPkNjVgVmi2qrleoi3iDbsF8NRoA.jpg" width="300" />
-                                <div class="p-4 text-center">
-                                    <h3 class="text-lg font-semibold">
-                                        Jennifer Lee
-                                    </h3>
-                                    <p class="text-gray-600">
-                                        Marketer
-                                    </p>
-                                </div>
-                            </div>
 
                             {/* <!-- Team Member 7 --> */}
-                            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                                <img alt="Portrait of Doris Flores, UI Designer" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/f5SjtpTAveorhEt1vqf47SWxczTNKbgPjqiQRcme4LmQ4biQB.jpg" width="300" />
+                            <div class="bg-white rounded-lg shadow-lg overflow-hidden relative ">
+                                <img alt="Portrait of Alisha Kabir, Marketer" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/f5SjtpTAveorhEt1vqf47SWxczTNKbgPjqiQRcme4LmQ4biQB.jpg" width="300" />
+                                <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                    <div class="text-white space-x-4">
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-facebook-f">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-twitter">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-google-plus-g">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="https://www.linkedin.com/in/danish-hussain-dar-b06531228/" target="_blank">
+                                            <i class="fab fa-linkedin-in">
+                                            </i>
+                                        </a>
+                                    </div>
+                                </div>
                                 <div class="p-4 text-center">
                                     <h3 class="text-lg font-semibold">
                                         Doris Flores
                                     </h3>
-                                    <p class="text-gray-600">
+                                    <p class="text-gray-600 text-sm">
                                         UI Designer
                                     </p>
                                 </div>
                             </div>
 
                             {/* <!-- Team Member 8 --> */}
-                            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                                <img alt="Portrait of Brandon Ross, Developer" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/wn7kHRlhT46XEtiDifRMt5OSSXt2sRQLDvYsNEez3bi89mIUA.jpg" width="300" />
+                            <div class="bg-white rounded-lg shadow-lg overflow-hidden relative ">
+                                <img alt="Portrait of Alisha Kabir, Marketer" class="w-full h-48 object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/wn7kHRlhT46XEtiDifRMt5OSSXt2sRQLDvYsNEez3bi89mIUA.jpg" width="300" />
+                                <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                    <div class="text-white space-x-4">
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-facebook-f">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-twitter">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="#">
+                                            <i class="fab fa-google-plus-g">
+                                            </i>
+                                        </a>
+                                        <a class="text-white" href="https://www.linkedin.com/in/danish-hussain-dar-b06531228/" target="_blank">
+                                            <i class="fab fa-linkedin-in">
+                                            </i>
+                                        </a>
+                                    </div>
+                                </div>
                                 <div class="p-4 text-center">
                                     <h3 class="text-lg font-semibold">
                                         Brandon Ross
                                     </h3>
-                                    <p class="text-gray-600">
+                                    <p class="text-gray-600 text-sm">
                                         Developer
                                     </p>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
 
