@@ -57,10 +57,10 @@ function Footer() {
                             <p className="text-sm text-gray-300">© 2025. Ethiantech Global. Ltd. All rights reserved.</p>
                         </div>
                         <div className="flex space-x-5">
-                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91]"><i className="fab fa-facebook "></i></a>
-                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91]"><i className="fab fa-youtube"></i></a>
-                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91]"><i className="fab fa-instagram"></i></a>
-                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91]"><i className="fab fa-linkedin"></i></a>
+                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><i className="fab fa-facebook "></i></a>
+                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><i className="fab fa-youtube"></i></a>
+                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><i className="fab fa-instagram"></i></a>
+                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><i className="fab fa-linkedin"></i></a>
                         </div>
                     </div>
                 </div>
