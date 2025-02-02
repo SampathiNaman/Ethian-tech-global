@@ -49,6 +49,8 @@ function Home() {
                     <h1 className='text-white font-arial text-5xl md:text-6xl font-bold text-center'>Time to Grow!</h1>
                 </div>
             </div>
+
+
             <SectionWrapper title1="Better Future" title2="Explore Our Services" containerStyles='border border-neutral-400'>
                 <div className="w-11/12 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-8 mx-auto mt-10" data-aos="fade-up">
                     {data.map(service => (
@@ -56,6 +58,8 @@ function Home() {
                     ))}
                 </div>
             </SectionWrapper>
+
+            
             <div className='w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg grid lg:grid-cols-2 sm:grid-cols-1 gap-y-16 md:gap-x-8 mx-auto mt-12 p-6 md:p-8'>
                 <div className='lg:hidden font-sans text-blue-900 text-2xl space-y-1' data-aos="fade-up">
                     <h2 className='tracking-wider'>Why Choose Us</h2>
