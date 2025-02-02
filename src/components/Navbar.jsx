@@ -11,11 +11,11 @@ function Navbar() {
 
     return (
         <nav className="bg-[#122447] sticky top-0 text-white font-medium shadow-xl z-10">
-            <div className="p-6 flex items-center w-[95%] mx-auto ">
+            <div className="p-2 flex items-center w-[95%] mx-auto ">
                 {/* Logo */}
                 <div className="text-center md:mx-10 md:basis-1/3">
                     <NavLink to="/">
-                        <img className="w-40" src="logo.png" alt="Error in loading" />
+                        <img className="w-28 md:w-24 ml-12" src="logo.png" alt="Error in loading" />
                     </NavLink>
                 </div>
 
