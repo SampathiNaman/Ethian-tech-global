@@ -23,7 +23,7 @@ function Home() {
                     <h1 className='text-white font-arial text-5xl md:text-6xl font-bold text-center'>Welcome to the Ethian Tech</h1>
                     {/* <p className="text-xl text-white mt-4 font-medium">Dive into our world and discover what makes us tick </p> */}
                 
-                    <NavLink to="/contact" className="self-start bg-[#D62A91] text-white text-base rounded-md hover:bg-pink-600 disabled:cursor-not-allowed disabled:opacity-50 py-3 px-8 mx-auto relative top-20">
+                    <NavLink to="/contact" className="self-start bg-[#D62A91] text-white text-base rounded-md hover:bg-pink-600 disabled:cursor-not-allowed disabled:opacity-50 py-3 px-8 mx-auto relative top-20 shadow-2xl">
                         Contact Us
                     </NavLink>
                 </div>

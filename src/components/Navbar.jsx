@@ -26,23 +26,29 @@ function Navbar() {
                 >
                     {/* Close Button */}
                     <div
-                        className="text-2xl p-8 text-black md:hidden focus:outline-none cursor-pointer"
-                        onClick={toggleMenu}
+                        className="text-2xl px-4 py-2 text-black md:hidden focus:outline-none cursor-pointer"
+                        
                     >
-                        X
+                        
+                        <div className='p-4' onClick={toggleMenu}>
+                            X
+                        </div>
+                    
+                        
                     </div>
                     <NavLink
                         className={({ isActive }) =>
-                            `mx-3 ${isActive ? 'text-[#D62A91]' : 'md:text-white'} hover:text-[#D62A91]`
+                            `mx-3 ${isActive ? 'text-[#D62A91]' : 'md:text-white'} hover:text-[#D62A91] text-center py-2 my-1 border rounded-md border-black md:py-0 md:border-none  md:my-0 shadow-lg md:shadow-none`
                         }
                         to="/"
                         onClick={() => setMenu(false)}
                     >
                         Home
                     </NavLink>
+                    
                     <NavLink
                         className={({ isActive }) =>
-                            `mx-3 ${isActive ? 'text-[#D62A91]' : 'md:text-white'} hover:text-[#D62A91]`
+                            `mx-3 ${isActive ? 'text-[#D62A91]' : 'md:text-white'} hover:text-[#D62A91] text-center py-2 my-1 border rounded-md border-black md:py-0 md:border-none  md:my-0 shadow-lg md:shadow-none`
                         }
                         to="/about"
                         onClick={() => setMenu(false)}
@@ -51,7 +57,7 @@ function Navbar() {
                     </NavLink>
                     <NavLink
                         className={({ isActive }) =>
-                            `mx-3 ${isActive ? 'text-[#D62A91]' : 'md:text-white'} hover:text-[#D62A91]`
+                            `mx-3 ${isActive ? 'text-[#D62A91]' : 'md:text-white'} hover:text-[#D62A91] text-center py-2 my-1 border rounded-md border-black md:py-0 md:border-none  md:my-0 shadow-lg md:shadow-none`
                         }
                         to="/services"
                         onClick={() => setMenu(false)}
@@ -60,22 +66,50 @@ function Navbar() {
                     </NavLink>
                     <NavLink
                         className={({ isActive }) =>
-                            `mx-3 ${isActive ? 'text-[#D62A91]' : 'md:text-white'} hover:text-[#D62A91]`
+                            `mx-3 ${isActive ? 'text-[#D62A91]' : 'md:text-white'} hover:text-[#D62A91] text-center py-2 my-1 border rounded-md border-black md:py-0 md:border-none  md:my-0 shadow-lg md:shadow-none`
                         }
                         to="/contact"
                         onClick={() => setMenu(false)}
                     >
                         Contact
                     </NavLink>
+
+
+                    <hr className="md:hidden " style={{ width: "90%", border: "1px solid gray", borderRadius: "5px" , margin: "60px auto 0"}} />
+
+                    
+
+                    <div className=" mt-12 text-black text-2xl flex flex-col items-center md:hidden">
+                        <div>
+                            <NavLink to={"/"}><img className='w-40 sm:text-center' src="logo.png" alt="Error in loading" /></NavLink>
+                        </div>
+                        <div className="mt-5">
+                            <div className="flex items-center md:justify-start mb-2">
+                                <i className="fas fa-phone-alt text-2xl mr-3"></i>
+                                <span className="text-lg">4461237866</span>
+                            </div>
+                            <div className="flex items-center md:justify-start">
+                                <i className="fas fa-envelope text-2xl mr-3"></i>
+                                <a href="mailto:mail@ethiantech.com" className="text-lg underline">mail@ethiantech.com</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <NavLink to="/contact" className="self-start bg-[#D62A91] text-white text-base rounded-md hover:bg-pink-600 disabled:cursor-not-allowed disabled:opacity-50 py-3 px-8 mx-auto relative bottom-[-30px] md:hidden">
+                                            Contact Us
+                                        </NavLink>
+            
                 </div>
 
                 {/* Hamburger Icon */}
                 <div
-                    className="md:hidden absolute right-0 p-8 focus:outline-none text-white text-4xl cursor-pointer"
+                    className={`md:hidden absolute right-0 p-8 focus:outline-none text-white text-4xl cursor-pointer ${menu ? 'hidden' : ''}`}
                     onClick={toggleMenu}
                 >
                     ☰
                 </div>
+
+                
             </div>
         </nav>
     );
