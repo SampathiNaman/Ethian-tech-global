@@ -14,7 +14,7 @@ function Members() {
 
 
                     <div class="container mx-auto py-12">
-                        <div class="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-4 lg:gap-7">
+                        <div class="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-7">
                             
                             {/* <!-- Team Member 1 --> */}
                             <div class="bg-white rounded-lg shadow-lg overflow-hidden relative " data-aos="fade-up">
