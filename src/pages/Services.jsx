@@ -1,11 +1,12 @@
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import OurServices from '../components/OurServices'
 
 function Services() {
     return (
         <div>
             <Navbar />
-            <div className='text-3xl '> Services Page </div>
+            <OurServices />
             <Footer />
         </div>
     )
