@@ -1,4 +1,7 @@
 import { NavLink } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faPhone, faEnvelope} from '@fortawesome/free-solid-svg-icons';
+import { faFacebook,faYoutube, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 
 function Footer() {
     return (
@@ -12,11 +15,11 @@ function Footer() {
                         </div>
                         <div className="mt-5">
                             <div className="flex items-center md:justify-start mb-2">
-                                <i className="fas fa-phone-alt text-2xl mr-3"></i>
+                                <FontAwesomeIcon icon={faPhone} className='text-xl mr-4'/>
                                 <span className="text-lg">4461237866</span>
                             </div>
                             <div className="flex items-center md:justify-start">
-                                <i className="fas fa-envelope text-2xl mr-3"></i>
+                                <FontAwesomeIcon icon={faEnvelope} className='text-xl mr-4'/>
                                 <a href="mailto:mail@ethiantech.com" className="text-lg underline">mail@ethiantech.com</a>
                             </div>
                         </div>
@@ -57,10 +60,10 @@ function Footer() {
                             <p className="text-sm text-gray-300">© 2025. Ethiantech Global. Ltd. All rights reserved.</p>
                         </div>
                         <div className="flex space-x-5">
-                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><i className="fab fa-facebook "></i></a>
-                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><i className="fab fa-youtube"></i></a>
-                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><i className="fab fa-instagram"></i></a>
-                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><i className="fab fa-linkedin"></i></a>
+                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><FontAwesomeIcon icon={faFacebook} className='text-2xl'/></a>
+                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><FontAwesomeIcon icon={faYoutube} className='text-2xl'/></a>
+                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><FontAwesomeIcon icon={faTwitter} className='text-2xl'/></a>
+                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><FontAwesomeIcon icon={faLinkedin} className='text-2xl'/></a>
                         </div>
                     </div>
                 </div>
