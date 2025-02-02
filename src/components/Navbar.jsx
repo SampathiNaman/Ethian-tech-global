@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHouse, faXmark , faBars, faAddressCard, faToolbox, faPhone, faEnvelope} from '@fortawesome/free-solid-svg-icons';
+
 function Navbar() {
     const [menu, setMenu] = useState(false);
 
@@ -31,7 +34,7 @@ function Navbar() {
                     >
                         
                         <div className='p-4' onClick={toggleMenu}>
-                            X
+                            <FontAwesomeIcon icon={faXmark}/>
                         </div>
                     
                         
@@ -43,6 +46,7 @@ function Navbar() {
                         to="/"
                         onClick={() => setMenu(false)}
                     >
+                        <FontAwesomeIcon icon={faHouse} className='mx-2'/>
                         Home
                     </NavLink>
                     
@@ -53,6 +57,7 @@ function Navbar() {
                         to="/about"
                         onClick={() => setMenu(false)}
                     >
+                        <FontAwesomeIcon icon={faAddressCard} className='mx-2'/>
                         About
                     </NavLink>
                     <NavLink
@@ -62,6 +67,7 @@ function Navbar() {
                         to="/services"
                         onClick={() => setMenu(false)}
                     >
+                        <FontAwesomeIcon icon={faToolbox} className='mx-2'/>
                         Services
                     </NavLink>
                     <NavLink
@@ -71,6 +77,7 @@ function Navbar() {
                         to="/contact"
                         onClick={() => setMenu(false)}
                     >
+                        <FontAwesomeIcon icon={faPhone} className='mx-2'/>
                         Contact
                     </NavLink>
 
@@ -85,17 +92,17 @@ function Navbar() {
                         </div>
                         <div className="mt-5">
                             <div className="flex items-center md:justify-start mb-2">
-                                <i className="fas fa-phone-alt text-2xl mr-3"></i>
+                                <FontAwesomeIcon icon={faPhone} className='text-2xl mr-4'/>
                                 <span className="text-lg">4461237866</span>
                             </div>
                             <div className="flex items-center md:justify-start">
-                                <i className="fas fa-envelope text-2xl mr-3"></i>
+                                <FontAwesomeIcon icon={faEnvelope} className='text-2xl mr-4'/>
                                 <a href="mailto:mail@ethiantech.com" className="text-lg underline">mail@ethiantech.com</a>
                             </div>
                         </div>
                     </div>
 
-                    <NavLink to="/contact" className="self-start bg-[#D62A91] text-white text-base rounded-md hover:bg-pink-600 disabled:cursor-not-allowed disabled:opacity-50 py-3 px-8 mx-auto relative bottom-[-30px] md:hidden">
+                    <NavLink to="/contact" className="self-start bg-[#D62A91] text-white text-base rounded-md hover:bg-pink-600 disabled:cursor-not-allowed disabled:opacity-50 py-3 px-8 mx-auto relative bottom-[-30px] md:hidden shadow-xl">
                                             Contact Us
                                         </NavLink>
             
@@ -106,7 +113,7 @@ function Navbar() {
                     className={`md:hidden absolute right-0 p-8 focus:outline-none text-white text-4xl cursor-pointer ${menu ? 'hidden' : ''}`}
                     onClick={toggleMenu}
                 >
-                    ☰
+                    <FontAwesomeIcon icon={faBars} />
                 </div>
 
                 
