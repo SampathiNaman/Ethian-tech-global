@@ -15,7 +15,7 @@ function Navbar() {
                 {/* Logo */}
                 <div className="text-center md:mx-10 md:basis-1/3">
                     <NavLink to="/">
-                        <img className="w-28 md:w-24 ml-12" src="logo.png" alt="Error in loading" />
+                        <img className="w-28 md:w-24" src="logo.png" alt="Error in loading" />
                     </NavLink>
                 </div>
 
