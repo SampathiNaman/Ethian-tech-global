@@ -44,7 +44,7 @@ function Home() {
             <Navbar />
 
 
-            <div className='bg-[url(landingPageImg.jpg)] bg-cover bg-no-repeat bg-center sm:w-full h-[70vh] '>
+            <div className='bg-[url(landingPageImg.jpg)] bg-cover bg-no-repeat bg-center sm:w-full h-[70vh]' style={{ backgroundImage: "url('landingPageImg.jpg')" }}>
                 <div className='flex flex-col justify-center items-center h-full' style={{ backgroundColor: 'rgba(18, 36, 71, 0.5)' }}>
                     <h1 className='text-white font-arial text-5xl md:text-6xl font-bold text-center'>Time to Grow!</h1>
                 </div>
