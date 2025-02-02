@@ -126,14 +126,14 @@ return (
                             <a href="https://www.facebook.com" target="_blank" rel="noreferrer">
                                 <img src="facebook.png" alt="Facebook Icon" className='w-12' />
                             </a>
+                            <a href="https://www.youtube.com" target="_blank" rel="noreferrer">
+                                <img src="youtube.png" alt="Youtube Icon" className='w-12' />
+                            </a>
                             <a href="https://www.twitter.com" target="_blank" rel="noreferrer">
-                                <img src="x.png" alt="Twitter Icon" className='w-12' />
+                                <img src="twitter.png" alt="Twitter Icon" className='w-12' />
                             </a>
                             <a href="https://www.linkedin.com" target="_blank" rel="noreferrer">
                                 <img src="linkedin.png" alt="LinkedIn Icon" className='w-12' />
-                            </a>
-                            <a href="https://www.instagram.com" target="_blank" rel="noreferrer">
-                                <img src="instagram.png" alt="Instagram Icon" className='w-12' />
                             </a>
                         </div>
                     </div>
