@@ -54,7 +54,7 @@ function OurServices() {
         <div className="relative mt-8">
           <Swiper
             spaceBetween={20}
-            slidesPerView={1.5}
+            slidesPerView={1.3}
             breakpoints={{
               1024: { slidesPerView: 3 },
             }}
