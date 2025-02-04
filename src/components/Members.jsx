@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebook, faTwitter, faLinkedin, faInstagram } from '@fortawesome/free-brands-svg-icons';
+
 const teamMembers = [
     {
         name: "Jennifer Lee",
@@ -75,22 +78,22 @@ function Members() {
                                     <div className="text-white space-x-4">
                                         {member.social.facebook && (
                                             <a className="text-white" href={member.social.facebook} target="_blank" rel="noopener noreferrer">
-                                                <i className="fab fa-facebook-f"></i>
+                                                <FontAwesomeIcon icon={faFacebook} className='text-2xl'/>
                                             </a>
                                         )}
                                         {member.social.twitter && (
                                             <a className="text-white" href={member.social.twitter} target="_blank" rel="noopener noreferrer">
-                                                <i className="fab fa-twitter"></i>
+                                                <FontAwesomeIcon icon={faTwitter} className='text-2xl'/>
                                             </a>
                                         )}
                                         {member.social.instagram && (
                                             <a className="text-white" href={member.social.instagram} target="_blank" rel="noopener noreferrer">
-                                                <i className="fab fa-instagram"></i>
+                                                <FontAwesomeIcon icon={faInstagram} className='text-2xl'/>
                                             </a>
                                         )}
                                         {member.social.linkedin && (
                                             <a className="text-white" href={member.social.linkedin} target="_blank" rel="noopener noreferrer">
-                                                <i className="fab fa-linkedin-in"></i>
+                                                <FontAwesomeIcon icon={faLinkedin} className='text-2xl'/>
                                             </a>
                                         )}
                                     </div>

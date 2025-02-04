@@ -3,9 +3,8 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/autoplay";
-import { Autoplay, Navigation } from "swiper/modules";
+import "swiper/css/pagination";
+import { Pagination, Autoplay } from "swiper/modules";
 
 const services = [
   {
@@ -30,7 +29,7 @@ const services = [
   },
   {
     title: "Data Analytics",
-    desc: "Unlock valuable insights from your data to make informed business decisions.",
+    desc: "Unlock valuable insights from your data to make informed business decisions. business decisions",
     img: "https://storage.googleapis.com/a1aa/image/yjb9xrfLnIQE-ZL6L-GDa1d6PmtCxS2_dxnw_AM9E2s.jpg",
   },
   {
@@ -46,7 +45,7 @@ function OurServices() {
   }, []);
 
   return (
-    <section className="w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg mx-auto my-12 p-6 md:p-8 relative">
+    <section className="w-[100%] md:w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg mx-auto my-12 p-6 md:p-8 relative">
       <div className="container mx-auto px-4">
         <div className='font-sans text-blue-900 text-2xl space-y-1' data-aos="fade-up">
           <h2 className='tracking-wider'>Better Future</h2>
@@ -57,20 +56,17 @@ function OurServices() {
             spaceBetween={20}
             slidesPerView={1.5}
             breakpoints={{
-              1024: { slidesPerView: 3, navigation: true },
+              1024: { slidesPerView: 3 },
             }}
             loop={true}
             autoplay={{ delay: 3000, disableOnInteraction: true }}
-            navigation={{
-              nextEl: ".swiper-button-next",
-              prevEl: ".swiper-button-prev",
-            }}
-            modules={[Autoplay, Navigation]}
+            pagination={{ clickable: true }}
+            modules={[Pagination, Autoplay]}
             className="mt-8"
           >
             {services.map((service, index) => (
               <SwiperSlide key={index} className="flex justify-center">
-                <div className="bg-white p-4 rounded-lg shadow-lg max-w-xs">
+                <div className="bg-white p-2 md:p-4 mb-12 rounded-lg shadow-lg max-w-xs" data-aos="fade-up">
                   <img
                     alt={service.title}
                     className="w-full h-40 object-cover rounded-t-lg"
@@ -79,13 +75,11 @@ function OurServices() {
                   <h3 className="text-xl font-semibold text-gray-800 mt-4">
                     {service.title}
                   </h3>
-                  <p className="text-gray-600 mt-2">{service.desc}</p>
+                  <p className="text-gray-600 text-sm mt-2">{service.desc}</p>
                 </div>
               </SwiperSlide>
             ))}
           </Swiper>
-          <div className="hidden md:flex absolute left-[-40px] top-1/2 transform -translate-y-1/2 swiper-button-prev text-gray-600 hover:text-gray-800"></div>
-          <div className="hidden md:flex absolute right-[-40px] top-1/2 transform -translate-y-1/2 swiper-button-next text-gray-600 hover:text-gray-800"></div>
         </div>
       </div>
     </section>

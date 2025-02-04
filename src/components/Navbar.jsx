@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faXmark , faBars, faAddressCard, faToolbox, faPhone, faEnvelope} from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faXmark , faBars, faAddressCard, faToolbox, faScrewdriverWrench, faPhone, faEnvelope} from '@fortawesome/free-solid-svg-icons';
 
 function Navbar() {
     const [menu, setMenu] = useState(false);
@@ -60,6 +60,20 @@ function Navbar() {
                         <FontAwesomeIcon icon={faAddressCard} className='mx-2'/>
                         About
                     </NavLink>
+
+
+                    <NavLink
+                        className={({ isActive }) =>
+                            `mx-3 ${isActive ? 'text-[#D62A91]' : 'md:text-white'} hover:text-[#D62A91] text-center py-2 my-1 border rounded-md border-black md:py-0 md:border-none  md:my-0 shadow-lg md:shadow-none`
+                        }
+                        to="/products"
+                        onClick={() => setMenu(false)}
+                    >
+                        <FontAwesomeIcon icon={faToolbox} className='mx-2'/>
+                        Products
+                    </NavLink>
+
+
                     <NavLink
                         className={({ isActive }) =>
                             `mx-3 ${isActive ? 'text-[#D62A91]' : 'md:text-white'} hover:text-[#D62A91] text-center py-2 my-1 border rounded-md border-black md:py-0 md:border-none  md:my-0 shadow-lg md:shadow-none`
@@ -67,7 +81,8 @@ function Navbar() {
                         to="/services"
                         onClick={() => setMenu(false)}
                     >
-                        <FontAwesomeIcon icon={faToolbox} className='mx-2'/>
+                        
+                        <FontAwesomeIcon icon={faScrewdriverWrench} className='mx-2'/>
                         Services
                     </NavLink>
                     <NavLink
@@ -86,7 +101,7 @@ function Navbar() {
 
                     
 
-                    <div className=" mt-12 text-black text-2xl flex flex-col items-center md:hidden">
+                    <div className=" mt-8 text-black text-2xl flex flex-col items-center md:hidden">
                         <div>
                             <NavLink to={"/"}><img className='w-40 sm:text-center' src="logo.png" alt="Error in loading" /></NavLink>
                         </div>

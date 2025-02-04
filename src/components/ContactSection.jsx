@@ -162,7 +162,7 @@ return (
                     </div>
                     <button type="submit" disabled={sendingMsg} className="self-start bg-pink-500 text-white text-base rounded-md hover:bg-pink-600 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 py-2 px-8">{sendingMsg ? "Sending..." : "Send Message"}</button>
                     {/* Below div is created only to facilitate sending message through emailjs. This will not be displayed in website */}
-                    <div className="hidden flex flex-col items-stretch space-y-3">
+                    <div className="hidden flex-col items-stretch space-y-3">
                         <label htmlFor="byName" className='text-base font-medium'>Receiver&apos;s Name</label>
                         <input type="text" id="byName" name="byName" defaultValue={import.meta.env.VITE_CLIENT_NAME} required className='p-2 border border-gray-300 rounded-md focus:outline-2 focus:outline-pink-500' />
                     </div>
