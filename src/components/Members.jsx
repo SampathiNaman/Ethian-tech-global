@@ -83,7 +83,7 @@ function Members() {
                                                 <i className="fab fa-twitter"></i>
                                             </a>
                                         )}
-                                        {member.social.google && (
+                                        {member.social.instagram && (
                                             <a className="text-white" href={member.social.instagram} target="_blank" rel="noopener noreferrer">
                                                 <i className="fab fa-instagram"></i>
                                             </a>
