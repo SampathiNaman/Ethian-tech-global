@@ -109,8 +109,9 @@ return (
                 <h2 className='font-bold tracking-wide'>Lets Connect</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex flex-col justify-between space-y-8 mt-4" data-aos="fade-up">
-                    <iframe src={import.meta.env.VITE_Loc_SRC} height="350px" width="100%" className='md:w-[90%] lg:w-[80%] rounded-lg' allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" data-aos="fade-up"></iframe>
+                <div className="flex flex-col justify-center gap-4 space-y-8 mt-4" data-aos="fade-up">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d57550.21726159035!2d85.17917401081101!3d25.641823244808783!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ed58dce1098af7%3A0xd3ab2e3afc171805!2sNational%20Institute%20of%20Technology%20Patna%2C%20Patna%20University%20Campus%2C%20Patna%2C%20Bihar%20800006!5e0!3m2!1sen!2sin!4v1738518880976!5m2!1sen!2sin" height="350px" width="100%" className='md:w-[90%] lg:w-[80%] rounded-lg' allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" data-aos="fade-up"></iframe>
+                    
                     <div className='space-y-8'>
                         <div className='space-y-4'>
                             <div className='flex items-center space-x-2'>
@@ -124,16 +125,16 @@ return (
                         </div>
                         <div className='flex wrap items-center gap-4'>
                             <a href="https://www.facebook.com" target="_blank" rel="noreferrer">
-                                <img src="facebook.png" alt="Facebook Icon" className='w-12' />
+                                <img src="facebook.png" alt="Facebook Icon" className='w-10' />
                             </a>
                             <a href="https://www.youtube.com" target="_blank" rel="noreferrer">
-                                <img src="youtube.png" alt="Youtube Icon" className='w-12' />
+                                <img src="youtube.png" alt="Youtube Icon" className='w-10' />
                             </a>
                             <a href="https://www.twitter.com" target="_blank" rel="noreferrer">
-                                <img src="twitter.png" alt="Twitter Icon" className='w-12' />
+                                <img src="twitter.png" alt="Twitter Icon" className='w-10' />
                             </a>
                             <a href="https://www.linkedin.com" target="_blank" rel="noreferrer">
-                                <img src="linkedin.png" alt="LinkedIn Icon" className='w-12' />
+                                <img src="linkedin.png" alt="LinkedIn Icon" className='w-10' />
                             </a>
                         </div>
                     </div>
@@ -161,7 +162,7 @@ return (
                     </div>
                     <button type="submit" disabled={sendingMsg} className="self-start bg-pink-500 text-white text-base rounded-md hover:bg-pink-600 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 py-2 px-8">{sendingMsg ? "Sending..." : "Send Message"}</button>
                     {/* Below div is created only to facilitate sending message through emailjs. This will not be displayed in website */}
-                    <div className="hidden flex flex-col items-stretch space-y-3">
+                    <div className="hidden flex-col items-stretch space-y-3">
                         <label htmlFor="byName" className='text-base font-medium'>Receiver&apos;s Name</label>
                         <input type="text" id="byName" name="byName" defaultValue={import.meta.env.VITE_CLIENT_NAME} required className='p-2 border border-gray-300 rounded-md focus:outline-2 focus:outline-pink-500' />
                     </div>
