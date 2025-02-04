@@ -109,7 +109,7 @@ return (
                 <h2 className='font-bold tracking-wide'>Lets Connect</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex flex-col justify-center gap-8 space-y-8 mt-4" data-aos="fade-up">
+                <div className="flex flex-col justify-center gap-4 space-y-8 mt-4" data-aos="fade-up">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d57550.21726159035!2d85.17917401081101!3d25.641823244808783!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ed58dce1098af7%3A0xd3ab2e3afc171805!2sNational%20Institute%20of%20Technology%20Patna%2C%20Patna%20University%20Campus%2C%20Patna%2C%20Bihar%20800006!5e0!3m2!1sen!2sin!4v1738518880976!5m2!1sen!2sin" height="350px" width="100%" className='md:w-[90%] lg:w-[80%] rounded-lg' allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" data-aos="fade-up"></iframe>
                     
                     <div className='space-y-8'>
