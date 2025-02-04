@@ -10,7 +10,7 @@ const teamMembers = [
         social: {
             facebook: "#",
             twitter: "#",
-            google: "#",
+            instagram: "#",
             linkedin: "https://www.linkedin.com/in/danish-hussain-dar-b06531228/",
         },
     },
@@ -21,7 +21,7 @@ const teamMembers = [
         social: {
             facebook: "#",
             twitter: "#",
-            google: "#",
+            instagram: "#",
             linkedin: "#",
         },
     },
@@ -32,7 +32,7 @@ const teamMembers = [
         social: {
             facebook: "#",
             twitter: "#",
-            google: "#",
+            instagram: "#",
             linkedin: "#",
         },
     },
@@ -43,11 +43,10 @@ const teamMembers = [
         social: {
             facebook: "#",
             twitter: "#",
-            google: "#",
+            instagram: "#",
             linkedin: "#",
         },
     },
-    // Add more members here
 ];
 
 function Members() {
@@ -85,8 +84,8 @@ function Members() {
                                             </a>
                                         )}
                                         {member.social.google && (
-                                            <a className="text-white" href={member.social.google} target="_blank" rel="noopener noreferrer">
-                                                <i className="fab fa-google-plus-g"></i>
+                                            <a className="text-white" href={member.social.instagram} target="_blank" rel="noopener noreferrer">
+                                                <i className="fab fa-instagram"></i>
                                             </a>
                                         )}
                                         {member.social.linkedin && (
