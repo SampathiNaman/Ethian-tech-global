@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -46,7 +46,7 @@ const services = [
     title: "DevOps & Infrastructure Management",
     desc: "Automate development pipelines for faster, reliable releases.",
     points: ["CI/CD pipeline implementation", "Infrastructure as Code (laC)", "Kubernetes & containerization"],
-    btnText: "Accelerate Your DevOps Journey!",
+    btnText: "Accelerate DevOps Journey!",
     img: "https://storage.googleapis.com/a1aa/image/Vlqilcof0mgRlpt7HZk_9D6sHdbWJh2XXnorLX6TLsQ.jpg",
   },
     {
@@ -82,7 +82,9 @@ function OurServices() {
             spaceBetween={20}
             slidesPerView={1.3}
             breakpoints={{
-              1024: { slidesPerView: 3 },
+              800: { slidesPerView: 2 },
+              950: { slidesPerView: 2.3 },
+              1250: { slidesPerView: 3 },
             }}
             loop={true}
             autoplay={{ delay: 3000, disableOnInteraction: true }}
@@ -92,31 +94,33 @@ function OurServices() {
           >
             {services.map((service, index) => (
               <SwiperSlide key={index} className="flex justify-center">
-                <div className="bg-white p-2 md:p-4 mb-12 rounded-lg shadow-lg max-w-xs" data-aos="fade-up">
-                  <img
-                    alt={service.title}
-                    className="w-full h-40 object-cover rounded-t-lg"
-                    src={service.img}
-                  />
-                  <h3 className="text-xl font-semibold text-gray-800 mt-4">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm mt-2">{service.desc}</p>
-                  <ul className="list-image-[url(bullet.png)] text-gray-600 ms-6 mt-2">
-                    {
-                        service.points && service.points.map((point, index) => (
-                            <li key={index}>{point}</li>
-                        ))
-                    }
-                  </ul>
-                  <button type="button" className="bg-pink-500 text-white text-base rounded-md hover:bg-pink-600 active:scale-95 px-6 py-3 mt-3">{service.btnText}</button>
+                <div className="bg-white p-2 md:p-4 mb-12 rounded-lg shadow-lg max-w-xs min-h-[470px] flex flex-col justify-between" data-aos="fade-up">
+                  <div>
+                    <img
+                      alt={service.title}
+                      className="w-full h-40 object-cover rounded-t-lg"
+                      src={service.img}
+                    />
+                    <h3 className="text-xl font-semibold text-gray-800 mt-4">
+                      {service.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm mt-2">{service.desc}</p>
+                    <ul className="list-image-[url(bullet.png)] text-gray-600 ms-6 mt-2">
+                      {service.points && service.points.map((point, index) => (
+                        <li key={index}>{point}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <button type="button" className="self-center bg-pink-500 text-white text-base rounded-md hover:bg-pink-600 active:scale-95 px-6 py-3 my-3">
+                    {service.btnText}
+                  </button>
                 </div>
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
-        </div>
-        </section>
+      </div>
+    </section>
   );
 }
 

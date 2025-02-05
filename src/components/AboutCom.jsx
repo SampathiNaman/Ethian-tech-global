@@ -20,11 +20,17 @@ function AboutCom() {
                 </div>
                 <div className='space-y-5'>
                     <div className='font-sans'>
-                        <h2 className='text-blue-900 text-xl font-bold tracking-wide'>Expert Team</h2>
-                        <p className='text-base'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat itaque veritatis quis nobis. Quisquam inventore amet vitae corporis ducimus id optio enim odio blanditiis architecto! Dolor molestiae minus asperiores. Tempora. Lorem Lorem.
-                        Lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat itaque veritatis quis nobis. Quisquam inventore amet vitae corporis ducimus id optio enim odio blanditiis architecto! Dolor molestiae minus asperiores. Tempora. Lorem Lorem.
-                        LoremLorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat itaque veritatis quis nobis. Quisquam inventore amet vitae corporis ducimus id optio enim odio blanditiis architecto! Dolor molestiae minus asperiores. Tempora. Lorem Lorem.
-                        Lorem</p>
+                        <h2 className='text-blue-900 text-xl font-bold tracking-wide'>Who We Are</h2>
+                        <p className='text-base'>Empowering businesses with cutting-edge IT solutions. At Etheantech Global, we craft custom technology solutions to drive efficiency and innovation.</p>
+                    </div>
+                    <div className='font-sans'>
+                        <h2 className='text-blue-900 text-xl font-bold tracking-wide'>Mission & Vision</h2>
+                        <p className='text-base'>Our mission is to simplify technology and enable businesses to thrive in the digital era.</p>
+                    </div>
+                    <div className='font-sans'>
+                        <h2 className='text-blue-900 text-xl font-bold tracking-wide'>Why Choose Us?</h2>
+                        <p className='text-base'>Expert Team | Scalable Solutions |
+                        Client-Centric Approach | Future-Ready Technology</p>
                     </div>
                 </div>
             </div>
