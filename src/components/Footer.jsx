@@ -1,55 +1,77 @@
 import { NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faPhone, faEnvelope} from '@fortawesome/free-solid-svg-icons';
-import { faFacebook,faYoutube, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import { faPhone, faEnvelope, faAddressCard, faLocation, faLocationDot, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faFacebook, faYoutube, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 
 function Footer() {
     return (
-        <footer className="bg-[#1A3261] text-white font-sans "> 
-        {/* absolute bottom-0 w-full */}
+        <footer className="bg-[#1A3261] text-white font-sans ">
+            {/* absolute bottom-0 w-full */}
             <div className="container w-[90vw] mx-auto py-10 px-5">
-                <div className="flex justify-between gap-8 flex-wrap md:flex-row md:justify-between">
-                    <div className=" mb-10 md:mb-0">
-                        <div>
-                            <NavLink to={"/"}><img className='w-40 sm:text-center' src="logo.png" alt="Error in loading" /></NavLink>
-                        </div>
-                        <div className="mt-5">
-                            <div className="flex items-center md:justify-start mb-2">
-                                <FontAwesomeIcon icon={faPhone} className='text-xl mr-4'/>
-                                <span className="text-lg">4461237866</span>
-                            </div>
-                            <div className="flex items-center md:justify-start">
-                                <FontAwesomeIcon icon={faEnvelope} className='text-xl mr-4'/>
-                                <a href="mailto:mail@ethiantech.com" className="text-lg underline">mail@ethiantech.com</a>
-                            </div>
-                        </div>
-                    </div>
+                <div className="flex justify-between items-center gap-8 flex-wrap md:flex-row md:justify-between">
+
                     {/* <div className="flex flex-col md:flex-row md:space-x-20"> */}
                     <div className="mb-10 md:mb-0">
-                        <h2 className="text-xl font-bold mb-3">Partnerships</h2>
-                        <ul className="list-disc list-inside">
-                            <li className='cursor-pointer hover:underline'>TCS</li>
-                            <li className='cursor-pointer hover:underline'>Accenture</li>
-                            <li className='cursor-pointer hover:underline'>LTIMindtree</li>
+                        <h2 className="text-xl font-bold mb-3">Important Links</h2>
+                        <ul className="list-none list-inside pl-1">
+                            <li className='cursor-pointer hover:underline p-1'>
+                                <FontAwesomeIcon icon={faArrowRight} className='text-lg mr-4' />
+                                <NavLink to="/">Home</NavLink>
+                            </li>
+                            <li className='cursor-pointer hover:underline  p-1'>
+                                <FontAwesomeIcon icon={faArrowRight} className='text-lg mr-4' />
+                                <NavLink to="/about">About</NavLink>
+                            </li>
+                            <li className='cursor-pointer hover:underline  p-1'>
+                                <FontAwesomeIcon icon={faArrowRight} className='text-lg mr-4' />
+                                <NavLink to="/products">Products</NavLink>
+                            </li>
+                            <li className='cursor-pointer hover:underline  p-1'>
+                                <FontAwesomeIcon icon={faArrowRight} className='text-lg mr-4' />
+                                <NavLink to="/services">Services</NavLink>
+                            </li>
+                            <li className='cursor-pointer hover:underline  p-1'>
+                                <FontAwesomeIcon icon={faArrowRight} className='text-lg mr-4' />
+                                <NavLink to="/contact">Contact</NavLink>
+                            </li>
                         </ul>
                     </div>
+
                     <div className="mb-10 md:mb-0">
-                        <h2 className="text-xl font-bold mb-3">Resources</h2>
-                        <ul className="list-disc list-inside">
-                            <li className='cursor-pointer hover:underline'>Blogs</li>
-                            <li className='cursor-pointer hover:underline'>LTIMindtree</li>
-                        </ul>
+                        <div class="flex flex-col justify-center items-center w-full">
+                            <h2 className="text-xl font-bold mb-3">Subscribe to our newsletter</h2>
+                            <p class="text-sm text-white/80 text-center">The latest news, articles, and resources, sent to your inbox weekly.</p>
+                            <div class="flex items-center gap-2 pt-4">
+                                <input class="border text-black placeholder-gray-500  outline-none w-56 md:w-80 h-9 rounded py-2 px-3 text-sm" type="email" placeholder="Enter your email" />
+                                <button className="self-start bg-[#D62A91] text-white text-sm rounded-md hover:bg-pink-600 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 py-2 px-3">Subscribe</button>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <h2 className="text-xl font-bold mb-3">Enroll</h2>
-                        <ul className="list-disc list-inside">
-                            <li className='cursor-pointer hover:underline'>TCS</li>
-                            <li className='cursor-pointer hover:underline'>Accenture</li>
-                            <li className='cursor-pointer hover:underline'>LTIMindtree</li>
-                        </ul>
+
+                    <div className=" mb-10 md:mb-0">
+                        <h2 className="text-xl font-bold mb-3">Get in Touch</h2>
+                        {/* <div>
+                            <NavLink to={"/"}><img className='w-40 sm:text-center' src="logo.png" alt="Error in loading" /></NavLink>
+                        </div> */}
+                        <div className="mt-5">
+                            <div className="flex items-center md:justify-start mb-2">
+                                <FontAwesomeIcon icon={faLocationDot} className='text-xl mr-4' />
+                                <span>Patna University Campus,  <br></br>Patna, Bihar 800005</span>
+                            </div>
+                            <div className="flex items-center md:justify-start mb-2">
+                                <FontAwesomeIcon icon={faPhone} className='text-xl mr-4' />
+                                <span>4461237866</span>
+                            </div>
+                            <div className="flex items-center md:justify-start">
+                                <FontAwesomeIcon icon={faEnvelope} className='text-xl mr-4' />
+                                <a href="mailto:mail@ethiantech.com">mail@ethiantech.com</a>
+                            </div>
+                        </div>
                     </div>
                     {/* </div> */}
                 </div>
+
+
                 <div className="border-t border-gray-400 mt-10 pt-5">
                     <div className="flex flex-col md:flex-row md:justify-between items-center">
                         <div className="text-center md:text-left mb-5 md:mb-0">
@@ -60,10 +82,10 @@ function Footer() {
                             <p className="text-sm text-gray-300">© 2025. Ethiantech Global. Ltd. All rights reserved.</p>
                         </div>
                         <div className="flex space-x-5">
-                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><FontAwesomeIcon icon={faFacebook} className='text-2xl'/></a>
-                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><FontAwesomeIcon icon={faYoutube} className='text-2xl'/></a>
-                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><FontAwesomeIcon icon={faTwitter} className='text-2xl'/></a>
-                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><FontAwesomeIcon icon={faLinkedin} className='text-2xl'/></a>
+                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><FontAwesomeIcon icon={faFacebook} className='text-2xl' /></a>
+                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><FontAwesomeIcon icon={faYoutube} className='text-2xl' /></a>
+                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><FontAwesomeIcon icon={faTwitter} className='text-2xl' /></a>
+                            <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><FontAwesomeIcon icon={faLinkedin} className='text-2xl' /></a>
                         </div>
                     </div>
                 </div>
