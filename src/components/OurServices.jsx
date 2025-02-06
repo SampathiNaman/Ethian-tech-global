@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -45,7 +46,7 @@ const services = [
   {
     title: "DevOps & Infrastructure Management",
     desc: "Automate development pipelines for faster, reliable releases.",
-    points: ["CI/CD pipeline implementation", "Infrastructure as Code (laC)", "Kubernetes & containerization"],
+    points: ["CI/CD pipeline", "Infrastructure as Code (laC)", "Kubernetes | containerization"],
     btnText: "Accelerate DevOps Journey!",
     img: "https://storage.googleapis.com/a1aa/image/Vlqilcof0mgRlpt7HZk_9D6sHdbWJh2XXnorLX6TLsQ.jpg",
   },
@@ -80,7 +81,7 @@ function OurServices() {
         <div className="relative mt-8">
           <Swiper
             spaceBetween={20}
-            slidesPerView={1.3}
+            slidesPerView={1.2}
             breakpoints={{
               800: { slidesPerView: 2 },
               950: { slidesPerView: 2.3 },
@@ -94,7 +95,7 @@ function OurServices() {
           >
             {services.map((service, index) => (
               <SwiperSlide key={index} className="flex justify-center">
-                <div className="bg-white p-2 md:p-4 mb-12 rounded-lg shadow-lg max-w-xs min-h-[450px] flex flex-col justify-between" data-aos="fade-up">
+                <div className="bg-white p-2 md:p-4 mb-12 rounded-lg shadow-lg max-w-xs min-h-[450px] md:min-h-[450px] flex flex-col justify-between" data-aos="fade-up">
                   <div>
                     <img
                       alt={service.title}
@@ -111,9 +112,11 @@ function OurServices() {
                       ))}
                     </ul>
                   </div>
-                  <button type="button" className="self-left bg-[#D62A91] text-white text-base rounded-md hover:bg-pink-600 active:scale-95 px-4 py-2 my-3">
+                  
+                  <NavLink to="/contact" className="self-left text-center bg-[#D62A91] text-white text-base rounded-md hover:bg-pink-600 active:scale-95 px-4 py-2 mb-1 md:mb-0">
                     {service.btnText}
-                  </button>
+                  </NavLink>
+
                 </div>
               </SwiperSlide>
             ))}
