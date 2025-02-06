@@ -7,7 +7,7 @@ function WhyChooseUs() {
         data-aos="fade-up"
       >
         <h2 className="tracking-wider">Why Choose Us</h2>
-        <h2 className="font-bold tracking-wide">We Provide Your Best WOrk</h2>
+        <h2 className="font-bold tracking-wide">We Provide Your Best Work</h2>
       </div>
 
       <div className="grid lg:grid-cols-2 sm:grid-cols-1 gap-y-12 md:gap-x-16 mt-12 ">
@@ -70,7 +70,7 @@ function WhyChooseUs() {
             </div> */}
             <button
               type="button"
-              className="bg-pink-500 text-white text-base rounded-md hover:bg-pink-600 active:scale-95 px-6 py-3 mt-3"
+              className=" border-2 border-[#D62A91]  text-black text-base rounded-md hover:shadow-2xl shadow-[#D62A91] active:scale-95 px-4 py-2 mt-3"
             >
               Partner with Us for Digital Transformation!
             </button>

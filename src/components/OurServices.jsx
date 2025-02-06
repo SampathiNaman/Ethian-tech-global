@@ -17,7 +17,7 @@ const services = [
   {
     title: "Web Development",
     desc: "High-performing, scalable websites designed for growth.",
-    points: ["Custom web development", "E-commerce solutions"],
+    points: ["Custom web development", "E-commerce solutions", "Web Hosting"],
     btnText: "Get your websites!",
     img: "https://storage.googleapis.com/a1aa/image/YzWiArSy8jY3W2DM4AgsTacxHjXgpYYiV5XSrxn1NGE.jpg",
   },
@@ -29,7 +29,7 @@ const services = [
     img: "https://storage.googleapis.com/a1aa/image/9a2-yoYLl-glPZZUm5yK9xATEm7aqi5WKCu8tvuS4q8.jpg",
   },
   {
-    title: "Generative Al & Machine Learning Solutions",
+    title: "Gen Al & ML Solutions",
     desc: "Leverage AI-driven insights for smarter decision-making.",
     points: ["Predictive analytics", "AI-powered automation", "NLP & computer vision"],
     btnText: "Explore AI solutions!",
@@ -39,7 +39,7 @@ const services = [
     title: "Cloud Migration & Infrastructure Services",
     desc: "Secure, seamless migration to AWS, Azure, or Google Cloud.",
     points: ["Cloud migration & optimization", "Serverless computing", "DevOps automation"],
-    btnText: "Migrate to Cloud Effortlessly!",
+    btnText: "Migrate to Cloud!",
     img: "https://storage.googleapis.com/a1aa/image/yjb9xrfLnIQE-ZL6L-GDa1d6PmtCxS2_dxnw_AM9E2s.jpg",
   },
   {
@@ -54,14 +54,14 @@ const services = [
         desc: "From idea to execution, we help you build the right product.",
         points: ["Product strategy & roadmap", "MVP development", "Market research & feasibility"],
         btnText: "Turn Your Idea into Reality!",
-        img: "https://storage.googleapis.com/a1aa/image/Vlqilcof0mgRlpt7HZk_9D6sHdbWJh2XXnorLX6TLsQ.jpg",
+        img: "https://storage.googleapis.com/a1aa/image/9a2-yoYLl-glPZZUm5yK9xATEm7aqi5WKCu8tvuS4q8.jpg",
     },
     {
         title: "UI/UX Design",
         desc: "Craft intuitive, user-friendly digital experiences.",
         points: ["UX research & wireframing", "UI prototyping & interaction design", "Design systems & branding"],
         btnText: "Design a Stunning experience!",
-        img: "https://storage.googleapis.com/a1aa/image/Vlqilcof0mgRlpt7HZk_9D6sHdbWJh2XXnorLX6TLsQ.jpg",
+        img: "https://storage.googleapis.com/a1aa/image/RoulZ--n9HTWaP6_XDAY-Zb-C8w7DZL_OxMGj2KJXu0.jpg",
     },
 ];
 
@@ -87,14 +87,14 @@ function OurServices() {
               1250: { slidesPerView: 3 },
             }}
             loop={true}
-            autoplay={{ delay: 3000, disableOnInteraction: true }}
+            autoplay={{ delay: 2000, disableOnInteraction: true }}
             pagination={{ clickable: true }}
             modules={[Pagination, Autoplay]}
             className="mt-8"
           >
             {services.map((service, index) => (
               <SwiperSlide key={index} className="flex justify-center">
-                <div className="bg-white p-2 md:p-4 mb-12 rounded-lg shadow-lg max-w-xs min-h-[470px] flex flex-col justify-between" data-aos="fade-up">
+                <div className="bg-white p-2 md:p-4 mb-12 rounded-lg shadow-lg max-w-xs min-h-[450px] flex flex-col justify-between" data-aos="fade-up">
                   <div>
                     <img
                       alt={service.title}
@@ -105,13 +105,13 @@ function OurServices() {
                       {service.title}
                     </h3>
                     <p className="text-gray-600 text-sm mt-2">{service.desc}</p>
-                    <ul className="list-image-[url(bullet.png)] text-gray-600 ms-6 mt-2">
+                    <ul className="list-image-[url(bullet.png)] text-sm  text-gray-600 ms-6 mt-4">
                       {service.points && service.points.map((point, index) => (
                         <li key={index}>{point}</li>
                       ))}
                     </ul>
                   </div>
-                  <button type="button" className="self-center bg-pink-500 text-white text-base rounded-md hover:bg-pink-600 active:scale-95 px-6 py-3 my-3">
+                  <button type="button" className="self-left bg-[#D62A91] text-white text-base rounded-md hover:bg-pink-600 active:scale-95 px-4 py-2 my-3">
                     {service.btnText}
                   </button>
                 </div>
@@ -125,3 +125,5 @@ function OurServices() {
 }
 
 export default OurServices;
+
+
