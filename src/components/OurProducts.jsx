@@ -43,7 +43,7 @@ function OurProducts() {
                     </div>
                 ))}
             </div>
-            <NavLink to="/contact" className="float-right text-center bg-[#D62A91] text-white text-base rounded-md hover:bg-pink-600 active:scale-95 px-4 py-2 mb-1 md:mb-0" data-aos="fade-up">
+            <NavLink to="/contact" className="float-right text-center bg-[#D62A91] text-white text-base rounded-md hover:bg-pink-600 active:scale-95 px-4 py-2 my-4 md:mb-0">
                 Still confused? Talk to our experts
             </NavLink>
         </section>
