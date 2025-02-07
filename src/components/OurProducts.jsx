@@ -27,7 +27,7 @@ function OurProducts() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-4 md:py-8" >
                 {products.map((product, index) => (
-                    <div key={index} className="bg-white rounded-lg shadow-lg p-4 md:p-6" data-aos="fade-up">
+                    <div key={index} className="bg-white rounded-lg shadow-lg p-4 md:p-6 hover:cursor-pointer" data-aos="fade-up">
                         <img 
                             src={product.image} 
                             alt={product.title} 

@@ -15,7 +15,7 @@ function WhyChooseUs() {
             <img
             src="expertTeamImg.png"
             alt="Expert Team"
-            className="w-4/5 lg:w-full md:mt-2 m-auto"
+            className="w-full lg:w-full md:mt-2 m-0 md:m-auto drop-shadow-[1px_10px_15px_rgba(18,36,71,0.4)]"
             data-aos="fade-up"
             />
         </div>
