@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -106,9 +108,9 @@ function OurServices() {
                       {service.title}
                     </h3>
                     <p className="text-gray-600 text-sm mt-2">{service.desc}</p>
-                    <ul className="list-image-[url(bullet.png)] text-sm  text-gray-600 ms-6 mt-4">
+                    <ul className="text-sm list-none text-gray-600 ms-6 mt-4">
                       {service.points && service.points.map((point, index) => (
-                        <li key={index}>{point}</li>
+                        <li key={index}><FontAwesomeIcon icon={faAnglesRight} className="pe-2 text-[#D62A91]" />{point}</li>
                       ))}
                     </ul>
                   </div>

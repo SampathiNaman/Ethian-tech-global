@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import emailjs from '@emailjs/browser'
-import { Toaster, toast } from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
 
 
 const ContactSection = () => {
@@ -27,7 +27,7 @@ const ContactSection = () => {
             [e.target.name]: e.target.value.trim()
         })
     }
-    
+
     const validate = () => {
         let errors = {};
         if (!formData.name) {
@@ -35,11 +35,11 @@ const ContactSection = () => {
         }
         if (!formData.email) {
             errors.email = 'Email is required';
-        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
             errors.email = 'Enter a valid email address';
         }
-        if (formData.phone && !/^\+?[1-9][0-9]{7,14}$/.test(formData.phone)) {
-            errors.phone = 'Enter a valid phone number (e.g., +1234567890)';
+        if (formData.phone && !/^\+?[0-9]{1,3}?[-. ]?[0-9]{1,5}?[-. ]?[0-9]{1,5}$/.test(formData.phone)) {
+            errors.phone = 'Enter a valid phone number (e.g., +1 234567890)';
         }
         if (!formData.message) {
             errors.message = 'Message is required';
@@ -89,20 +89,6 @@ useEffect(() => {
 
 return (
     <>
-        <Toaster
-            position="top-right"
-            reverseOrder={false}
-            gutter={8}
-            toastOptions={{
-                className: 'bg-white border border-gray-300 rounded-md shadow-md mt-24',
-                duration: 5000,
-                removeDelay: 1000,
-                ariaProps: {
-                    role: 'status',
-                    'aria-live': 'polite',
-                },
-            }}
-        />
         <div className='w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg mx-auto my-16'>
             <div className='font-sans text-blue-900 text-2xl space-y-1 mb-8' data-aos="fade-up">
                 <h2 className='tracking-wider'>Contact</h2>
@@ -163,8 +149,8 @@ return (
                     <button type="submit" disabled={sendingMsg} className="self-start bg-pink-500 text-white text-base rounded-md hover:bg-pink-600 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 py-2 px-8">{sendingMsg ? "Sending..." : "Send Message"}</button>
                     {/* Below div is created only to facilitate sending message through emailjs. This will not be displayed in website */}
                     <div className="hidden flex-col items-stretch space-y-3">
-                        <label htmlFor="byName" className='text-base font-medium'>Receiver&apos;s Name</label>
-                        <input type="text" id="byName" name="byName" defaultValue={import.meta.env.VITE_CLIENT_NAME} required className='p-2 border border-gray-300 rounded-md focus:outline-2 focus:outline-pink-500' />
+                        <label htmlFor="cname" className='text-base font-medium'>{import.meta.env.VITE_CLIENT_NAME}</label>
+                        <input type="text" id="cname" name="cname" defaultValue={import.meta.env.VITE_CLIENT_NAME} required className='p-2 border border-gray-300 rounded-md focus:outline-2 focus:outline-pink-500' />
                     </div>
                 </form>
             </div>

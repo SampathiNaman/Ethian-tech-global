@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const products = [
     {
@@ -42,6 +43,9 @@ function OurProducts() {
                     </div>
                 ))}
             </div>
+            <NavLink to="/contact" className="float-right text-center bg-[#D62A91] text-white text-base rounded-md hover:bg-pink-600 active:scale-95 px-4 py-2 mb-1 md:mb-0" data-aos="fade-up">
+                Still confused? Talk to our experts
+            </NavLink>
         </section>
     );
 }

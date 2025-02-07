@@ -1,10 +1,51 @@
+import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import emailjs from '@emailjs/browser'
+import { toast } from 'react-hot-toast'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faEnvelope, faLocationDot, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faYoutube, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 
 function Footer() {
+    const [subscribing, setSubscribing] = useState(false);
+    const [error, setError] = useState("");
+
+    const sendMsgToEmail = (e) => {
+        e.preventDefault();
+        setSubscribing(true);
+        emailjs.sendForm(import.meta.env.VITE_SUBSCRIBE_SERVICE_ID, import.meta.env.VITE_SUBSCRIBE_TEMPLATE_ID, e.target, {
+            publicKey: import.meta.env.VITE_SUBSCRIBE_PUBLIC_KEY,
+        })
+        .then(() => {
+            e.target.reset();
+            toast('Subscribed', {
+                style: {color: 'green'},
+                icon: '✅',
+
+            });
+        })
+        .catch(() => {
+            toast('Unable to subscribe. Please try again!', {
+                style: {color: 'red'},
+                icon: '❌',
+              });
+        })
+        .finally(() => {
+            setSubscribing(false);
+        });
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const error = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.email.value) ? "Enter a valid email address" : "";
+        setError(error);
+        if (!error) {
+            sendMsgToEmail(e);
+        }
+    };
+
     return (
+        <>
         <footer className="bg-[#1A3261] text-white font-sans ">
             {/* absolute bottom-0 w-full */}
             <div className="container w-[90vw] mx-auto py-10 px-5">
@@ -38,14 +79,15 @@ function Footer() {
                     </div>
 
                     <div className="mb-10 md:mb-0">
-                        <div class="flex flex-col justify-center items-center w-full">
+                        <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center w-full">
                             <h2 className="text-xl font-bold mb-3">Subscribe to our newsletter</h2>
-                            <p class="text-sm text-white/80 text-center">The latest news, articles, and resources, sent to your inbox weekly.</p>
-                            <div class="flex items-center gap-2 pt-4">
-                                <input class="border text-black placeholder-gray-500  outline-none w-56 md:w-80 h-9 rounded py-2 px-3 text-sm" type="email" placeholder="Enter your email" />
-                                <button className="self-start bg-[#D62A91] text-white text-sm rounded-md hover:bg-pink-600 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 py-2 px-3">Subscribe</button>
+                            <p className="text-sm text-white/80 text-center">The latest news, articles, and resources, sent to your inbox weekly.</p>
+                            <div className="flex items-center gap-2 pt-4">
+                                <input className="border text-black placeholder-gray-500  outline-none w-56 md:w-80 h-9 rounded py-2 px-3 text-sm" type="email" id="email" name="email" placeholder="Enter your email" />
+                                <button type="submit" disabled={subscribing} className="self-start bg-[#D62A91] text-white text-sm rounded-md hover:bg-pink-600 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 py-2 px-3">{subscribing ? "Subscribing..." : "Subscribe"}</button>
                             </div>
-                        </div>
+                            {error && <p className="text-red-500 text-sm italic mt-2">{error}</p>}
+                        </form>
                     </div>
 
                     <div className=" mb-10 md:mb-0">
@@ -91,6 +133,7 @@ function Footer() {
                 </div>
             </div>
         </footer>
+        </>
     )
 }
 

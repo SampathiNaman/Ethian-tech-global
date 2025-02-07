@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 function WhyChooseUs() {
   return (
     <>
@@ -19,8 +21,8 @@ function WhyChooseUs() {
             data-aos="fade-up"
             />
         </div>
-        <div className="space-y-8">
-          <div className="space-y-5" data-aos="fade-up">
+        <div data-aos="fade-up">
+          <div className="space-y-5">
             <div className="font-sans">
               <h2 className="text-blue-900 text-xl font-bold tracking-wide">
                 Expert Team
@@ -68,12 +70,9 @@ function WhyChooseUs() {
                 <h2 className='text-blue-900 text-xl font-bold tracking-wide'>Commitment to Excellence</h2>
                 <p className='text-base'>Long-term partnerships, continuous innovation.</p>
             </div> */}
-            <button
-              type="button"
-              className=" border-2 border-[#D62A91]  text-black text-base rounded-md hover:shadow-2xl shadow-[#D62A91] active:scale-95 px-4 py-2 mt-3"
-            >
+            <NavLink to="/contact" className="inline-block text-center bg-[#D62A91] text-white text-base rounded-md hover:bg-pink-600 active:scale-95 px-4 py-2" data-aos="fade-up">
               Partner with Us for Digital Transformation!
-            </button>
+            </NavLink>
           </div>
         </div>
       </div>
