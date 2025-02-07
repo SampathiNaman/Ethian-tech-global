@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone, faEnvelope, faAddressCard, faLocation, faLocationDot, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faPhone, faEnvelope, faLocationDot, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faYoutube, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 
 function Footer() {
@@ -79,7 +79,7 @@ function Footer() {
                             <a href="#" className="text-sm text-gray-300">Terms of Service</a>
                         </div>
                         <div className="text-center md:text-left mb-5 md:mb-0">
-                            <p className="text-sm text-gray-300">© 2025. Ethiantech Global. Ltd. All rights reserved.</p>
+                            <p className="text-sm text-gray-300">© 2025. Ethian Tech. Ltd. All rights reserved.</p>
                         </div>
                         <div className="flex space-x-5">
                             <a href="#" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><FontAwesomeIcon icon={faFacebook} className='text-2xl' /></a>

@@ -88,7 +88,7 @@ function OurServices() {
               1250: { slidesPerView: 3 },
             }}
             loop={true}
-            autoplay={{ delay: 2000, disableOnInteraction: true }}
+            autoplay={{ delay: 3000, disableOnInteraction: true }}
             pagination={{ clickable: true }}
             modules={[Pagination, Autoplay]}
             className="mt-8"
