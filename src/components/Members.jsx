@@ -58,7 +58,7 @@ function Members() {
     }, []);
 
     return (
-        <div className="w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg mx-auto my-12 p-6 md:p-8">
+        <section className="w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg mx-auto my-12 p-6 md:p-8">
             <div className="font-sans text-blue-900 text-2xl space-y-1" data-aos="fade-up">
                 <h2 className="tracking-wider">Members</h2>
                 <h2 className="font-bold tracking-wide">We have expert members</h2>
@@ -107,7 +107,7 @@ function Members() {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
 

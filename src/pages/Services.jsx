@@ -4,11 +4,23 @@ import OurServices from '../components/OurServices'
 
 function Services() {
     return (
-        <div>
+        <>
+            <head>
+                <title>Our Services - Ethian Tech Global</title>
+                <meta name="description" content="Discover the range of services offered by Ethian Tech Global. From IT consulting to web development, we provide comprehensive solutions for your business." />
+                <meta name="keywords" content="Ethian Tech Global Services, IT Consulting, Web Development, Mobile App Development, AI Solutions, Cloud Migration, DevOps, Product Consulting, UI/UX Design" />
+                <meta property="og:title" content="Our Services - Ethian Tech Global" />
+                <meta property="og:description" content="Discover the range of services offered by Ethian Tech Global. From IT consulting to web development, we provide comprehensive solutions for your business." />
+                <meta property="og:image" content="services-image.webp" />
+                <meta property="og:url" content="https://www.ethiantechglobal.com/services" />
+                <meta name="twitter:card" content="summary_large_image" />
+            </head>
             <Navbar />
-            <OurServices />
+            <main>
+                <OurServices />
+            </main>
             <Footer />
-        </div>
+        </>
     )
 }
 
