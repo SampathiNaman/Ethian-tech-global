@@ -2,8 +2,7 @@ import { NavLink } from "react-router-dom";
 
 function WhyChooseUs() {
   return (
-    <>
-    <div className="w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg mx-auto p-6 md:p-8">
+    <section className="w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg mx-auto p-6 md:p-8">
       <div
         className="font-sans text-blue-900 text-2xl space-y-1"
         data-aos="fade-up"
@@ -15,7 +14,7 @@ function WhyChooseUs() {
       <div className="grid lg:grid-cols-2 sm:grid-cols-1 gap-y-12 md:gap-x-16 mt-12 ">
         <div>
             <img
-            src="expertTeamImg.webp"
+            src="expert-team.webp"
             alt="Expert Team"
             className="w-full lg:w-full md:mt-2 m-0 md:m-auto drop-shadow-[1px_10px_15px_rgba(18,36,71,0.4)]"
             data-aos="fade-up"
@@ -76,9 +75,7 @@ function WhyChooseUs() {
           </div>
         </div>
       </div>
-    </div>
-
-    </>
+    </section>
   );
 }
 

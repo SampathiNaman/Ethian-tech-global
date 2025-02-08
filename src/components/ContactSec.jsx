@@ -3,7 +3,7 @@ import emailjs from '@emailjs/browser'
 import { toast } from 'react-hot-toast'
 
 
-const ContactSection = () => {
+function ContactSection() {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -88,8 +88,7 @@ useEffect(() => {
 }, []);
 
 return (
-    <>
-        <div className='w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg mx-auto my-16'>
+        <section className='w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg mx-auto my-16'>
             <div className='font-sans text-blue-900 text-2xl space-y-1 mb-8' data-aos="fade-up">
                 <h2 className='tracking-wider'>Contact</h2>
                 <h2 className='font-bold tracking-wide'>Lets Connect</h2>
@@ -154,8 +153,7 @@ return (
                     </div>
                 </form>
             </div>
-        </div>
-    </>
+        </section>
 )
 }
 

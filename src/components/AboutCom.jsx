@@ -7,7 +7,7 @@ function AboutCom() {
             AOS.init({ duration: 1000 });
           });
     return (
-        <div className='w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg grid lg:grid-cols-2 sm:grid-cols-1 gap-y-16 md:gap-x-8 mx-auto mt-12 p-6 md:p-8'>
+        <section className='w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg grid lg:grid-cols-2 sm:grid-cols-1 gap-y-16 md:gap-x-8 mx-auto mt-12 p-6 md:p-8'>
             <div className='lg:hidden font-sans text-blue-900 text-2xl space-y-1' data-aos="fade-up">
                 <h2 className='tracking-wider'>Our company</h2>
                 <h2 className='font-bold tracking-wide'>Make the world a better place with us</h2>
@@ -34,7 +34,7 @@ function AboutCom() {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     )
 }
 
