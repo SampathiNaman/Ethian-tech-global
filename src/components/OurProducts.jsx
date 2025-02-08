@@ -28,7 +28,7 @@ function OurProducts() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-4 md:py-8" >
                 {products.map((product, index) => (
-                    <div key={index} className="bg-white rounded-lg shadow-lg p-4 md:p-6" data-aos="fade-up">
+                    <div key={index} className="bg-white rounded-lg shadow-lg p-4 md:p-6 hover:cursor-pointer" data-aos="fade-up">
                         <img 
                             src={product.image} 
                             alt={product.title} 
@@ -43,7 +43,7 @@ function OurProducts() {
                     </div>
                 ))}
             </div>
-            <NavLink to="/contact" className="float-right text-center bg-[#D62A91] text-white text-base rounded-md hover:bg-pink-600 active:scale-95 px-4 py-2 mb-1 md:mb-0" data-aos="fade-up">
+            <NavLink to="/contact" className="float-right text-center bg-[#D62A91] text-white text-base rounded-md hover:bg-pink-600 active:scale-95 px-4 py-2 my-4 md:mb-0">
                 Still confused? Talk to our experts
             </NavLink>
         </section>
