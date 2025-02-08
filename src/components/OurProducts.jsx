@@ -21,7 +21,7 @@ const products = [
 
 function OurProducts() {
     return (
-        <section className="w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg mx-auto p-6 md:p-8 my-12">
+        <section className="w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg mx-auto p-6 md:p-8 mt-12 mb-20">
             <div className='font-sans text-blue-900 text-2xl space-y-1' data-aos="fade-up">
                 <h2 className='tracking-wider'>Explore Products</h2>
                 <h2 className='font-bold tracking-wide'>Explore Our Products</h2>
