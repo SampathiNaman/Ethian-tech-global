@@ -93,7 +93,7 @@ function Footer() {
                     <div className=" mb-10 md:mb-0">
                         <h2 className="text-xl font-bold mb-3">Get in Touch</h2>
                         {/* <div>
-                            <NavLink to={"/"}><img className='w-40 sm:text-center' src="logo.png" alt="Error in loading" /></NavLink>
+                            <NavLink to={"/"}><img className='w-40 sm:text-center' src="logo.webp" alt="Error in loading" /></NavLink>
                         </div> */}
                         <div className="mt-5">
                             <div className="flex items-center md:justify-start mb-2">
