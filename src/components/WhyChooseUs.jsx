@@ -15,7 +15,7 @@ function WhyChooseUs() {
       <div className="grid lg:grid-cols-2 sm:grid-cols-1 gap-y-12 md:gap-x-16 mt-12 ">
         <div>
             <img
-            src="expertTeamImg.png"
+            src="expertTeamImg.webp"
             alt="Expert Team"
             className="w-4/5 lg:w-full md:mt-2 m-auto"
             data-aos="fade-up"

@@ -12,7 +12,7 @@ function AboutCom() {
                 <h2 className='tracking-wider'>Our company</h2>
                 <h2 className='font-bold tracking-wide'>Make the world a better place with us</h2>
             </div>
-            <img src="about-us.png" alt="Expert Team" className='w-4/5 m-auto' data-aos="fade-up" />
+            <img src="about-us.webp" alt="Expert Team" className='w-4/5 m-auto' data-aos="fade-up" />
             <div className='space-y-8' data-aos="fade-up">
                 <div className='hidden lg:block font-sans text-blue-900 text-2xl space-y-1'>
                     <h2 className='tracking-wider'>Our company</h2>

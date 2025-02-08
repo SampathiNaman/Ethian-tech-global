@@ -17,7 +17,7 @@ function Home() {
         <>
             <Navbar />
 
-            <div className='bg-[url(landingPageImg.jpg)] bg-cover bg-no-repeat bg-center sm:w-full h-[70vh]' style={{ backgroundImage: "url('landingPageImg.jpg')" }}>
+            <div className='bg-cover bg-no-repeat bg-center sm:w-full h-[70vh]' style={{ backgroundImage: "url('landingPageImg.webp')" }}>
                 <div className='flex flex-col justify-center items-center h-full ' style={{ backgroundColor: 'rgba(18, 36, 71, 0.4)' }}>
                     <h1 className='text-white font-arial text-6xl md:text-8xl font-bold text-center'>Innovate Transform Accelerate</h1>
                     <p className="text-xl md:text-2xl text-white mt-4 text-center font-medium">Your IT Partner for a Digital Future, Tailored for your Growth.</p>
