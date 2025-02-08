@@ -49,12 +49,21 @@ function ContactSection() {
 
     const sendMsgToEmail = (e) => {
         e.preventDefault();
+        
+
+
         setSendingMsg(true);
         emailjs.sendForm(import.meta.env.VITE_SERVICE_ID, import.meta.env.VITE_TEMPLATE_ID, e.target, {
             publicKey: import.meta.env.VITE_PUBLIC_KEY,
         })
         .then(() => {
-            e.target.reset();
+        // empty the formData
+        setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            message: ''
+        });
             toast('Message Sent!', {
                 style: {color: 'green'},
                 icon: '✅',
