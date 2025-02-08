@@ -18,7 +18,7 @@ function Navbar() {
                 {/* Logo */}
                 <div className="text-center md:mx-10 md:basis-1/3">
                     <NavLink to="/">
-                        <img className="w-28 md:w-24" src="logo.png" alt="Error in loading" />
+                        <img className="w-28 md:w-24" src="logo.webp" alt="Error in loading" />
                     </NavLink>
                 </div>
 
@@ -103,7 +103,7 @@ function Navbar() {
 
                     <div className=" mt-8 text-black text-2xl flex flex-col items-center md:hidden">
                         <div>
-                            <NavLink to={"/"}><img className='w-40 sm:text-center drop-shadow-[1px_10px_15px_rgba(18,36,71,0.2)]' src="logo.png" alt="Error in loading" /></NavLink>
+                            <NavLink to={"/"}><img className='w-40 sm:text-center drop-shadow-[1px_10px_15px_rgba(18,36,71,0.2)]' src="logo.webp" alt="Error in loading" /></NavLink>
                         </div>
                         <div className="mt-5">
                             <div className="flex items-center md:justify-start mb-2">
