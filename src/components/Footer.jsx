@@ -96,17 +96,20 @@ function Footer() {
                             <NavLink to={"/"}><img className='w-40 sm:text-center' src="logo.webp" alt="Error in loading" /></NavLink>
                         </div> */}
                         <div className="mt-5">
-                            <div className="flex items-center md:justify-start mb-2">
+                        <div className="flex items-center md:justify-start mb-2">
                                 <FontAwesomeIcon icon={faLocationDot} className='text-xl mr-4' />
-                                <span>Patna University Campus,  <br></br>Patna, Bihar 800005</span>
+                                <a href='https://www.google.com/maps?q=8433+Oak+Bush+Ter,+Columbia+MD+21045'  target='_blank' className="cursor-pointer"> 8433 Oak Bush Ter, <br />Columbia MD 21045</a>
                             </div>
                             <div className="flex items-center md:justify-start mb-2">
                                 <FontAwesomeIcon icon={faPhone} className='text-xl mr-4' />
-                                <span>4461237866</span>
+                                <div className='flex flex-col'>
+                                    <a href="tel:+14436758888" className="cursor-pointer">+1443-675-8888 </a>
+                                    <a href="tel:+917977571286 " className="cursor-pointer">+91-7977571286 </a>
+                                </div>
                             </div>
                             <div className="flex items-center md:justify-start">
                                 <FontAwesomeIcon icon={faEnvelope} className='text-xl mr-4' />
-                                <a href="mailto:mail@ethiantech.com">mail@ethiantech.com</a>
+                                <a href="mailto:info@ethiantech.com" className="cursor-pointer">info@ethiantech.com</a>
                             </div>
                         </div>
                     </div>

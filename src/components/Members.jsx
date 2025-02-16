@@ -7,14 +7,14 @@ import { faFacebook, faTwitter, faLinkedin, faInstagram } from '@fortawesome/fre
 
 const teamMembers = [
     {
-        name: "Jennifer Lee",
-        role: "Marketer",
-        image: "https://storage.googleapis.com/a1aa/image/sfjco7Yk9ZxvbCvnOe6GdOPkNjVgVmi2qrleoi3iDbsF8NRoA.jpg",
+        name: "Amare Yihun",
+        role: "Founder and Managing Director",
+        image: "Amare Yihun-Founder and Managing Director.jpg",
         social: {
-            facebook: "#",
+            facebook: "https://www.facebook.com/amare.siraw.1",
             twitter: "#",
-            instagram: "#",
-            linkedin: "https://www.linkedin.com/in/danish-hussain-dar-b06531228/",
+            instagram: "https://www.instagram.com/?fbclid=IwY2xjawIOZ6NleHRuA2FlbQIxMAABHa-n6eicCPFwUoMfqeO-dTqa9Qvvo0UZG_1VGPjYRVAS9WqPnQYt4GyKlg_aem_23lb7cKYmavz2Gp4VvHzwA",
+            linkedin: "https://www.linkedin.com/in/amare-yihun-mph-ms-87368579/",
         },
     },
     {
