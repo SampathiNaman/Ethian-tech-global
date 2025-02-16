@@ -104,17 +104,20 @@ return (
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex flex-col justify-center gap-4 space-y-8 mt-4" data-aos="fade-up">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d57550.21726159035!2d85.17917401081101!3d25.641823244808783!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ed58dce1098af7%3A0xd3ab2e3afc171805!2sNational%20Institute%20of%20Technology%20Patna%2C%20Patna%20University%20Campus%2C%20Patna%2C%20Bihar%20800006!5e0!3m2!1sen!2sin!4v1738518880976!5m2!1sen!2sin" height="350px" width="100%" className='md:w-[90%] lg:w-[80%] rounded-lg' allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" data-aos="fade-up"></iframe>
-                    
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2797.705244664904!2d-76.80745182457896!3d39.20733352835808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b7e06acfa66a3b%3A0x12b640bcecdfb8d!2s8433%20Oak%20Bush%20Terrace%2C%20Columbia%2C%20MD%2021045%2C%20USA!5e1!3m2!1sen!2sin!4v1739466924840!5m2!1sen!2sin" width="100%" height="350px" className='md:w-[90%] lg:w-[80%] rounded-lg' allowfullscreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" data-aos="fade-up"></iframe>
                     <div className='space-y-8'>
                         <div className='space-y-4'>
                             <div className='flex items-center space-x-2'>
-                                <img src="phone.png" alt="Phone Icon" className='w-6' />
-                                <p className='text-base'>+91 1234567890</p>
+                                <img src="america.png" alt="American Flag Icon" className='w-6' />
+                                <a href="tel:+14436758888" className="text-base cursor-pointer">+1443-675-8888</a>
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src="india.png" alt="Indian Falg Icon" className='w-6' />
+                                <a href="tel:+917977571286 " className="text-base cursor-pointer">+91-7977571286 </a>
                             </div>
                             <div className='flex items-center space-x-2'>
                                 <img src="gmail.png" alt="Email Icon" className='w-6' />
-                                <p className='text-base'>company@gmail.com</p>
+                                <a href="mailto:info@ethiantech.com" className="text-base cursor-pointer">info@ethiantech.com</a>
                             </div>
                         </div>
                         <div className='flex wrap items-center gap-4'>
@@ -155,11 +158,6 @@ return (
                         {errors.message && <p className="text-red-500 text-sm italic">{errors.message}</p>}
                     </div>
                     <button type="submit" disabled={sendingMsg} className="self-start bg-pink-500 text-white text-base rounded-md hover:bg-pink-600 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 py-2 px-8">{sendingMsg ? "Sending..." : "Send Message"}</button>
-                    {/* Below div is created only to facilitate sending message through emailjs. This will not be displayed in website */}
-                    <div className="hidden flex-col items-stretch space-y-3">
-                        <label htmlFor="cname" className='text-base font-medium'>{import.meta.env.VITE_CLIENT_NAME}</label>
-                        <input type="text" id="cname" name="cname" defaultValue={import.meta.env.VITE_CLIENT_NAME} required className='p-2 border border-gray-300 rounded-md focus:outline-2 focus:outline-pink-500' />
-                    </div>
                 </form>
             </div>
         </section>
