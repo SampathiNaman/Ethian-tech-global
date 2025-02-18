@@ -23,8 +23,8 @@ function OurProducts() {
     return (
         <section className="w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg mx-auto p-6 md:p-8 mt-12 mb-20">
             <div className='font-sans text-blue-900 text-2xl space-y-1' data-aos="fade-up">
-                <h2 className='tracking-wider'>Explore Products</h2>
-                <h2 className='font-bold tracking-wide'>Explore Our Products</h2>
+                {/* <h2 className='tracking-wider'>Explore Products</h2> */}
+                <h2 className='font-bold tracking-wide'>Explore Our SaaS Products</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-4 md:py-8" >
                 {products.map((product, index) => (
@@ -43,7 +43,7 @@ function OurProducts() {
                     </div>
                 ))}
             </div>
-            <NavLink to="/contact" className="float-right text-center bg-[#D62A91] text-white text-base rounded-md hover:bg-pink-600 active:scale-95 px-4 py-2 my-4 md:mb-0">
+            <NavLink to="/contact" className="float-left md:float-right text-center bg-[#D62A91] text-white text-base rounded-md hover:bg-pink-600 active:scale-95 px-4 py-2 my-4 md:mb-0">
                 Still confused? Talk to our experts
             </NavLink>
         </section>

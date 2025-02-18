@@ -1,3 +1,7 @@
+
+import React from 'react'
+import { NavLink } from 'react-router-dom'
+
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Members from '../components/Members'
@@ -20,6 +24,7 @@ function About() {
             <main>
                 <AboutCom />
                 <Members />
+                
             </main>
             
             <Footer />

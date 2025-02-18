@@ -27,7 +27,7 @@ function WhyChooseUs() {
                 Expert Team
               </h2>
               <p className="text-base">
-                seasoned professionals with proven track record
+                Seasoned professionals with proven track record
               </p>
             </div>
             <div className="font-sans">

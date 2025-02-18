@@ -8,7 +8,7 @@ import { faFacebook, faTwitter, faLinkedin, faInstagram } from '@fortawesome/fre
 const teamMembers = [
     {
         name: "Amare Yihun",
-        role: "Founder & CFO",
+        role: "Founder & Managing director",
         image: "Amare_Yihun.jpg",
         social: {
             facebook: "https://www.facebook.com/amare.siraw.1",
@@ -34,10 +34,10 @@ function Members() {
     }, []);
 
     return (
-        <section className="w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg mx-auto my-12 p-6 md:p-8">
+        <section className="w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg mx-auto my-6 p-6 md:p-8">
             <div className="font-sans text-blue-900 text-2xl space-y-1" data-aos="fade-up">
-                <h2 className="tracking-wider">Members</h2>
-                <h2 className="font-bold tracking-wide">We have expert members</h2>
+                <h2 className="tracking-wider">Who we are</h2>
+                <h2 className="font-bold tracking-wide">Team Members</h2>
 
                 <div className="container mx-auto py-12">
                     <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-7">
