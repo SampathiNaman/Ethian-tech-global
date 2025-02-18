@@ -8,24 +8,22 @@ import { faFacebook, faTwitter, faLinkedin, faInstagram } from '@fortawesome/fre
 const teamMembers = [
     {
         name: "Amare Yihun",
-        role: "Founder and Managing Director",
-        image: "Amare Yihun-Founder and Managing Director.jpg",
+        role: "Founder and CFO",
+        image: "Amare_Yihun.jpg",
         social: {
             facebook: "https://www.facebook.com/amare.siraw.1",
-            twitter: "#",
             instagram: "https://www.instagram.com/?fbclid=IwY2xjawIOZ6NleHRuA2FlbQIxMAABHa-n6eicCPFwUoMfqeO-dTqa9Qvvo0UZG_1VGPjYRVAS9WqPnQYt4GyKlg_aem_23lb7cKYmavz2Gp4VvHzwA",
             linkedin: "https://www.linkedin.com/in/amare-yihun-mph-ms-87368579/",
         },
     },
     {
-        name: "Jason Roy",
-        role: "Designer",
-        image: "https://storage.googleapis.com/a1aa/image/faaDMN9HUWxKbiFShPma0tn7385Ype4TBRkSDcMywe2K8NRoA.jpg",
+        name: "Gautham",
+        role: "Founder & CTO",
+        image: "Gautham_2.jpg",
         social: {
-            facebook: "#",
-            twitter: "#",
-            instagram: "#",
-            linkedin: "#",
+            facebook: "https://www.facebook.com/gtd.gautam",
+            instagram: "https://www.instagram.com/gtd.gautam/",
+            linkedin: "https://www.linkedin.com/in/gautham-nayak-9163098b/",
         },
     },
     {
