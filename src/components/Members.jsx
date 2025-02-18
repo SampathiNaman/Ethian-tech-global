@@ -8,7 +8,7 @@ import { faFacebook, faTwitter, faLinkedin, faInstagram } from '@fortawesome/fre
 const teamMembers = [
     {
         name: "Amare Yihun",
-        role: "Founder and CFO",
+        role: "Founder & CFO",
         image: "Amare_Yihun.jpg",
         social: {
             facebook: "https://www.facebook.com/amare.siraw.1",
@@ -17,35 +17,13 @@ const teamMembers = [
         },
     },
     {
-        name: "Gautham",
+        name: "Gautham Nayak",
         role: "Founder & CTO",
-        image: "Gautham_2.jpg",
+        image: "Gautham.jpg",
         social: {
             facebook: "https://www.facebook.com/gtd.gautam",
             instagram: "https://www.instagram.com/gtd.gautam/",
             linkedin: "https://www.linkedin.com/in/gautham-nayak-9163098b/",
-        },
-    },
-    {
-        name: "Jason Smith",
-        role: "Marketer",
-        image: "https://storage.googleapis.com/a1aa/image/lyoxSxSeViR5Zq68f4cGGcD6mJcAXu3Od3GIMr8eaOqO8NRoA.jpg",
-        social: {
-            facebook: "#",
-            twitter: "#",
-            instagram: "#",
-            linkedin: "#",
-        },
-    },
-    {
-        name: "Doris Flores",
-        role: "UI Designer",
-        image: "https://storage.googleapis.com/a1aa/image/f5SjtpTAveorhEt1vqf47SWxczTNKbgPjqiQRcme4LmQ4biQB.jpg",
-        social: {
-            facebook: "#",
-            twitter: "#",
-            instagram: "#",
-            linkedin: "#",
         },
     },
 ];
