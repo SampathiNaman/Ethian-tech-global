@@ -104,7 +104,8 @@ return (
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex flex-col justify-center gap-4 space-y-8 mt-4" data-aos="fade-up">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2797.705244664904!2d-76.80745182457896!3d39.20733352835808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b7e06acfa66a3b%3A0x12b640bcecdfb8d!2s8433%20Oak%20Bush%20Terrace%2C%20Columbia%2C%20MD%2021045%2C%20USA!5e1!3m2!1sen!2sin!4v1739466924840!5m2!1sen!2sin" width="100%" height="350px" className='md:w-[90%] lg:w-[80%] rounded-lg' allowfullscreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" data-aos="fade-up"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d49463.236633288194!2d-76.86320645074471!3d39.209892439089124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b7dfdf0b692537%3A0x7a95d0ec352b4105!2sColumbia%2C%20MD%2021045%2C%20USA!5e0!3m2!1sen!2sin!4v1739949726271!5m2!1sen!2sin" width="100%" height="350px" className='md:w-[90%] lg:w-[80%] rounded-lg' allowfullscreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" data-aos="fade-up"></iframe>
+                    
                     <div className='space-y-8'>
                         <div className='space-y-4'>
                             <div className='flex items-center space-x-2'>

@@ -36,7 +36,7 @@ function Members() {
     return (
         <section className="w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg mx-auto my-6 p-6 md:p-8">
             <div className="font-sans text-blue-900 text-2xl space-y-1" data-aos="fade-up">
-                <h2 className="tracking-wider">Who we are</h2>
+                <h2 className="tracking-wider">Our Team</h2>
                 <h2 className="font-bold tracking-wide">Team Members</h2>
 
                 <div className="container mx-auto py-12">

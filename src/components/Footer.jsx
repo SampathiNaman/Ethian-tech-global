@@ -98,18 +98,18 @@ function Footer() {
                             <div className="mt-5">
                                 <div className="flex items-center md:justify-start mb-2">
                                     <FontAwesomeIcon icon={faLocationDot} className='text-xl mr-4' />
-                                    <a href='https://www.google.com/maps?q=8433+Oak+Bush+Ter,+Columbia+MD+21045' target='_blank' className="cursor-pointer"> 8433 Oak Bush Ter, <br />Columbia MD 21045</a>
+                                    <a href='https://maps.app.goo.gl/huDWUfsvmpYrcoxz9' target='_blank' className="cursor-pointer">Columbia MD 21045 USA</a>
                                 </div>
                                 <div className="flex items-center md:justify-start mb-2">
                                     <FontAwesomeIcon icon={faPhone} className='text-xl mr-4' />
                                     <div className='flex flex-col'>
                                         <div className="flex items-center gap-2">
                                             <img src="america.png" alt="American Flag Icon" className='w-6' />
-                                            <a href="tel:+14436758888" className="cursor-pointer">+1443-675-8888 </a>
+                                            <a href="tel:+14436758888" className="cursor-pointer">+1-443-675-8888 </a>
                                         </div>
                                         <div className="flex items-center gap-2">
                                             <img src="india.png" alt="Indian Falg Icon" className='w-6' />
-                                            <a href="tel:+917977571286 " className="cursor-pointer">+91-7977571286 </a>
+                                            <a href="tel:+917977571286 " className="cursor-pointer">+91-79775-71286 </a>
 
                                         </div>
                                     </div>
