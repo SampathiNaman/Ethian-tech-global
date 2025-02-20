@@ -9,7 +9,7 @@ const teamMembers = [
     {
         name: "Amare Yihun",
         role: "Founder & Managing director",
-        image: "Amare_Yihun.jpg",
+        image: "Amare_Yihun.webp",
         social: {
             facebook: "https://www.facebook.com/amare.siraw.1",
             instagram: "https://www.instagram.com/?fbclid=IwY2xjawIOZ6NleHRuA2FlbQIxMAABHa-n6eicCPFwUoMfqeO-dTqa9Qvvo0UZG_1VGPjYRVAS9WqPnQYt4GyKlg_aem_23lb7cKYmavz2Gp4VvHzwA",
@@ -19,7 +19,7 @@ const teamMembers = [
     {
         name: "Gautham Nayak",
         role: "Founder & CTO",
-        image: "Gautham.jpg",
+        image: "Gautham.webp",
         social: {
             facebook: "https://www.facebook.com/gtd.gautam",
             instagram: "https://www.instagram.com/gtd.gautam/",
