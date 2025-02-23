@@ -19,7 +19,7 @@ const teamMembers = [
     {
         name: "Gautham Nayak",
         role: "Founder & CTO",
-        image: "gautham.webp",
+        image: "Gautham.webp",
         social: {
             facebook: "https://www.facebook.com/gtd.gautam",
             instagram: "https://www.instagram.com/gtd.gautam/",
