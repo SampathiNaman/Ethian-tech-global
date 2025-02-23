@@ -16,7 +16,7 @@ function WhyChooseUs() {
             <img
             src="expert-team.webp"
             alt="Expert Team"
-            className="w-full lg:w-full md:mt-2 m-0 md:m-auto drop-shadow-[1px_10px_15px_rgba(18,36,71,0.4)]"
+            className="w-full lg:w-full md:mt-2 m-0 md:m-auto"
             data-aos="fade-up"
             />
         </div>
