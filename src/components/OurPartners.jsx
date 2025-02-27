@@ -7,10 +7,10 @@ function OurPartners() {
                 {/* <h2 className="tracking-wider">Our Partners</h2> */}
                 <h2 className="font-bold tracking-wide">Our Partners</h2>
             </div>
-            <div className="flex flex-wrap justify-left md:justify-center items-center space-x-4 md:space-x-8 my-6" data-aos="fade-up">
+            <div className="flex flex-wrap justify-left md:justify-left items-center my-6" data-aos="fade-up">
 
                 <div className="w-[50%] md:w-[20%] h-auto">
-                    <a href='https://www.rasbyte.com/' target='_blank'><img src="Partner1.webp" alt="Our Partners" className="h-auto" width={200} data-aos="fade-up" /></a>
+                    <a href='https://www.rasbyte.com/' target='_blank'><img src="Partner1.jpg" alt="Our Partners" className="h-auto" width={200} data-aos="fade-up" /></a>
                 </div>
                 {/* <div className="w-[50%] md:w-[20%] h-auto">
                     <a href='https://www.rasbyte.com/' target='_blank'><img src="Partner1.webp" alt="Our Partners" className="h-auto" width={200} data-aos="fade-up" /></a>
