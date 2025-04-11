@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -8,8 +8,11 @@ import OurServices from '../components/OurServices'
 import Footer from '../components/Footer'
 import Members from '../components/Members'
 import WhyChooseUs from "../components/WhyChooseUs";
+import LoginPopup from '../components/LoginPopup';
 
 function Home() {
+    const [showLogin, setShowLogin] = useState(true);
+
     useEffect(() => {
         AOS.init({ duration: 1300 });
     });
@@ -26,6 +29,7 @@ function Home() {
                 <meta name="twitter:card" content="summary_large_image" />
             </head>
 
+            <LoginPopup isOpen={showLogin} onClose={() => setShowLogin(false)} />
             <Navbar />
             <header className='bg-cover bg-no-repeat bg-center sm:w-full h-[70vh]' style={{ backgroundImage: "url('landing-page.webp')" }}>
                 <div className='flex flex-col justify-center items-center h-full ' style={{ backgroundColor: 'rgba(18, 36, 71, 0.4)' }}>
