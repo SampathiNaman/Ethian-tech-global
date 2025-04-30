@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faXmark , faBars, faAddressCard, faToolbox, faScrewdriverWrench, faPhone, faEnvelope} from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faXmark , faBars, faAddressCard, faToolbox, faDumbbell, faScrewdriverWrench, faPhone, faEnvelope} from '@fortawesome/free-solid-svg-icons';
 
 function Navbar() {
     const [menu, setMenu] = useState(false);
@@ -85,6 +85,21 @@ function Navbar() {
                         <FontAwesomeIcon icon={faScrewdriverWrench} className='mx-2'/>
                         Services
                     </NavLink>
+                    
+
+                    <NavLink
+                        className={({ isActive }) =>
+                            `mx-3 ${isActive ? 'text-[#D62A91]' : 'md:text-white'} hover:text-[#D62A91] text-center py-2 my-1 border rounded-md border-black md:py-0 md:border-none  md:my-0 shadow-lg md:shadow-none`
+                        }
+                        to="/training"
+                        onClick={() => setMenu(false)}
+                    >
+                        
+                        <FontAwesomeIcon icon={faDumbbell} className='mx-2'/>
+                        Training
+                    </NavLink>
+
+
                     <NavLink
                         className={({ isActive }) =>
                             `mx-3 ${isActive ? 'text-[#D62A91]' : 'md:text-white'} hover:text-[#D62A91] text-center py-2 my-1 border rounded-md border-black md:py-0 md:border-none  md:my-0 shadow-lg md:shadow-none`
