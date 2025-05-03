@@ -4,6 +4,7 @@ import axios from 'axios';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  {/* children refers to whatever part of your app.jsx is wrapped by the provider */}
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -28,7 +29,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ user, login, logout, loading }}>
-      {children}
+      {children} 
     </AuthContext.Provider>
   );
 };
