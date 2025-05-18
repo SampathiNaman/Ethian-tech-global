@@ -9,33 +9,19 @@ import Footer from '../components/Footer'
 import Members from '../components/Members'
 import WhyChooseUs from "../components/WhyChooseUs";
 import LoginPopup from '../components/LoginPopup';
-import SignupPopup from '../components/SignupPopup';
+import { useAuth } from '../context/AuthContext';
 
 function Home() {
-    const [showLogin, setShowLogin] = useState(true);
-    const [showSignup, setShowSignup] = useState(false);
+    const [showLogin, setShowLogin] = useState(false);
+    const { user, loading } = useAuth();
 
     useEffect(() => {
         AOS.init({ duration: 1300 });
-    });
-
-    const handleCloseLogin = () => {
-        setShowLogin(false);
-    };
-
-    const handleCloseSignup = () => {
-        setShowSignup(false);
-    };
-
-    const handleSwitchToSignup = () => {
-        setShowLogin(false);
-        setShowSignup(true);
-    };
-
-    const handleSwitchToLogin = () => {
-        setShowSignup(false);
-        setShowLogin(true);
-    };
+        // Only show login popup if user is not logged in and not loading
+        if (!user && !loading) {
+            setShowLogin(true);
+        }
+    }, [user, loading]);
 
     return (
         <>
@@ -50,8 +36,7 @@ function Home() {
                 <meta name="twitter:card" content="summary_large_image" />
             </head>
 
-            <LoginPopup isOpen={showLogin} onClose={handleCloseLogin} onSwitchToSignup={handleSwitchToSignup} />
-            <SignupPopup isOpen={showSignup} onClose={handleCloseSignup} onSwitchToLogin={handleSwitchToLogin} />
+            {!user && !loading && <LoginPopup isOpen={showLogin} onClose={() => setShowLogin(false)} />}
             <Navbar />
             <header className='bg-cover bg-no-repeat bg-center sm:w-full h-[70vh]' style={{ backgroundImage: "url('landing-page.webp')" }}>
                 <div className='flex flex-col justify-center items-center h-full ' style={{ backgroundColor: 'rgba(18, 36, 71, 0.4)' }}>

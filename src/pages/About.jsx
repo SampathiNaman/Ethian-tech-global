@@ -6,6 +6,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Members from '../components/Members'
 import AboutCom from '../components/AboutCom'
+import OurPartners from '../components/OurPartners'
 
 function About() {
     return (
@@ -24,7 +25,7 @@ function About() {
             <main>
                 <AboutCom />
                 <Members />
-                
+                <OurPartners />
             </main>
             
             <Footer />
