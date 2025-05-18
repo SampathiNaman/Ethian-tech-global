@@ -9,10 +9,12 @@ import Footer from '../components/Footer'
 import Members from '../components/Members'
 import WhyChooseUs from "../components/WhyChooseUs";
 import LoginPopup from '../components/LoginPopup';
+import SignupPopup from '../components/SignupPopup';
 import { useAuth } from '../context/AuthContext';
 
 function Home() {
     const [showLogin, setShowLogin] = useState(false);
+    const [showSignup, setShowSignup] = useState(false);
     const { user, loading } = useAuth();
 
     useEffect(() => {
@@ -22,6 +24,16 @@ function Home() {
             setShowLogin(true);
         }
     }, [user, loading]);
+
+    const handleSwitchToLogin = () => {
+        setShowLogin(true);
+        setShowSignup(false);
+    };
+
+    const handleSwitchToSignup = () => {
+        setShowLogin(false);
+        setShowSignup(true);
+    };
 
     return (
         <>
@@ -36,7 +48,8 @@ function Home() {
                 <meta name="twitter:card" content="summary_large_image" />
             </head>
 
-            {!user && !loading && <LoginPopup isOpen={showLogin} onClose={() => setShowLogin(false)} />}
+            {!user && !loading && <LoginPopup isOpen={showLogin} onClose={() => setShowLogin(false)} onSwitchToSignup={handleSwitchToSignup} />}
+            {!user && !loading && <SignupPopup isOpen={showSignup} onClose={() => setShowSignup(false)} onSwitchToLogin={handleSwitchToLogin} />}
             <Navbar />
             <header className='bg-cover bg-no-repeat bg-center sm:w-full h-[70vh]' style={{ backgroundImage: "url('landing-page.webp')" }}>
                 <div className='flex flex-col justify-center items-center h-full ' style={{ backgroundColor: 'rgba(18, 36, 71, 0.4)' }}>
