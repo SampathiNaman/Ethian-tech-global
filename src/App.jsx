@@ -3,10 +3,12 @@ import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
 import Home from "./pages/Home"
 import About from "./pages/About"
-import Services from "./pages/Services"
-import Contact from "./pages/Contact"
 import Products from './pages/Products';
+import Services from "./pages/Services"
 import Training from './pages/Training';
+import Payment from './pages/Payment';
+import Contact from "./pages/Contact"
+import PaymentRedirect from './pages/PaymentRedirect';
 
 function App() {
   return (
@@ -33,7 +35,9 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/services" element={<Services />} />
             <Route path="/training" element={<Training />} />
+            <Route path="/payment" element={<Payment />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/payment-redirect" element={<PaymentRedirect />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
