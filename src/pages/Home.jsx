@@ -3,11 +3,11 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 import { NavLink } from "react-router-dom";
-import Navbar from '../components/Navbar'
-import OurServices from '../components/OurServices'
-import Footer from '../components/Footer'
-import Members from '../components/Members'
 import WhyChooseUs from "../components/WhyChooseUs";
+import Members from '../components/Members'
+import OurServices from '../components/OurServices'
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 import LoginPopup from '../components/LoginPopup';
 import SignupPopup from '../components/SignupPopup';
 import { useAuth } from '../context/AuthContext';
