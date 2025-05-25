@@ -4,10 +4,9 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const SignupPopup = ({ isOpen, onClose, onSwitchToLogin }) => {
+const SignupPopup = ({ onSwitchToLogin }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -17,10 +16,9 @@ const SignupPopup = ({ isOpen, onClose, onSwitchToLogin }) => {
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, authPopupState, closeAuthPopup } = useAuth();
 
-  if (!isOpen) return null;
+  if (authPopupState !== 'signup') return null;
 
   const resetForm = () => {
     setFormData({
@@ -39,6 +37,8 @@ const SignupPopup = ({ isOpen, onClose, onSwitchToLogin }) => {
     // Name validation
     if (!formData.name.trim()) {
       newErrors.name = 'Name is required';
+    } else if (formData.name.trim().length < 2) {
+        newErrors.name = 'Name must be at least 2 characters';
     }
 
     // Email validation
@@ -51,8 +51,8 @@ const SignupPopup = ({ isOpen, onClose, onSwitchToLogin }) => {
     // Phone validation
     if (!formData.phoneNo) {
       newErrors.phoneNo = 'Phone number is required';
-    } else if (!/^\d{10}$/.test(formData.phoneNo)) {
-      newErrors.phoneNo = 'Phone number must be exactly 10 digits';
+    } else if (!/^[+]?[\d]{1,4}[-\s]?[(]?[\d]{1,3}[)]?[-\s]?[\d]{1,4}[-\s]?[\d]{1,4}[-\s]?[\d]{1,9}$/.test(formData.phoneNo)) {
+      newErrors.phoneNo = 'Enter a valid phone number';
     }
 
     // Password validation
@@ -113,11 +113,9 @@ const SignupPopup = ({ isOpen, onClose, onSwitchToLogin }) => {
       );
 
       if (response.data.message === 'Registration successful') {
-        await login(response.data.user);
+        login(response.data.user);
         toast.success('Welcome! Your account has been created successfully.');
         resetForm();
-        onClose();
-        navigate('/products');
       }
     } catch (error) {
       console.error('Registration error:', error);
@@ -125,7 +123,6 @@ const SignupPopup = ({ isOpen, onClose, onSwitchToLogin }) => {
       if (error.response) {
         switch (error.response.status) {
           case 400:
-            // Validation errors
             if (error.response.data.errors) {
               const validationErrors = {};
               error.response.data.errors.forEach(err => {
@@ -163,11 +160,9 @@ const SignupPopup = ({ isOpen, onClose, onSwitchToLogin }) => {
       });
 
       if (response.data.message === 'Login successful') {
-        await login(response.data.user);
+        login(response.data.user);
         toast.success('Welcome!');
         resetForm();
-        onClose();
-        navigate('/products');
       }
     } catch (error) {
       console.error('Google signup error:', error);
@@ -183,9 +178,9 @@ const SignupPopup = ({ isOpen, onClose, onSwitchToLogin }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md relative max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-lg p-8 w-full max-w-md relative">
         <button
-          onClick={onClose}
+          onClick={closeAuthPopup}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
           disabled={loading}
           aria-label="Close signup popup"
@@ -193,21 +188,23 @@ const SignupPopup = ({ isOpen, onClose, onSwitchToLogin }) => {
           <FontAwesomeIcon icon={faXmark} className="text-xl" />
         </button>
 
-        <h2 className="text-2xl font-bold text-center mb-4">Create Account</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">Create Account</h2>
         
-        <div className="space-y-3">
-          <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}
-              onError={handleGoogleError}
-              useOneTap
-              width="100%"
-              size="large"
-              theme="outline"
-              shape="rectangular"
-              text="signup_with"
-            />
-          </GoogleOAuthProvider>
+        <div className="space-y-4">
+          <div className="flex justify-center">
+            <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleError}
+                useOneTap
+                width="100%"
+                size="large"
+                theme="outline"
+                shape="rectangular"
+                text="signup_with"
+              />
+            </GoogleOAuthProvider>
+          </div>
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">

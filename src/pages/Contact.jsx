@@ -2,8 +2,15 @@ import Navbar from '../components/Navbar'
 
 import Footer from '../components/Footer'
 import ContactSec from '../components/ContactSec'
+import { useEffect } from 'react';
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function Contact() {
+    useEffect(() => {
+        AOS.init({ duration: 1300 });
+        AOS.refresh();
+    }, []);
     return (
         <>
             <head>

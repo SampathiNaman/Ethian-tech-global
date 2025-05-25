@@ -80,7 +80,6 @@ export const ErrorScreen = ({ error, onRetry, onClose }) => {
   );
 };
 
-
 ErrorScreen.propTypes = {
   error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   onRetry: PropTypes.func,

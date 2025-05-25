@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import Home from "./pages/Home"
 import About from "./pages/About"
 import Products from './pages/Products';
@@ -9,6 +9,8 @@ import Training from './pages/Training';
 import Payment from './pages/Payment';
 import Contact from "./pages/Contact"
 import PaymentRedirect from './pages/PaymentRedirect';
+import LoginPopup from './components/LoginPopup';
+import SignupPopup from './components/SignupPopup';
 
 function App() {
   return (
@@ -27,22 +29,37 @@ function App() {
               },
           }}
       />      
-      <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/training" element={<Training />} />
-            <Route path="/payment" element={<Payment />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/payment-redirect" element={<PaymentRedirect />} />
-          </Routes>
-        </BrowserRouter>
-      </AuthProvider>
+      <BrowserRouter>
+          <AuthProvider>
+              <AppContent />
+          </AuthProvider>
+      </BrowserRouter>
     </div>
   );
+}
+
+function AppContent() {
+    const { authPopupState, closeAuthPopup, switchToSignupForm, switchToLoginForm } = useAuth();
+    return (
+        <>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/training" element={<Training />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/payment" element={<Payment />} />
+                <Route path="/payment-redirect" element={<PaymentRedirect />} />
+            </Routes>
+            {authPopupState === 'login' && (
+                <LoginPopup onClose={closeAuthPopup} onSwitchToSignup={switchToSignupForm} />
+            )}
+            {authPopupState === 'signup' && (
+                 <SignupPopup onClose={closeAuthPopup} onSwitchToLogin={switchToLoginForm} />
+            )}
+        </>
+    );
 }
 
 export default App;

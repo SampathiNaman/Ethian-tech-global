@@ -1,15 +1,19 @@
+import { useRef, useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-
+import OurCourses from '../components/OurCourses';
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function Training() {
-
     const navigate = useNavigate();
 
-    const handlePayment = () => {
-        navigate('/payment', { state: { amount: 750, currency: 'usd', service: 'training',  description: 'Ethian Tech Training Program'} });
-    };
+    // Initialize AOS for animations
+    useEffect(() => {
+        AOS.init({ duration: 1300 }); // Initialize AOS with a consistent duration
+        AOS.refresh(); // Refresh AOS to pick up elements after navigation
+    }, []);
 
     return (
         <>
@@ -25,27 +29,11 @@ function Training() {
         </head>
         <Navbar />
         <main className="main-content">
-                <div className='flex flex-col items-center justify-center my-16 p-4'>
-                    <h1 className='text-4xl font-bold'>Training</h1>
-                    <p className='text-lg mt-4'>We offer a variety of training programs to help you enhance your skills.</p>
-                    <p className='text-lg my-2'>Our training programs are designed to be flexible and convenient for you.</p>
-
-                    {/* Payment Section */}
-                    <div className="payment-section w-full max-w-md">
-
-                        {/* Payment Controls */}
-                        <button 
-                            onClick={() => handlePayment()}
-                            className='payment-button border-2 rounded-md bg-green-300 px-3 py-2 my-8 hover:bg-green-400 disabled:opacity-50'
-                        >
-                            Pay $750
-                        </button>
-                    </div>
-                </div>
+                <OurCourses />
             </main>
         <Footer />
     </>
-    )
+    );
 }
 
-export default Training
+export default Training;

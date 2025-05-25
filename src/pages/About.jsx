@@ -1,5 +1,4 @@
-
-import React from 'react'
+import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import Navbar from '../components/Navbar'
@@ -7,8 +6,14 @@ import Footer from '../components/Footer'
 import Members from '../components/Members'
 import AboutCom from '../components/AboutCom'
 import OurPartners from '../components/OurPartners'
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function About() {
+    useEffect(() => {
+        AOS.init({ duration: 1300 });
+        AOS.refresh();
+    }, []);
     return (
         <>
             <head>
