@@ -65,7 +65,9 @@ const Payment = () => {
         {
           amount: location.state.amount,
           currency: location.state.currency,
-          service: location.state.service,
+          metadata: {
+            "product_type": location.state.service,
+          },
         },
         {
           headers: {

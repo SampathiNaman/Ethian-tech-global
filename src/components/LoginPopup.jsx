@@ -4,20 +4,18 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const LoginPopup = ({ isOpen, onClose, onSwitchToSignup }) => {
+const LoginPopup = ({ onSwitchToSignup }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, authPopupState, closeAuthPopup } = useAuth();
 
-  if (!isOpen) return null;
+  if (authPopupState !== 'login') return null;
 
   const resetForm = () => {
     setFormData({ email: '', password: '' });
@@ -77,20 +75,16 @@ const LoginPopup = ({ isOpen, onClose, onSwitchToSignup }) => {
       );
 
       if (response.data.message === 'Login successful') {
-        await login(response.data.user);
+        login(response.data.user);
         toast.success('Welcome back!');
         resetForm();
-        onClose();
-        navigate('/products');
       }
     } catch (error) {
       console.error('Login error:', error);
       
-      // Handle different error cases
       if (error.response) {
         switch (error.response.status) {
           case 400:
-            // Validation errors
             if (error.response.data.errors) {
               const validationErrors = {};
               error.response.data.errors.forEach(err => {
@@ -105,11 +99,9 @@ const LoginPopup = ({ isOpen, onClose, onSwitchToSignup }) => {
                 duration: 5000,
                 icon: '🔐'
               });
-              // Clear the form
               resetForm();
             } else {
               toast.error('Invalid email or password');
-              // Clear password field for security
               setFormData(prev => ({ ...prev, password: '' }));
             }
             break;
@@ -142,11 +134,9 @@ const LoginPopup = ({ isOpen, onClose, onSwitchToSignup }) => {
       });
 
       if (response.data.message === 'Login successful') {
-        await login(response.data.user);
+        login(response.data.user);
         toast.success('Welcome back!');
         resetForm();
-        onClose();
-        navigate('/products');
       }
     } catch (error) {
       console.error('Google login error:', error);
@@ -183,7 +173,7 @@ const LoginPopup = ({ isOpen, onClose, onSwitchToSignup }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-8 w-full max-w-md relative">
         <button
-          onClick={onClose}
+          onClick={closeAuthPopup}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
           disabled={loading}
           aria-label="Close login popup"
@@ -194,18 +184,20 @@ const LoginPopup = ({ isOpen, onClose, onSwitchToSignup }) => {
         <h2 className="text-2xl font-bold text-center mb-6">Welcome Back</h2>
         
         <div className="space-y-4">
-          <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}
-              onError={handleGoogleError}
-              useOneTap
-              width="100%"
-              size="large"
-              theme="outline"
-              shape="rectangular"
-              text="continue_with"
-            />
-          </GoogleOAuthProvider>
+          <div className="flex justify-center">
+            <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleError}
+                useOneTap
+                width="100%"
+                size="large"
+                theme="outline"
+                shape="rectangular"
+                text="continue_with"
+              />
+            </GoogleOAuthProvider>
+          </div>
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
@@ -273,8 +265,11 @@ const LoginPopup = ({ isOpen, onClose, onSwitchToSignup }) => {
 
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 
+                  disabled:opacity-50 disabled:cursor-not-allowed transition-colors
+                  flex items-center justify-center"
               disabled={loading}
+              aria-live="polite"
             >
               {loading ? (
                 <span className="flex items-center justify-center">

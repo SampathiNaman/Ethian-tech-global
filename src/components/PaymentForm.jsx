@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   useStripe, 
   useElements,
@@ -26,12 +27,24 @@ const PaymentForm = ({
   const [error, setError] = useState(null);
   const [retryCount, setRetryCount] = useState(-1);
 
+  const navigate = useNavigate();
+
   const amountFormatted = useMemo(() => 
     new Intl.NumberFormat(navigator.language, {
       style: 'currency',
       currency: paymentDetails.currency,
     }).format(paymentDetails.amount)
   , [paymentDetails]);
+
+  const handleRetry = () => {
+    setPaymentStatus('idle');
+    setError(null);
+    setRetryCount(retry => retry + 1);
+  }
+
+  const handleClose = () => {
+    navigate('/training', {replace: true});
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -80,22 +93,22 @@ const PaymentForm = ({
         setPaymentStatus(paymentIntent.status);
         setRetryCount(-1);
       }
-      else if (requiresActionStatuses.includes(paymentIntent?.status)) {
-        setRequiresAction(true);
-        // 3D Secure authentication
-        const { error: actionError } = await stripe.handleCardAction(clientSecret);
-        if (actionError) throw actionError;
-        // Re-check status after authentication
-        const { paymentIntent: postAuthIntent } = await stripe.retrievePaymentIntent(clientSecret);
-        if (postAuthIntent?.status !== 'succeeded') {
-          throw {
-            code: '3ds_verification_failed',
-            message: '3D Secure authentication unsuccessful'
-          };
-        }
-        setPaymentStatus('succeeded');
-        setRetryCount(-1);
-      }
+      // else if (requiresActionStatuses.includes(paymentIntent?.status)) {
+      //   setRequiresAction(true);
+      //   // 3D Secure authentication
+      //   const { error: actionError } = await stripe.handleCardAction(clientSecret);
+      //   if (actionError) throw actionError;
+      //   // Re-check status after authentication
+      //   const { paymentIntent: postAuthIntent } = await stripe.retrievePaymentIntent(clientSecret);
+      //   if (postAuthIntent?.status !== 'succeeded') {
+      //     throw {
+      //       code: '3ds_verification_failed',
+      //       message: '3D Secure authentication unsuccessful'
+      //     };
+      //   }
+      //   setPaymentStatus('succeeded');
+      //   setRetryCount(-1);
+      // }
     } catch (err) {
       setPaymentStatus('failed');
       handlePaymentError(err);
@@ -199,7 +212,7 @@ const PaymentForm = ({
   return (
     <div className="max-w-xl mx-auto p-4">
       <div className="bg-white rounded-lg shadow-md p-6">
-        {paymentStatus !== 'succeeded' && !requiresAction && (
+        {paymentStatus !== 'succeeded' && paymentStatus !== 'failed' && !requiresAction && (
           renderPaymentForm()
         )}
         {requiresAction && (
@@ -225,7 +238,7 @@ const PaymentForm = ({
         {/* Show error screen below the form if payment failed (not field errors) */}
         {paymentStatus === 'failed' && error && (
           <div className="flex flex-col items-center justify-center min-h-[200px] mt-4">
-            <ErrorScreen error={error} onRetry={() => setPaymentStatus('idle')} onClose={() => window.location.replace('/')} />
+            <ErrorScreen error={error} onRetry={handleRetry} onClose={handleClose} />
           </div>
         )}
       </div>

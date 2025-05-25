@@ -45,7 +45,7 @@ const PaymentRedirect = () => {
     return () => { isMounted = false; };
   }, [searchParams]);
 
-  const handleClose = () => window.close() || navigate('/training', { replace: true });
+  const handleClose = () => navigate('/training', { replace: true });
   const handleRetry = () => navigate('/training', { replace: true });
 
   return (

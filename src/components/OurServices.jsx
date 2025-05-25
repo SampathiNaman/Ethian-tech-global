@@ -97,7 +97,7 @@ function OurServices() {
           >
             {services.map((service, index) => (
               <SwiperSlide key={index} className="flex justify-center">
-                <div className="bg-white p-2 md:p-4 mb-12 rounded-lg shadow-lg max-w-xs min-h-[450px] md:min-h-[450px] flex flex-col justify-between" data-aos="fade-up">
+                <div className="bg-white p-2 md:p-4 mb-12 rounded-lg shadow-lg max-w-xs min-h-[450px] md:min-h-[450px] flex flex-col justify-between hover:shadow-xl transition-shadow duration-300 ease-in-out transform hover:scale-[1.03]" data-aos="fade-up">
                   <div>
                     <img
                       alt={service.title}
