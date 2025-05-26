@@ -1,0 +1,16 @@
+export const errorMap = {
+  "card_declined": "Card declined. Please try another payment method.",
+  "expired_card": "Card expired. Please update your card details.",
+  "incorrect_cvc": "Incorrect CVC code. Please check your card details.",
+  "invalid_number": "Invalid card number. Please verify your card information.",
+  "invalid_expiry_month": "Invalid expiration month. Please check your card details.",
+  "processing_error": "Payment processor declined the transaction.",
+  "currency_mismatch": "Payment currency does not match required currency.",
+  "amount_mismatch": "Payment amount does not match requested amount.",
+  "authentication_required": "3D Secure authentication failed. Please complete verification.",
+  "3ds_verification_failed": "3D Secure verification unsuccessful.",
+  "network_failure": "Network error occurred. Please check your connection.",
+  "api_connection_error": "Unable to connect to payment processor.",
+  "verification_failed": "Payment verification failed with our system",
+  "max_retries": "Maximum payment attempts reached. Please contact support."
+}

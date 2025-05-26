@@ -1,27 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
 import { NavLink } from "react-router-dom";
-import Navbar from '../components/Navbar'
-import OurServices from '../components/OurServices'
-import Footer from '../components/Footer'
-import Members from '../components/Members'
 import WhyChooseUs from "../components/WhyChooseUs";
-import LoginPopup from '../components/LoginPopup';
-import { useAuth } from '../context/AuthContext';
+import Members from '../components/Members'
+import OurServices from '../components/OurServices'
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 
 function Home() {
-    const [showLogin, setShowLogin] = useState(false);
-    const { user, loading } = useAuth();
-
     useEffect(() => {
         AOS.init({ duration: 1300 });
-        // Only show login popup if user is not logged in and not loading
-        if (!user && !loading) {
-            setShowLogin(true);
-        }
-    }, [user, loading]);
+        AOS.refresh();
+    }, []);
 
     return (
         <>
@@ -36,7 +28,6 @@ function Home() {
                 <meta name="twitter:card" content="summary_large_image" />
             </head>
 
-            {!user && !loading && <LoginPopup isOpen={showLogin} onClose={() => setShowLogin(false)} />}
             <Navbar />
             <header className='bg-cover bg-no-repeat bg-center sm:w-full h-[70vh]' style={{ backgroundImage: "url('landing-page.webp')" }}>
                 <div className='flex flex-col justify-center items-center h-full ' style={{ backgroundColor: 'rgba(18, 36, 71, 0.4)' }}>

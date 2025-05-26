@@ -2,8 +2,15 @@ import React from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import OurProducts from '../components/OurProducts'
+import { useEffect } from 'react';
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function Products() {
+    useEffect(() => {
+        AOS.init({ duration: 1300 });
+        AOS.refresh();
+    }, []);
     return (
         <>
             <head>

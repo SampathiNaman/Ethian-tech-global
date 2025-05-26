@@ -1,22 +1,19 @@
-import React, { useState } from 'react'
+import { useRef, useEffect, useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import StripePayment from '../components/StripePayment'
-import { toast } from 'react-hot-toast'
+import OurCourses from '../components/OurCourses';
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function Training() {
-    const [showPayment, setShowPayment] = useState(false);
+    const navigate = useNavigate();
 
-    const handlePaymentSuccess = (paymentMethod) => {
-        toast.success('Payment successful!');
-        setShowPayment(false);
-        // Here you would typically send the paymentMethod.id to your backend
-        // to complete the payment process
-    };
-
-    const handlePaymentError = (error) => {
-        toast.error(error);
-    };
+    // Initialize AOS for animations
+    useEffect(() => {
+        AOS.init({ duration: 1300 }); // Initialize AOS with a consistent duration
+        AOS.refresh(); // Refresh AOS to pick up elements after navigation
+    }, []);
 
     return (
         <>
@@ -31,33 +28,12 @@ function Training() {
             <meta name="twitter:card" content="summary_large_image" />
         </head>
         <Navbar />
-        <main>
-        <div className='flex flex-col items-center justify-center my-16 p-4'>
-            <h1 className='text-4xl font-bold'>Training</h1>
-            <p className='text-lg mt-4'>We offer a variety of training programs to help you enhance your skills.</p>
-            <p className='text-lg my-2 '>Our training programs are designed to be flexible and convenient for you.</p>
-            
-            {!showPayment ? (
-                <button 
-                    onClick={() => setShowPayment(true)}
-                    className='border-2 rounded-md bg-green-300 px-3 py-2 my-8 hover:bg-green-400'
-                >
-                    Pay $750
-                </button>
-            ) : (
-                <StripePayment 
-                    amount={750}
-                    onSuccess={handlePaymentSuccess}
-                    onError={handlePaymentError}
-                />
-            )}
-            
-            <p className='text-lg mt-2'>We accept all major credit cards.</p>
-        </div>
-        </main>
+        <main className="main-content">
+                <OurCourses />
+            </main>
         <Footer />
     </>
-    )
+    );
 }
 
-export default Training
+export default Training;
