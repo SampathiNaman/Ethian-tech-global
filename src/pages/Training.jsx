@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import OurCourses from '../components/OurCourses';
+import CourseCard from '../components/CourseCard';
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -29,8 +30,9 @@ function Training() {
         </head>
         <Navbar />
         <main className="main-content">
+                <CourseCard />
                 <OurCourses />
-            </main>
+        </main>
         <Footer />
     </>
     );

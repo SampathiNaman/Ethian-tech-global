@@ -8,7 +8,7 @@ import { faFacebook, faTwitter, faLinkedin, faInstagram } from '@fortawesome/fre
 const teamMembers = [
     {
         name: "Amare Yihun",
-        role: "Founder & Managing director",
+        role: "Founder & Managing Director",
         image: "amare-yihun.webp",
         social: {
             facebook: "https://www.facebook.com/amare.siraw.1",

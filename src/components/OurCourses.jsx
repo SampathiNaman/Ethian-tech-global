@@ -49,9 +49,7 @@ function OurCourses() {
 
     return (
         <section className="w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg mx-auto p-6 md:p-8 mt-12 mb-20">
-            <div className='font-sans text-blue-900 text-2xl space-y-1' data-aos="fade-up">
-                <h2 className='font-bold tracking-wide'>Our Training Programs</h2>
-            </div>
+            
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-4 md:py-8">
                 {courses.map((course) => (
                     <div key={course.id} className="bg-white rounded-lg shadow-lg p-4 md:p-6 hover:shadow-xl transition-shadow duration-300 ease-in-out transform hover:scale-[1.03]" data-aos="fade-up">
