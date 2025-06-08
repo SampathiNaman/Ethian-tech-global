@@ -121,14 +121,6 @@ const CourseCard = () => {
         <div className="grid lg:grid-cols-2 gap-8"  >
           {/* Left Content */}
           <div className="p-6 lg:p-8">
-            {/* <div className="flex flex-wrap items-center gap-2 mb-4">
-              <span className="bg-blue-500 text-white text-sm px-4 py-1.5 rounded-full font-medium">
-                NEW COURSE
-              </span>
-              <span className="bg-pink-100 text-pink-600 text-sm px-4 py-1.5 rounded-full font-medium">
-                LAUNCH AND DEPLOY GEN AI APPS
-              </span>
-            </div> */}
 
             <h2 className="text-3xl font-bold leading-tight mb-4">
               <span className="text-[#D62A91]">Advanced Generative AI</span>
@@ -174,8 +166,11 @@ const CourseCard = () => {
               </p>
               <p className="text-gray-500 text-sm flex items-center gap-2">
                 <span className="text-lg">📞</span>
-                For enquiries call: <span className="font-semibold">+1-443-675-8888</span>
+                For enquiries: <span className="font-semibold">+1-443-675-8888 or info@ethiantech.com</span>
               </p>
+              {/* <p className="text-gray-500 text-sm flex items-center gap-2 ml-10">
+                or Mail us: <span className="font-semibold">info@ethiantech.com</span>
+              </p> */}
             </div>
           </div>
 
@@ -339,7 +334,7 @@ const CourseCard = () => {
 
 
         <div className="bg-white rounded-xl p-6 mt-8 relative z-0" data-aos="fade-up">
-          <h2 className="text-xl md:text-2xl font-bold mb-10 text-blue-900 text-center">Disigned for working Professionals</h2>
+          <h2 className="text-xl md:text-2xl font-bold mb-10 text-blue-900 text-center">Designed for working Professionals</h2>
           <div className="relative mt-8">
             <Swiper
               spaceBetween={20}
