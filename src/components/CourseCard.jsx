@@ -8,6 +8,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper/modules";
 import { NavLink } from "react-router-dom";
+import emailjs from '@emailjs/browser';
+import toast from 'react-hot-toast';
 
 const services = [
   {
@@ -45,6 +47,7 @@ const CourseCard = () => {
     email: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -56,23 +59,32 @@ const CourseCard = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+
     try {
-      // Here you can add API call to save user details
-      // For example:
-      // await saveUserDetails(formData);
-      
-      // For now, we'll just simulate a successful submission
-      console.log('Form submitted:', formData);
+      await emailjs.sendForm(
+        import.meta.env.VITE_BROCHURE_SERVICE_ID, 
+        import.meta.env.VITE_BROCHURE_TEMPLATE_ID, 
+        e.target,
+        import.meta.env.VITE_BROCHURE_PUBLIC_KEY
+      );
+
+      // Log success
+      console.log('Email sent successfully');
+      toast.success('Form submitted successfully!');
       setIsSubmitted(true);
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error('Error sending email:', error);
+      toast.error('Failed to submit form. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleDownload = () => {
     // Create a link element and trigger download
     const link = document.createElement('a');
-    link.href = '/Agentic-AI-and-GenAI-Course-Overview-by-EthianTech_May.pdf'; // Update with actual path
+    link.href = '/Agentic-AI-and-GenAI-Course-Overview-by-EthianTech_May.pdf';
     link.download = 'Agentic-AI-and-GenAI-Course-Overview-by-EthianTech_May.pdf';
     document.body.appendChild(link);
     link.click();
@@ -235,12 +247,23 @@ const CourseCard = () => {
                     placeholder="Enter your email"
                   />
                 </div>
-                
+
                 <button
                   type="submit"
-                  className="w-full bg-[#D62A91] text-white px-6 py-3 rounded-lg font-medium hover:bg-pink-600 transition-colors"
+                  disabled={isSubmitting}
+                  className="w-full bg-[#D62A91] text-white px-6 py-3 rounded-lg font-medium hover:bg-pink-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Submit
+                  {isSubmitting ? (
+                    <span className="flex items-center justify-center">
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Submitting...
+                    </span>
+                  ) : (
+                    'Submit'
+                  )}
                 </button>
               </form>
             ) : (
