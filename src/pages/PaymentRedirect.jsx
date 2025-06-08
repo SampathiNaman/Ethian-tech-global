@@ -53,7 +53,7 @@ const PaymentRedirect = () => {
       <div className="bg-white rounded-2xl shadow-2xl p-10 max-w-md w-full text-center border border-blue-100 animate-fade-in-up">
         {status === 'processing' && (
           <>
-            <div className="mb-6 text-blue-500 animate-spin-slow">
+            <div className="mb-6 text-blue-500">
               <FontAwesomeIcon icon={faCheckCircle} size="3x" />
             </div>
             <h2 className="text-2xl font-bold mb-2 text-blue-700 animate-pulse">Processing Payment...</h2>
