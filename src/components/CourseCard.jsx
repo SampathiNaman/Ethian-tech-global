@@ -166,7 +166,7 @@ const CourseCard = () => {
               </p>
               <p className="text-gray-500 text-sm flex items-center gap-2">
                 <span className="text-lg">📞</span>
-                For enquiries: <span className="font-semibold">+1-443-675-8888 or info@ethiantech.com</span>
+                For enquiries: <span className="font-semibold">+1-443-675-8888</span> or <span className="font-semibold">info@ethiantech.com</span>
               </p>
               {/* <p className="text-gray-500 text-sm flex items-center gap-2 ml-10">
                 or Mail us: <span className="font-semibold">info@ethiantech.com</span>

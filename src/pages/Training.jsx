@@ -31,7 +31,7 @@ function Training() {
         <Navbar />
         <main className="main-content">
                 <CourseCard />
-                <OurCourses />
+                {/* <OurCourses /> */}
         </main>
         <Footer />
     </>
