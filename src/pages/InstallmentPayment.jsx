@@ -9,6 +9,7 @@ import { ErrorScreen } from '../components/PaymentStatusComponents';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { errorMap } from '../utils/errorMap';
+import { useCoursePurchases } from '../context/CoursePurchasesContext';
 
 const RETRY_LIMIT = 5;
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
@@ -32,6 +33,7 @@ const InstallmentPayment = () => {
   const navigate = useNavigate();
   const abortControllerRef = useRef();
   const isMountedRef = useRef(true);
+  const { refreshPurchases } = useCoursePurchases();
 
   useEffect(() => {
     isMountedRef.current = true;
@@ -76,6 +78,7 @@ const InstallmentPayment = () => {
           isAutomatic: location.state.isAutomatic,
           metadata: {
             product_type: location.state.service,
+            course_id: location.state.courseId,
             is_installment: true,
             installment_details: {
               total_installments: location.state.numberOfInstallments,
@@ -143,6 +146,10 @@ const InstallmentPayment = () => {
     createPaymentIntent();
   };
 
+  const handlePaymentSuccess = async () => {
+    await refreshPurchases();
+  };
+
   const renderContent = () => {
     if (loading) return <Spinner />;
     if (error) return <ErrorScreen error={error} onRetry={handleRetry} onClose={() => navigate(-1)} />;
@@ -159,6 +166,7 @@ const InstallmentPayment = () => {
             <InstallmentPaymentForm
               clientSecret={clientSecret}
               paymentDetails={location.state}
+              onPaymentSuccess={handlePaymentSuccess}
             />
           </Elements>
         </div>

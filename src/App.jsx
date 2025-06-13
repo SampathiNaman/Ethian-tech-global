@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { CoursePurchasesProvider } from './context/CoursePurchasesContext';
 import Home from "./pages/Home"
 import About from "./pages/About"
 import Products from './pages/Products';
@@ -32,14 +33,16 @@ function App() {
       />      
       <BrowserRouter>
           <AuthProvider>
-              <AppContent />
+              <CoursePurchasesProvider>
+                  <AppRoutes />
+              </CoursePurchasesProvider>
           </AuthProvider>
       </BrowserRouter>
     </div>
   );
 }
 
-function AppContent() {
+function AppRoutes() {
     const { authPopupState, closeAuthPopup, switchToSignupForm, switchToLoginForm } = useAuth();
     return (
         <>

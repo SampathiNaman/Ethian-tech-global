@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   useStripe, 
@@ -9,15 +9,18 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faCircleNotch, 
-  faExclamationTriangle
+  faExclamationTriangle,
+  faInfoCircle
 } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import { errorMap } from '../utils/errorMap';
 import { ErrorScreen, SuccessScreen } from './PaymentStatusComponents';
+import { useCoursePurchases } from '../context/CoursePurchasesContext';
 
 const PaymentForm = ({ 
   clientSecret,
   paymentDetails,
+  onPaymentSuccess
 }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -26,7 +29,7 @@ const PaymentForm = ({
   const [requiresAction, setRequiresAction] = useState(false);
   const [error, setError] = useState(null);
   const [retryCount, setRetryCount] = useState(-1);
-
+  const { startPaymentProcessing } = useCoursePurchases();
   const navigate = useNavigate();
 
   const amountFormatted = useMemo(() => 
@@ -43,8 +46,22 @@ const PaymentForm = ({
   }
 
   const handleClose = () => {
-    navigate('/training', {replace: true});
-  }
+    navigate('/training', { replace: true });
+  };
+
+  const handlePaymentError = (error) => {
+    let code = error.code || (error.type ? error.type.replace(/\s+/g, '_').toLowerCase() : undefined);
+    let message = error.message || 'Payment processing failed';
+    
+    if (!code || !errorMap[code]) {
+      code = 'unknown_error';
+    }
+    
+    setError({
+      code,
+      message: errorMap[code] || message,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,24 +80,27 @@ const PaymentForm = ({
       });
       return;
     }
-    
+
     try {
       setPaymentStatus('processing');
       setError(null);
       setRetryCount((prev) => prev + 1);
 
-      // Always use /payment-redirect as return_url for all payment methods
-      // Use 'always' for redirect-based methods, 'if_required' for card
-      // Stripe will handle the redirect for Amazon Pay, Klarna, etc.
       const { paymentIntent, error: confirmError } = await stripe.confirmPayment({
         elements,
         clientSecret,
         confirmParams: {
           receipt_email: email,
           return_url: `${window.location.origin}/payment-redirect`,
+          payment_method_data: {
+            billing_details: {
+              email: email,
+            },
+          },
         },
-        redirect: 'if_required' // Stripe will redirect if needed (Amazon Pay, 3DS, etc.)
+        redirect: 'if_required'
       });
+
       if (confirmError) {
         throw {
           code: confirmError.code,
@@ -88,43 +108,22 @@ const PaymentForm = ({
           type: confirmError.type,
         };
       }
-      const requiresActionStatuses = ['requires_action', 'requires_confirmation'];
+
       if (paymentIntent?.status === 'succeeded' || paymentIntent?.status === 'processing') {
-        setPaymentStatus(paymentIntent.status);
-        setRetryCount(-1);
+        setPaymentStatus('succeeded');
+        setRetryCount(0);
+        startPaymentProcessing();
+
+        if (onPaymentSuccess) {
+          onPaymentSuccess(paymentIntent);
+        }
+      } else if (paymentIntent?.status === 'requires_action') {
+        setRequiresAction(true);
       }
-      // else if (requiresActionStatuses.includes(paymentIntent?.status)) {
-      //   setRequiresAction(true);
-      //   // 3D Secure authentication
-      //   const { error: actionError } = await stripe.handleCardAction(clientSecret);
-      //   if (actionError) throw actionError;
-      //   // Re-check status after authentication
-      //   const { paymentIntent: postAuthIntent } = await stripe.retrievePaymentIntent(clientSecret);
-      //   if (postAuthIntent?.status !== 'succeeded') {
-      //     throw {
-      //       code: '3ds_verification_failed',
-      //       message: '3D Secure authentication unsuccessful'
-      //     };
-      //   }
-      //   setPaymentStatus('succeeded');
-      //   setRetryCount(-1);
-      // }
     } catch (err) {
       setPaymentStatus('failed');
       handlePaymentError(err);
     }
-  };
-
-  const handlePaymentError = (error) => {
-    let code = error.code || (error.type ? error.type.replace(/\s+/g, '_').toLowerCase() : undefined);
-    let message = error.message || 'Payment processing failed';
-    if (!code || !errorMap[code]) {
-      code = 'unknown_error';
-    }
-    setError({
-      code,
-      message: errorMap[code] || message,
-    });
   };
 
   const renderPaymentForm = () => (
@@ -207,7 +206,7 @@ const PaymentForm = ({
         )}
       </button>
     </form>
-  )
+  );
 
   return (
     <div className="max-w-xl mx-auto p-4">
@@ -232,10 +231,9 @@ const PaymentForm = ({
         )}
         {paymentStatus === 'succeeded' && (
           <div className="flex flex-col items-center justify-center min-h-[200px]">
-            <SuccessScreen onClose={() => window.location.replace('/training')} />
+            <SuccessScreen onClose={() => navigate('/training', { replace: true })} />
           </div>
         )}
-        {/* Show error screen below the form if payment failed (not field errors) */}
         {paymentStatus === 'failed' && error && (
           <div className="flex flex-col items-center justify-center min-h-[200px] mt-4">
             <ErrorScreen error={error} onRetry={handleRetry} onClose={handleClose} />
@@ -252,7 +250,8 @@ PaymentForm.propTypes = {
     amount: PropTypes.number.isRequired,
     currency: PropTypes.string.isRequired,
     service: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  onPaymentSuccess: PropTypes.func
 };
 
 export default PaymentForm;

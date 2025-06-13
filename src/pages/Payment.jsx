@@ -6,10 +6,11 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import PaymentForm from '../components/PaymentForm';
 import { ErrorScreen } from '../components/PaymentStatusComponents';
-
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import { useCoursePurchases } from '../context/CoursePurchasesContext';
 
 const RETRY_LIMIT = 5;
-
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const Spinner = () => (
@@ -31,7 +32,8 @@ const Payment = () => {
   const navigate = useNavigate();
   const abortControllerRef = useRef();
   const isMountedRef = useRef(true);
- 
+  const { refreshPurchases } = useCoursePurchases();
+
   useEffect(() => {
     isMountedRef.current = true;
     return () => {
@@ -52,13 +54,19 @@ const Payment = () => {
     },
   }), [clientSecret]);
 
-
   const createPaymentIntent = useCallback(async () => {
+    if (!location.state) {
+      setError('Missing payment details');
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     setError(null);
     if (abortControllerRef.current) abortControllerRef.current.abort();
     const controller = new AbortController();
     abortControllerRef.current = controller;
+
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/api/payments/create-intent`,
@@ -66,7 +74,8 @@ const Payment = () => {
           amount: location.state.amount,
           currency: location.state.currency,
           metadata: {
-            "product_type": location.state.service,
+            product_type: location.state.service,
+            course_id: location.state.courseId
           },
         },
         {
@@ -79,9 +88,11 @@ const Payment = () => {
           signal: controller.signal,
         }
       );
-      if (!response.data.clientSecret) {
+
+      if (!response.data?.clientSecret) {
         throw new Error('Invalid response from server');
       }
+
       if (isMountedRef.current) {
         setClientSecret(response.data.clientSecret);
         setRetryCount(0);
@@ -89,6 +100,7 @@ const Payment = () => {
     } catch (err) {
       if (isMountedRef.current) {
         setError(err.message || 'An error occurred while creating the payment intent.');
+        setClientSecret('');
       }
     } finally {
       if (isMountedRef.current) setLoading(false);
@@ -117,10 +129,17 @@ const Payment = () => {
     createPaymentIntent();
   };
 
+  const handlePaymentSuccess = async () => {
+    await refreshPurchases();
+    navigate('/training');
+  };
+
   const renderContent = () => {
     if (loading) return <Spinner />;
     if (error) return <ErrorScreen error={error} onRetry={handleRetry} onClose={() => navigate(-1)} />;
     if (!location.state) return <ErrorScreen error="Missing payment details. Please start over." onRetry={() => navigate(-1)} onClose={() => navigate(-1)} />;
+    if (!clientSecret) return <ErrorScreen error="Failed to initialize payment. Please try again." onRetry={handleRetry} onClose={() => navigate(-1)} />;
+
     return (
       <div className="payment-section w-full max-w-xl px-2 sm:px-0">
         <div className="bg-white p-6 rounded-lg shadow-md">
@@ -131,6 +150,7 @@ const Payment = () => {
             <PaymentForm
               clientSecret={clientSecret}
               paymentDetails={location.state}
+              onPaymentSuccess={handlePaymentSuccess}
             />
           </Elements>
         </div>
@@ -139,6 +159,8 @@ const Payment = () => {
   };
 
   return (
+    <>
+    <Navbar />
     <main className="main-content">
       <div className="flex flex-col items-center justify-center my-16 p-4 space-y-8 w-full">
         <div className="text-center max-w-2xl mb-12">
@@ -165,6 +187,8 @@ const Payment = () => {
         </div>
       </div>
     </main>
+    <Footer />
+    </>
   );
 };
 

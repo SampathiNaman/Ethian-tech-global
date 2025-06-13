@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
 import { errorMap } from '../utils/errorMap';
 import { ErrorScreen, SuccessScreen } from './PaymentStatusComponents';
 import { formatCurrency, calculatePerInstallmentAmount } from '../utils/installmentUtils';
+import { useCoursePurchases } from '../context/CoursePurchasesContext';
 import toast from 'react-hot-toast';
 
 const InstallmentPaymentForm = ({ 
@@ -29,6 +30,7 @@ const InstallmentPaymentForm = ({
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
+  const { startPaymentProcessing } = useCoursePurchases();
   
   const [email, setEmail] = useState('');
   const [paymentStatus, setPaymentStatus] = useState('idle');
@@ -130,6 +132,7 @@ const InstallmentPaymentForm = ({
       if (paymentIntent?.status === 'succeeded' || paymentIntent?.status === 'processing') {
         setPaymentStatus('succeeded');
         setRetryCount(0);
+        startPaymentProcessing();
 
         // Handle recurring payment setup if needed
         if (!isSubsequentPayment && paymentDetails.isAutomatic && paymentDetails.setupIntentClientSecret) {
@@ -209,7 +212,7 @@ const InstallmentPaymentForm = ({
       <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-4">
         <div className="flex">
           <FontAwesomeIcon 
-            icon={faInfoCircle} 
+            icon={faCalendarAlt} 
             className="text-blue-400 mr-3 mt-1"
             aria-hidden="true"
           />
@@ -321,7 +324,7 @@ const InstallmentPaymentForm = ({
         )}
         {paymentStatus === 'succeeded' && (
           <div className="flex flex-col items-center justify-center min-h-[200px]">
-            <SuccessScreen onClose={() => window.location.replace('/training')} />
+            <SuccessScreen onClose={() => navigate('/training', { replace: true })} />
           </div>
         )}
         {paymentStatus === 'failed' && error && (
@@ -341,8 +344,9 @@ InstallmentPaymentForm.propTypes = {
     currency: PropTypes.string.isRequired,
     numberOfInstallments: PropTypes.number.isRequired,
     isAutomatic: PropTypes.bool,
-    setupIntentClientSecret: PropTypes.string,
-    service: PropTypes.string.isRequired
+    service: PropTypes.string.isRequired,
+    courseId: PropTypes.string.isRequired,
+    setupIntentClientSecret: PropTypes.string
   }).isRequired,
   onPaymentSuccess: PropTypes.func,
   onPaymentError: PropTypes.func

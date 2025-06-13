@@ -4,6 +4,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { SuccessScreen, ErrorScreen } from '../components/PaymentStatusComponents';
+import { useCoursePurchases } from '../context/CoursePurchasesContext';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -12,6 +13,7 @@ const PaymentRedirect = () => {
   const [status, setStatus] = useState('processing');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { startPaymentProcessing } = useCoursePurchases();
 
   useEffect(() => {
     const clientSecret = searchParams.get('payment_intent_client_secret');
@@ -20,6 +22,7 @@ const PaymentRedirect = () => {
       setError('Missing payment intent client secret.');
       return;
     }
+
     let isMounted = true;
     stripePromise.then(async (stripe) => {
       if (!stripe) {
@@ -31,8 +34,10 @@ const PaymentRedirect = () => {
       }
       try {
         const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
+        
         if (paymentIntent?.status === 'succeeded' || paymentIntent?.status === 'processing') {
           setStatus('succeeded');
+          startPaymentProcessing();
         } else {
           setStatus('failed');
           setError(paymentIntent?.last_payment_error || paymentIntent?.last_payment_error?.message || 'Payment failed after redirect.');
@@ -43,7 +48,7 @@ const PaymentRedirect = () => {
       }
     });
     return () => { isMounted = false; };
-  }, [searchParams]);
+  }, [searchParams, startPaymentProcessing]);
 
   const handleClose = () => navigate('/training', { replace: true });
   const handleRetry = () => navigate('/training', { replace: true });
