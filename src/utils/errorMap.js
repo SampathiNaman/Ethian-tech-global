@@ -12,5 +12,5 @@ export const errorMap = {
   "network_failure": "Network error occurred. Please check your connection.",
   "api_connection_error": "Unable to connect to payment processor.",
   "verification_failed": "Payment verification failed with our system",
-  "max_retries": "Maximum payment attempts reached. Please contact support."
+  "max_retries": "Maximum payment attempts reached. Please contact support.",
 }
