@@ -20,7 +20,8 @@ import { useCoursePurchases } from '../context/CoursePurchasesContext';
 const PaymentForm = ({ 
   clientSecret,
   paymentDetails,
-  onPaymentSuccess
+  onPaymentSuccess,
+  onClose
 }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -30,7 +31,6 @@ const PaymentForm = ({
   const [error, setError] = useState(null);
   const [retryCount, setRetryCount] = useState(-1);
   const { startPaymentProcessing } = useCoursePurchases();
-  const navigate = useNavigate();
 
   const amountFormatted = useMemo(() => 
     new Intl.NumberFormat(navigator.language, {
@@ -44,10 +44,6 @@ const PaymentForm = ({
     setError(null);
     setRetryCount(retry => retry + 1);
   }
-
-  const handleClose = () => {
-    navigate('/training', { replace: true });
-  };
 
   const handlePaymentError = (error) => {
     let code = error.code || (error.type ? error.type.replace(/\s+/g, '_').toLowerCase() : undefined);
@@ -231,12 +227,12 @@ const PaymentForm = ({
         )}
         {paymentStatus === 'succeeded' && (
           <div className="flex flex-col items-center justify-center min-h-[200px]">
-            <SuccessScreen onClose={() => navigate('/training', { replace: true })} />
+            <SuccessScreen onClose={onClose} />
           </div>
         )}
         {paymentStatus === 'failed' && error && (
           <div className="flex flex-col items-center justify-center min-h-[200px] mt-4">
-            <ErrorScreen error={error} onRetry={handleRetry} onClose={handleClose} />
+            <ErrorScreen error={error} onRetry={handleRetry} onClose={onClose} />
           </div>
         )}
       </div>
@@ -251,7 +247,8 @@ PaymentForm.propTypes = {
     currency: PropTypes.string.isRequired,
     service: PropTypes.string.isRequired
   }).isRequired,
-  onPaymentSuccess: PropTypes.func
+  onPaymentSuccess: PropTypes.func,
+  onClose: PropTypes.func.isRequired
 };
 
 export default PaymentForm;
