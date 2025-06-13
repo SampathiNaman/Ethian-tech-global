@@ -314,10 +314,6 @@ const CourseCard = () => {
                     <>
                       <div className="pt-2 border-t border-gray-200">
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Next Payment:</span>
-                          <span className="font-medium">{formatCurrency(nextPaymentInfo.nextPaymentAmount, currency)}</span>
-                        </div>
-                        <div className="flex justify-between">
                           <span className="text-gray-600">Due Date:</span>
                           <span className="font-medium">
                             {new Date(nextPaymentInfo.nextPaymentDate).toLocaleDateString()}

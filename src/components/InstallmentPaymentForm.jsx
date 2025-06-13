@@ -160,8 +160,6 @@ const InstallmentPaymentForm = ({
 
       if (setupError) {
         toast.error('First payment successful, but automatic billing setup failed. Please contact support.');
-      } else {
-        toast.success('Automatic billing setup completed successfully!');
       }
     } catch (setupErr) {
       toast.error('Failed to set up automatic billing. Please contact support.');

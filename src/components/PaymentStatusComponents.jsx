@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 
 export const SuccessScreen = ({ onClose }) => {
   const [countdown, setCountdown] = useState(5);
-  const [isRedirecting, setIsRedirecting] = useState(false);
 
   useEffect(() => {
     toast.success('Payment successful! Thank you for your purchase.', { icon: '🎉' });
@@ -17,7 +16,6 @@ export const SuccessScreen = ({ onClose }) => {
       setCountdown(prev => {
         if (prev <= 1) {
           clearInterval(timer);
-          setIsRedirecting(true);
           onClose();
           return 0;
         }
@@ -25,13 +23,8 @@ export const SuccessScreen = ({ onClose }) => {
       });
     }, 1000);
 
-    return () => {
-      clearInterval(timer);
-      if (isRedirecting) {
-        onClose();
-      }
-    };
-  }, [onClose, isRedirecting]);
+    return () => clearInterval(timer);
+  }, [onClose]);
 
   return (
     <>
@@ -39,15 +32,12 @@ export const SuccessScreen = ({ onClose }) => {
       <h2 className="text-xl font-semibold mb-2 text-gray-800">Payment Successful</h2>
       <p className="text-gray-600 mb-4">Thank you! Your payment was processed successfully.</p>
       <p className="text-sm text-gray-500 mb-4">
-        {isRedirecting ? 'Redirecting...' : `Redirecting to training page in ${countdown} seconds...`}
+        {countdown === 0 ? 'Redirecting...' : `Redirecting to training page in ${countdown} seconds...`}
       </p>
       <button
         className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-semibold text-base focus:outline-none focus:ring-2 focus:ring-blue-400"
-        onClick={() => {
-          setIsRedirecting(true);
-          onClose();
-        }}
-        disabled={isRedirecting}
+        onClick={onClose}
+        disabled={countdown === 0}
       >
         Continue
       </button>
