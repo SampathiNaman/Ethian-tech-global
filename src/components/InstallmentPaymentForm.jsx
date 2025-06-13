@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   useStripe, 
@@ -10,40 +10,54 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faCircleNotch, 
   faExclamationTriangle,
-  faInfoCircle
+  faInfoCircle,
+  faCalendarAlt,
+  faCheckCircle
 } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import { errorMap } from '../utils/errorMap';
 import { ErrorScreen, SuccessScreen } from './PaymentStatusComponents';
+import { formatCurrency, calculatePerInstallmentAmount } from '../utils/installmentUtils';
 import { useCoursePurchases } from '../context/CoursePurchasesContext';
+import toast from 'react-hot-toast';
 
-const PaymentForm = ({ 
+const InstallmentPaymentForm = ({ 
   clientSecret,
   paymentDetails,
-  onPaymentSuccess
+  onPaymentSuccess,
+  onPaymentError
 }) => {
   const stripe = useStripe();
   const elements = useElements();
+  const navigate = useNavigate();
+  const { startPaymentProcessing } = useCoursePurchases();
+  
   const [email, setEmail] = useState('');
   const [paymentStatus, setPaymentStatus] = useState('idle');
-  const [requiresAction, setRequiresAction] = useState(false);
   const [error, setError] = useState(null);
-  const [retryCount, setRetryCount] = useState(-1);
-  const { startPaymentProcessing } = useCoursePurchases();
-  const navigate = useNavigate();
+  const [retryCount, setRetryCount] = useState(0);
+  const [isSettingUpRecurring, setIsSettingUpRecurring] = useState(false);
+  const [isSubsequentPayment, setIsSubsequentPayment] = useState(false);
+  const [requiresAction, setRequiresAction] = useState(false);
 
+  // Check if this is a subsequent payment
+  useEffect(() => {
+    if (paymentDetails?.metadata?.is_installment && 
+        paymentDetails?.metadata?.installment_details?.current_installment > 1) {
+      setIsSubsequentPayment(true);
+    }
+  }, [paymentDetails]);
+
+  // Format amount for display
   const amountFormatted = useMemo(() => 
-    new Intl.NumberFormat(navigator.language, {
-      style: 'currency',
-      currency: paymentDetails.currency,
-    }).format(paymentDetails.amount)
+    formatCurrency(paymentDetails.amount / paymentDetails.numberOfInstallments, paymentDetails.currency)
   , [paymentDetails]);
 
   const handleRetry = () => {
     setPaymentStatus('idle');
     setError(null);
-    setRetryCount(retry => retry + 1);
-  }
+    setRetryCount(prev => prev + 1);
+  };
 
   const handleClose = () => {
     navigate('/training', { replace: true });
@@ -61,6 +75,10 @@ const PaymentForm = ({
       code,
       message: errorMap[code] || message,
     });
+    
+    if (onPaymentError) {
+      onPaymentError(error);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -74,8 +92,8 @@ const PaymentForm = ({
 
     if (retryCount >= 5) {
       setError({
-        code: 'max_retries_reached',
-        message: 'Maximum retry attempts reached. Please start over.',
+        code: 'max_retries',
+        message: errorMap['max_retries'],
         type: 'card_error',
       });
       return;
@@ -84,8 +102,9 @@ const PaymentForm = ({
     try {
       setPaymentStatus('processing');
       setError(null);
-      setRetryCount((prev) => prev + 1);
+      setRetryCount(prev => prev + 1);
 
+      // Confirm the payment
       const { paymentIntent, error: confirmError } = await stripe.confirmPayment({
         elements,
         clientSecret,
@@ -109,10 +128,16 @@ const PaymentForm = ({
         };
       }
 
+      // Handle successful payment
       if (paymentIntent?.status === 'succeeded' || paymentIntent?.status === 'processing') {
         setPaymentStatus('succeeded');
         setRetryCount(0);
         startPaymentProcessing();
+
+        // Handle recurring payment setup if needed
+        if (!isSubsequentPayment && paymentDetails.isAutomatic && paymentDetails.setupIntentClientSecret) {
+          await handleRecurringSetup();
+        }
 
         if (onPaymentSuccess) {
           onPaymentSuccess(paymentIntent);
@@ -123,6 +148,25 @@ const PaymentForm = ({
     } catch (err) {
       setPaymentStatus('failed');
       handlePaymentError(err);
+    }
+  };
+
+  const handleRecurringSetup = async () => {
+    setIsSettingUpRecurring(true);
+    try {
+      const { error: setupError } = await stripe.confirmCardSetup(
+        paymentDetails.setupIntentClientSecret
+      );
+
+      if (setupError) {
+        toast.error('First payment successful, but automatic billing setup failed. Please contact support.');
+      } else {
+        toast.success('Automatic billing setup completed successfully!');
+      }
+    } catch (setupErr) {
+      toast.error('Failed to set up automatic billing. Please contact support.');
+    } finally {
+      setIsSettingUpRecurring(false);
     }
   };
 
@@ -165,7 +209,47 @@ const PaymentForm = ({
         </div>
       </div>
 
-      <div aria-live="polite" style={{ minHeight: 40 }}>
+      <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-4">
+        <div className="flex">
+          <FontAwesomeIcon 
+            icon={faCalendarAlt} 
+            className="text-blue-400 mr-3 mt-1"
+            aria-hidden="true"
+          />
+          <div>
+            <p className="text-sm text-blue-700">
+              {paymentDetails.numberOfInstallments === 1 ? (
+                'You will be charged the full amount now.'
+              ) : (
+                <>
+                  You will be charged {amountFormatted} monthly for {paymentDetails.numberOfInstallments} months.
+                  {paymentDetails.isAutomatic ? (
+                    <div className="mt-2 flex items-center text-green-600">
+                      <FontAwesomeIcon 
+                        icon={faCheckCircle} 
+                        className="mr-2"
+                        aria-hidden="true"
+                      />
+                      <span>Automatic monthly payments enabled</span>
+                    </div>
+                  ) : (
+                    <div className="mt-2 flex items-center text-blue-600">
+                      <FontAwesomeIcon 
+                        icon={faCalendarAlt} 
+                        className="mr-2"
+                        aria-hidden="true"
+                      />
+                      <span>You will receive a reminder before each payment</span>
+                    </div>
+                  )}
+                </>
+              )}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div aria-live="polite">
         {error && (
           <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-4" role="alert">
             <div className="flex items-center">
@@ -186,7 +270,7 @@ const PaymentForm = ({
 
       <button
         type="submit"
-        disabled={!stripe || paymentStatus === 'processing'}
+        disabled={!stripe || paymentStatus === 'processing' || isSettingUpRecurring}
         className="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 
                   disabled:opacity-50 disabled:cursor-not-allowed transition-colors
                   flex items-center justify-center"
@@ -201,8 +285,17 @@ const PaymentForm = ({
             />
             Processing...
           </>
+        ) : isSettingUpRecurring ? (
+          <>
+            <FontAwesomeIcon 
+              icon={faCircleNotch} 
+              className="animate-spin mr-2"
+              aria-hidden="true"
+            />
+            Setting up automatic payments...
+          </>
         ) : (
-          `Pay ${amountFormatted}`
+          `Pay ${amountFormatted} ${paymentDetails.numberOfInstallments > 1 ? 'now' : ''}`
         )}
       </button>
     </form>
@@ -244,14 +337,19 @@ const PaymentForm = ({
   );
 };
 
-PaymentForm.propTypes = {
+InstallmentPaymentForm.propTypes = {
   clientSecret: PropTypes.string.isRequired,
   paymentDetails: PropTypes.shape({
     amount: PropTypes.number.isRequired,
     currency: PropTypes.string.isRequired,
-    service: PropTypes.string.isRequired
+    numberOfInstallments: PropTypes.number.isRequired,
+    isAutomatic: PropTypes.bool,
+    service: PropTypes.string.isRequired,
+    courseId: PropTypes.string.isRequired,
+    setupIntentClientSecret: PropTypes.string
   }).isRequired,
-  onPaymentSuccess: PropTypes.func
+  onPaymentSuccess: PropTypes.func,
+  onPaymentError: PropTypes.func
 };
 
-export default PaymentForm;
+export default InstallmentPaymentForm; 

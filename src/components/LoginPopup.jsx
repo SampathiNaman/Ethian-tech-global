@@ -185,18 +185,18 @@ const LoginPopup = ({ onSwitchToSignup }) => {
         
         <div className="space-y-4">
           <div className="flex justify-center">
-            <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-              <GoogleLogin
-                onSuccess={handleGoogleSuccess}
-                onError={handleGoogleError}
-                useOneTap
-                width="100%"
-                size="large"
-                theme="outline"
-                shape="rectangular"
-                text="continue_with"
-              />
-            </GoogleOAuthProvider>
+          <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleError}
+              useOneTap
+              width="100%"
+              size="large"
+              theme="outline"
+              shape="rectangular"
+              text="continue_with"
+            />
+          </GoogleOAuthProvider>
           </div>
 
           <div className="relative">

@@ -1,13 +1,15 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { CoursePurchasesProvider } from './context/CoursePurchasesContext';
 import Home from "./pages/Home"
 import About from "./pages/About"
 import Products from './pages/Products';
 import Services from "./pages/Services"
 import Training from './pages/Training';
 import Payment from './pages/Payment';
-import Contact from "./pages/Contact"
+import Contact from "./pages/Contact";
+import InstallmentPayment from './pages/InstallmentPayment';
 import PaymentRedirect from './pages/PaymentRedirect';
 import LoginPopup from './components/LoginPopup';
 import SignupPopup from './components/SignupPopup';
@@ -31,14 +33,16 @@ function App() {
       />      
       <BrowserRouter>
           <AuthProvider>
-              <AppContent />
+              <CoursePurchasesProvider>
+                  <AppRoutes />
+              </CoursePurchasesProvider>
           </AuthProvider>
       </BrowserRouter>
     </div>
   );
 }
 
-function AppContent() {
+function AppRoutes() {
     const { authPopupState, closeAuthPopup, switchToSignupForm, switchToLoginForm } = useAuth();
     return (
         <>
@@ -51,6 +55,7 @@ function AppContent() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/payment" element={<Payment />} />
                 <Route path="/payment-redirect" element={<PaymentRedirect />} />
+                <Route path="/installment-payment" element={<InstallmentPayment />} />
             </Routes>
             {authPopupState === 'login' && (
                 <LoginPopup onClose={closeAuthPopup} onSwitchToSignup={switchToSignupForm} />
