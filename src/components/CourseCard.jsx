@@ -454,6 +454,14 @@ const CourseCard = () => {
 
             {renderPaymentOptions()}
             {renderInstallmentDetails()}
+            <div className="flex justify-center space-x-4 text-sm text-gray-600 mb-4">
+              <NavLink to="/policies" className="hover:text-[#D62A91] transition-colors">
+                Refund Policy
+              </NavLink>
+              <NavLink to="/policies" className="hover:text-[#D62A91] transition-colors">
+                Deferral Policy
+              </NavLink>
+            </div>
             {renderPaymentButtons()}
 
             <div className="space-y-2 mt-4">

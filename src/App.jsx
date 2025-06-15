@@ -9,6 +9,7 @@ import Services from "./pages/Services"
 import Training from './pages/Training';
 import Payment from './pages/Payment';
 import Contact from "./pages/Contact";
+import Policies from './pages/Policies';
 import InstallmentPayment from './pages/InstallmentPayment';
 import PaymentRedirect from './pages/PaymentRedirect';
 import LoginPopup from './components/LoginPopup';
@@ -56,6 +57,7 @@ function AppRoutes() {
                 <Route path="/payment" element={<Payment />} />
                 <Route path="/payment-redirect" element={<PaymentRedirect />} />
                 <Route path="/installment-payment" element={<InstallmentPayment />} />
+                <Route path="/policies" element={<Policies />} />
             </Routes>
             {authPopupState === 'login' && (
                 <LoginPopup onClose={closeAuthPopup} onSwitchToSignup={switchToSignupForm} />

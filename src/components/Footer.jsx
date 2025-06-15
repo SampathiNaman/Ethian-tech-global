@@ -75,6 +75,10 @@ function Footer() {
                                     <FontAwesomeIcon icon={faArrowRight} className='text-lg mr-4' />
                                     <NavLink to="/contact">Contact</NavLink>
                                 </li>
+                                <li className='cursor-pointer hover:underline  p-1'>
+                                    <FontAwesomeIcon icon={faArrowRight} className='text-lg mr-4' />
+                                    <NavLink to="/policies">Policies</NavLink>
+                                </li>
                             </ul>
                         </div>
 
@@ -127,7 +131,7 @@ function Footer() {
                     <div className="border-t border-gray-400 mt-10 pt-5">
                         <div className="flex flex-col md:flex-row md:justify-between items-center">
                             <div className="text-center md:text-left mb-5 md:mb-0">
-                                <a href="#" className="text-sm text-gray-300 mr-5">Privacy Policy</a>
+                                <NavLink to="/policies" className="text-sm text-gray-300 mr-5">Refund & Deferral Policy</NavLink>
                                 <a href="#" className="text-sm text-gray-300">Terms of Service</a>
                             </div>
                             <div className="text-center md:text-left mb-5 md:mb-0">
