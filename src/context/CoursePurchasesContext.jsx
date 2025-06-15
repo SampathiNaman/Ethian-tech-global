@@ -1,34 +1,67 @@
 import { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
 import { useAuth } from './AuthContext';
-import { useLocation } from 'react-router-dom';
 
-const CoursePurchasesContext = createContext();
-const POLLING_INTERVAL = 5000; // 5 seconds
-const MAX_POLLING_ATTEMPTS = 4;
+// Create context
+const CoursePurchasesContext = createContext(null);
 
-export const useCoursePurchases = () => {
-  const context = useContext(CoursePurchasesContext);
-  if (!context) {
-    throw new Error('useCoursePurchases must be used within a CoursePurchasesProvider');
-  }
-  return context;
-};
+// Cache keys
+const CACHE_KEY = 'course_purchases';
+const CACHE_TIMESTAMP_KEY = 'course_purchases_timestamp';
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
+// Provider component
 export const CoursePurchasesProvider = ({ children }) => {
-  const [purchases, setPurchases] = useState([]);
+  const [purchases, setPurchases] = useState(() => {
+    const cachedData = localStorage.getItem(CACHE_KEY);
+    const timestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
+    
+    if (cachedData && timestamp) {
+      const isExpired = Date.now() - parseInt(timestamp) > CACHE_DURATION;
+      if (!isExpired) {
+        return JSON.parse(cachedData);
+      }
+    }
+    return [];
+  });
+  
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const pollingRefs = useRef({});
   const { user } = useAuth();
-  const location = useLocation();
 
-  const fetchPurchases = useCallback(async () => {
+  const updateCache = useCallback((data) => {
+    localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+    localStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+  }, []);
+
+  const clearCache = useCallback(() => {
+    localStorage.removeItem(CACHE_KEY);
+    localStorage.removeItem(CACHE_TIMESTAMP_KEY);
+  }, []);
+
+  const fetchPurchases = useCallback(async (forceRefresh = false) => {
     if (!user) {
       setPurchases([]);
       setLoading(false);
+      clearCache();
       return;
+    }
+
+    // Check cache first if not forcing refresh
+    if (!forceRefresh) {
+      const cachedData = localStorage.getItem(CACHE_KEY);
+      const timestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
+      
+      if (cachedData && timestamp) {
+        const isExpired = Date.now() - parseInt(timestamp) > CACHE_DURATION;
+        if (!isExpired) {
+          setPurchases(JSON.parse(cachedData));
+          setLoading(false);
+          return JSON.parse(cachedData);
+        }
+      }
     }
 
     try {
@@ -38,6 +71,7 @@ export const CoursePurchasesProvider = ({ children }) => {
         { withCredentials: true }
       );
       setPurchases(response.data);
+      updateCache(response.data);
       setError(null);
       return response.data;
     } catch (err) {
@@ -46,11 +80,17 @@ export const CoursePurchasesProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  }, [user]);
+  }, [user, updateCache, clearCache]);
 
+  // Initial load and user change
   useEffect(() => {
-    fetchPurchases();
-  }, [fetchPurchases]);
+    if (user) {
+      fetchPurchases();
+    } else {
+      setPurchases([]);
+      clearCache();
+    }
+  }, [user, fetchPurchases, clearCache]);
 
   // Cleanup polling on unmount
   useEffect(() => {
@@ -83,6 +123,7 @@ export const CoursePurchasesProvider = ({ children }) => {
         );
         
         setPurchases(response.data);
+        updateCache(response.data);
         
         // Check if any purchase is still processing
         const hasProcessingPayments = response.data.some(
@@ -99,7 +140,7 @@ export const CoursePurchasesProvider = ({ children }) => {
     }, POLLING_INTERVAL);
 
     pollingRefs.current.main = pollInterval;
-  }, []);
+  }, [updateCache]);
 
   const stopPaymentProcessing = useCallback(() => {
     Object.values(pollingRefs.current).forEach(interval => clearInterval(interval));
@@ -146,7 +187,7 @@ export const CoursePurchasesProvider = ({ children }) => {
     getPurchaseStatus,
     getInstallmentDetails,
     getNextPaymentInfo,
-    refreshPurchases: fetchPurchases,
+    refreshPurchases: () => fetchPurchases(true), // Force refresh
     startPaymentProcessing,
     stopPaymentProcessing,
     paymentSuccess
@@ -157,4 +198,17 @@ export const CoursePurchasesProvider = ({ children }) => {
       {children}
     </CoursePurchasesContext.Provider>
   );
+};
+
+// Constants
+const POLLING_INTERVAL = 5000; // 5 seconds
+const MAX_POLLING_ATTEMPTS = 4;
+
+// Custom hook
+export const useCoursePurchases = () => {
+  const context = useContext(CoursePurchasesContext);
+  if (!context) {
+    throw new Error('useCoursePurchases must be used within a CoursePurchasesProvider');
+  }
+  return context;
 }; 

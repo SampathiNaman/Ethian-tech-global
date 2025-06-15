@@ -3,7 +3,8 @@ import { useAuth } from '../context/AuthContext';
 import { useCoursePurchases } from '../context/CoursePurchasesContext';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faSpinner, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 const CoursePurchaseButton = ({ 
   courseId,
@@ -19,7 +20,8 @@ const CoursePurchaseButton = ({
   const { getPurchaseStatus, paymentSuccess } = useCoursePurchases();
   const purchaseStatus = getPurchaseStatus(courseId);
 
-  const handlePurchaseClick = () => {
+  const handlePurchaseClick = async () => {
+    // If not logged in, show login popup
     if (!user) {
       const paymentDetails = {
         amount: price,
@@ -34,19 +36,40 @@ const CoursePurchaseButton = ({
       return;
     }
 
-    const paymentDetails = {
-      amount: price,
-      currency,
-      numberOfInstallments: selectedInstallments,
-      isAutomatic,
-      service,
-      courseId
-    };
+    // Verify user session before proceeding
+    try {
+      await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/auth/me`, {
+        withCredentials: true
+      });
 
-    if (selectedInstallments === 1) {
-      navigate('/payment', { state: paymentDetails });
-    } else {
-      navigate('/installment-payment', { state: paymentDetails });
+      const paymentDetails = {
+        amount: price,
+        currency,
+        numberOfInstallments: selectedInstallments,
+        isAutomatic,
+        service,
+        courseId
+      };
+
+      if (selectedInstallments === 1) {
+        navigate('/payment', { state: paymentDetails });
+      } else {
+        navigate('/installment-payment', { state: paymentDetails });
+      }
+    } catch (error) {
+      // If session is invalid, show login popup
+      if (error.response?.status === 401) {
+        const paymentDetails = {
+          amount: price,
+          currency,
+          numberOfInstallments: selectedInstallments,
+          isAutomatic,
+          service,
+          courseId
+        };
+        const redirectPath = selectedInstallments === 1 ? '/payment' : '/installment-payment';
+        openLoginPopup(redirectPath, paymentDetails);
+      }
     }
   };
 

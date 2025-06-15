@@ -314,10 +314,6 @@ const CourseCard = () => {
                     <>
                       <div className="pt-2 border-t border-gray-200">
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Next Payment:</span>
-                          <span className="font-medium">{formatCurrency(nextPaymentInfo.nextPaymentAmount, currency)}</span>
-                        </div>
-                        <div className="flex justify-between">
                           <span className="text-gray-600">Due Date:</span>
                           <span className="font-medium">
                             {new Date(nextPaymentInfo.nextPaymentDate).toLocaleDateString()}
@@ -460,11 +456,18 @@ const CourseCard = () => {
             {renderInstallmentDetails()}
             {renderPaymentButtons()}
 
-            <div className="space-y-2">
-              <p className="text-red-600 text-sm font-medium flex items-center gap-2">
-                <span className="text-lg">⚠️</span>
-                Hurry! <b>862</b> people have already applied in last 1 month
-              </p>
+            <div className="space-y-2 mt-4">
+              {purchaseStatus === 'completed' ? (
+                <p className="text-gray-600 text-sm font-medium flex items-center gap-2">
+                  <span className="text-lg">📱</span>
+                  You will be added to the course WhatsApp group shortly. Please keep your phone number updated.
+                </p>
+              ) : (
+                <p className="text-red-600 text-sm font-medium flex items-center gap-2">
+                  <span className="text-lg">⚠️</span>
+                  Hurry! <b>862</b> people have already applied in last 1 month
+                </p>
+              )}
               <p className="text-gray-500 text-sm flex items-center gap-2">
                 <span className="text-lg">📞</span>
                 For enquiries: <span className="font-semibold">+1-443-675-8888</span> or <span className="font-semibold">info@ethiantech.com</span>

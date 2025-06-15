@@ -131,7 +131,6 @@ const Payment = () => {
 
   const handlePaymentSuccess = async () => {
     await refreshPurchases();
-    navigate('/training');
   };
 
   const renderContent = () => {
@@ -151,6 +150,7 @@ const Payment = () => {
               clientSecret={clientSecret}
               paymentDetails={location.state}
               onPaymentSuccess={handlePaymentSuccess}
+              onClose={() => navigate('/training', { replace: true })}
             />
           </Elements>
         </div>
