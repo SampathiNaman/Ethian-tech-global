@@ -21,7 +21,6 @@ function Footer() {
                 toast('Subscribed', {
                     style: { color: 'green' },
                     icon: '✅',
-
                 });
             })
             .catch(() => {
@@ -44,42 +43,32 @@ function Footer() {
         }
     };
 
+    const links = [
+        { to: "/", label: "Home" },
+        { to: "/about", label: "About" },
+        { to: "/products", label: "Products" },
+        { to: "/services", label: "Services" },
+        { to: "/training", label: "Training" },
+        { to: "/contact", label: "Contact" },
+        { to: "/policies", label: "Policies" }
+    ];
+
     return (
         <>
-            <footer className="bg-[#1A3261] text-white font-sans ">
+            <footer className="bg-[#1A3261] text-white font-sans">
                 {/* absolute bottom-0 w-full */}
                 <div className="container w-[90vw] mx-auto py-10 px-5">
-                    <div className="flex justify-between items-center gap-8 flex-wrap md:flex-row md:justify-between">
-
-                        {/* <div className="flex flex-col md:flex-row md:space-x-20"> */}
+                    <div className="flex justify-between items-start gap-8 flex-wrap md:flex-row md:justify-between">
                         <div className="mb-10 md:mb-0">
                             <h2 className="text-xl font-bold mb-3">Important Links</h2>
-                            <ul className="list-none list-inside pl-1">
-                                <li className='cursor-pointer hover:underline p-1'>
-                                    <FontAwesomeIcon icon={faArrowRight} className='text-lg mr-4' />
-                                    <NavLink to="/">Home</NavLink>
-                                </li>
-                                <li className='cursor-pointer hover:underline  p-1'>
-                                    <FontAwesomeIcon icon={faArrowRight} className='text-lg mr-4' />
-                                    <NavLink to="/about">About</NavLink>
-                                </li>
-                                <li className='cursor-pointer hover:underline  p-1'>
-                                    <FontAwesomeIcon icon={faArrowRight} className='text-lg mr-4' />
-                                    <NavLink to="/products">Products</NavLink>
-                                </li>
-                                <li className='cursor-pointer hover:underline  p-1'>
-                                    <FontAwesomeIcon icon={faArrowRight} className='text-lg mr-4' />
-                                    <NavLink to="/services">Services</NavLink>
-                                </li>
-                                <li className='cursor-pointer hover:underline  p-1'>
-                                    <FontAwesomeIcon icon={faArrowRight} className='text-lg mr-4' />
-                                    <NavLink to="/contact">Contact</NavLink>
-                                </li>
-                                <li className='cursor-pointer hover:underline  p-1'>
-                                    <FontAwesomeIcon icon={faArrowRight} className='text-lg mr-4' />
-                                    <NavLink to="/policies">Policies</NavLink>
-                                </li>
-                            </ul>
+                            <div className="grid grid-cols-2 gap-x-8 gap-y-1">
+                                {links.map((link, index) => (
+                                    <div key={index} className='cursor-pointer hover:underline p-1'>
+                                        <FontAwesomeIcon icon={faArrowRight} className='text-lg mr-2' />
+                                        <NavLink to={link.to}>{link.label}</NavLink>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
 
                         <div className="mb-10 md:mb-0">
@@ -94,7 +83,7 @@ function Footer() {
                             </form>
                         </div>
 
-                        <div className=" mb-10 md:mb-0">
+                        <div className="mb-10 md:mb-0">
                             <h2 className="text-xl font-bold mb-3">Get in Touch</h2>
                             {/* <div>
                             <NavLink to={"/"}><img className='w-40 sm:text-center' src="logo.webp" alt="Error in loading" /></NavLink>

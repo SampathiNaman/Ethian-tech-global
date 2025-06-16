@@ -62,6 +62,14 @@ const InstallmentPayment = () => {
       return;
     }
 
+    const { amount, currency, service, courseId, numberOfInstallments, isAutomatic } = location.state;
+
+    if (!amount || !currency || !service || !courseId || !numberOfInstallments) {
+      setError('Invalid payment details');
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     setError(null);
     if (abortControllerRef.current) abortControllerRef.current.abort();
@@ -72,18 +80,18 @@ const InstallmentPayment = () => {
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/api/payments/create-installment`,
         {
-          amount: location.state.amount,
-          currency: location.state.currency,
-          numberOfInstallments: location.state.numberOfInstallments,
-          isAutomatic: location.state.isAutomatic,
+          amount,
+          currency,
+          numberOfInstallments,
+          isAutomatic,
           metadata: {
-            product_type: location.state.service,
-            course_id: location.state.courseId,
+            product_type: service,
+            course_id: courseId,
             is_installment: true,
             installment_details: {
-              total_installments: location.state.numberOfInstallments,
+              total_installments: numberOfInstallments,
               current_installment: 1,
-              is_automatic: location.state.isAutomatic
+              is_automatic: isAutomatic
             }
           }
         },

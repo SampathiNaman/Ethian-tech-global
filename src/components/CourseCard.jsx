@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AOS from "aos";
-import { INSTALLMENT_OPTIONS, calculatePerInstallmentAmount, calculateInstallmentFee, formatCurrency, formatFeePercentage } from "../utils/installmentUtils";
-import { useAuth } from '../context/AuthContext';
+import { 
+  PAYMENT_CONFIG,
+  calculatePaymentDetails, 
+  formatCurrency, 
+  getInstallmentOptions,
+  getDefaultPaymentDetails
+} from "../utils/installmentUtils";
 import { useCoursePurchases } from '../context/CoursePurchasesContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAnglesRight, faArrowUpRightDots, faBriefcase, faChalkboard, faChalkboardUser, faMagnifyingGlass, faMoneyCheck, faPencil, faUserGroup, faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -43,19 +48,12 @@ const services = [
   },
 ];
 
-
 const CourseCard = () => {
   const navigate = useNavigate();
-  const { user, openLoginPopup } = useAuth();
   const { getPurchaseStatus, getNextPaymentInfo } = useCoursePurchases();
   const [selectedInstallments, setSelectedInstallments] = useState(1);
   const [isAutomatic, setIsAutomatic] = useState(true);
   const [showPaymentDetails, setShowPaymentDetails] = useState(false);
-  
-  const coursePrice = 1999; // Price in USD
-  const currency = 'USD';
-  const service = 'advanced_generative_ai_course';
-  const courseId = 'advanced_generative_ai_course';
   const [showPopup, setShowPopup] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -63,9 +61,14 @@ const CourseCard = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const coursePrice = 900; // Price in USD
+  const currency = 'USD';
+  const service = 'advanced_generative_ai_course';
+  const courseId = 'advanced_generative_ai_course';
 
-  const purchaseStatus = getPurchaseStatus(courseId);
-  const nextPaymentInfo = getNextPaymentInfo(courseId);
+  const purchaseStatus = getPurchaseStatus(PAYMENT_CONFIG.courseId);
+  const nextPaymentInfo = getNextPaymentInfo(PAYMENT_CONFIG.courseId);
 
   // Set default installment based on current plan
   useEffect(() => {
@@ -136,27 +139,6 @@ const CourseCard = () => {
     };
   }, []);
 
-  const handleEnroll = () => {
-    const paymentDetails = {
-      amount: coursePrice,
-      currency: currency,
-      numberOfInstallments: selectedInstallments,
-      isAutomatic: isAutomatic,
-      service: service
-    };
-
-    if (user) {
-      if (selectedInstallments === 1) {
-        navigate('/payment', { state: paymentDetails });
-      } else {
-        navigate('/installment-payment', { state: paymentDetails });
-      }
-    } else {
-      const redirectPath = selectedInstallments === 1 ? '/payment' : '/installment-payment';
-      openLoginPopup(redirectPath, paymentDetails);
-    }
-  };
-
   const renderPaymentOptions = () => {
     if (purchaseStatus === 'completed') {
       return null; // Don't show payment options for completed purchases
@@ -169,11 +151,8 @@ const CourseCard = () => {
         </label>
         <div className="relative">
           <div className="flex overflow-x-auto pb-4 gap-3 scrollbar-hide custom-scrollbar">
-            {INSTALLMENT_OPTIONS.map(option => {
-              const perInstallmentAmount = calculatePerInstallmentAmount(coursePrice, option.value);
-              const totalFee = calculateInstallmentFee(coursePrice, option.value);
-              const totalAmount = coursePrice + totalFee;
-
+            {getInstallmentOptions().map(option => {
+              const paymentDetails = calculatePaymentDetails(option.value);
               const isInProgress = purchaseStatus === 'in_progress' && nextPaymentInfo;
               const isCurrentPlan = isInProgress && option.value === nextPaymentInfo?.totalInstallments;
               const isDisabled = isInProgress && !isCurrentPlan;
@@ -195,7 +174,7 @@ const CourseCard = () => {
                       <span className={`text-xs font-semibold px-2 py-1 rounded-full w-fit mb-2 ${
                         option.value === 1 
                           ? 'bg-green-100 text-green-700'
-                          : option.value === 3
+                          : option.value === 2
                           ? 'bg-blue-100 text-blue-700'
                           : 'bg-purple-100 text-purple-700'
                       }`}>
@@ -220,20 +199,17 @@ const CourseCard = () => {
                       {option.value === 1 ? (
                         <>
                           <span className="text-[#D62A91] font-medium block text-lg">
-                            {formatCurrency(coursePrice, currency)}
+                            {formatCurrency(paymentDetails.perInstallmentAmount)}
                           </span>
                           <span className="text-gray-600 text-xs">{option.description}</span>
                         </>
                       ) : (
                         <>
                           <span className="text-gray-600 block">
-                            {formatCurrency(perInstallmentAmount, currency)}/mo
+                            {formatCurrency(paymentDetails.perInstallmentAmount)}/mo
                           </span>
                           <span className="text-[#D62A91] font-medium block">
-                            Total: {formatCurrency(totalAmount, currency)}
-                          </span>
-                          <span className="text-gray-600 text-xs">
-                            {option.description} ({formatFeePercentage(option.value)}% processing fee)
+                            Total: {formatCurrency(paymentDetails.totalAmount)}
                           </span>
                         </>
                       )}
@@ -256,9 +232,7 @@ const CourseCard = () => {
 
     const isInProgress = purchaseStatus === 'in_progress' && nextPaymentInfo;
     const currentInstallments = isInProgress ? nextPaymentInfo.totalInstallments : selectedInstallments;
-    const perInstallmentAmount = calculatePerInstallmentAmount(coursePrice, currentInstallments);
-    const totalFee = calculateInstallmentFee(coursePrice, currentInstallments);
-    const totalAmount = coursePrice + totalFee;
+    const paymentDetails = calculatePaymentDetails(currentInstallments);
 
     return (
       <div className="my-4">
@@ -271,14 +245,14 @@ const CourseCard = () => {
               <span className="text-sm text-gray-600">Selected Plan</span>
               <span className="text-lg font-semibold text-gray-900">
                 {currentInstallments === 1 
-                  ? formatCurrency(coursePrice, currency)
-                  : `${formatCurrency(perInstallmentAmount, currency)} × ${currentInstallments} months`
+                  ? formatCurrency(paymentDetails.perInstallmentAmount)
+                  : `${formatCurrency(paymentDetails.perInstallmentAmount)} × ${currentInstallments} months`
                 }
               </span>
             </div>
             {currentInstallments > 1 && (
               <span className="text-sm text-gray-500">
-                (Total: {formatCurrency(totalAmount, currency)})
+                (Total: {formatCurrency(paymentDetails.totalAmount)})
               </span>
             )}
           </div>
@@ -292,23 +266,20 @@ const CourseCard = () => {
         {showPaymentDetails && (
           <div className="mt-2 p-4 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200">
             <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-gray-600">Course Price:</span>
-                <span className="font-medium">{formatCurrency(coursePrice, currency)}</span>
-              </div>
-              {currentInstallments > 1 && (
+              {currentInstallments === 1 ? (
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Total Amount:</span>
+                  <span className="font-medium">{formatCurrency(paymentDetails.perInstallmentAmount)}</span>
+                </div>
+              ) : (
                 <>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Installment Fee ({formatFeePercentage(currentInstallments)}%):</span>
-                    <span className="font-medium">{formatCurrency(totalFee, currency)}</span>
+                    <span className="text-gray-600">Per Installment:</span>
+                    <span className="font-medium">{formatCurrency(paymentDetails.perInstallmentAmount)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Total Amount:</span>
-                    <span className="font-medium">{formatCurrency(totalAmount, currency)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Per Installment:</span>
-                    <span className="font-medium">{formatCurrency(perInstallmentAmount, currency)}</span>
+                    <span className="font-medium">{formatCurrency(paymentDetails.totalAmount)}</span>
                   </div>
                   {isInProgress && nextPaymentInfo && (
                     <>
@@ -344,12 +315,6 @@ const CourseCard = () => {
                   )}
                 </>
               )}
-              {currentInstallments === 1 && (
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Total Amount:</span>
-                  <span className="font-medium">{formatCurrency(coursePrice, currency)}</span>
-                </div>
-              )}
             </div>
           </div>
         )}
@@ -377,6 +342,8 @@ const CourseCard = () => {
       );
     }
 
+    const paymentDetails = calculatePaymentDetails(selectedInstallments);
+
     return (
       <div className="flex flex-col gap-4 mb-6">
         <div className="flex flex-col sm:flex-row gap-3">
@@ -387,10 +354,10 @@ const CourseCard = () => {
             Download Brochure
           </button>
           <CoursePurchaseButton
-            courseId={courseId}
-            price={coursePrice}
-            currency={currency}
-            service={service}
+            courseId={paymentDetails.courseId}
+            price={selectedInstallments === 1 ? paymentDetails.perInstallmentAmount : paymentDetails.totalAmount}
+            currency={paymentDetails.currency}
+            service={paymentDetails.service}
             className="flex-1"
             selectedInstallments={selectedInstallments}
             isAutomatic={isAutomatic}
@@ -408,10 +375,11 @@ const CourseCard = () => {
   return (
     <div className="w-11/12 mt-12 p-6 sm:w-5/6 lg:w-4/5 max-w-screen-lg mx-auto">
       <div className='font-sans text-blue-900 text-2xl space-y-1' data-aos="fade-up">
-        <h2 className='tracking-wider'>Training Time</h2>
+        <h2 className='tracking-wider'>Master Tomorrow's skills Today - Learn to Create and Build 
+        </h2>
         <h2 className='font-bold tracking-wide'>Explore Our Courses</h2>
       </div>
-      <div className="bg-white sticky -top-[1000px] sm:-top-[750px] md:-top-[350px] z-[1] rounded-xl my-8 shadow-lg overflow-hidden border-t-4 border-pink-500" data-aos="fade-up">
+      <div className="bg-white sticky -top-[1000px] sm:-top-[750px] md:-top-[650px] z-[1] rounded-xl my-8 shadow-lg overflow-hidden border-t-4 border-pink-500" data-aos="fade-up">
         {/* Sparkle New Button */}
         <div className="absolute -top-3 -right-3 z-10 ">
           <div className="bg-gradient-to-r from-pink-500 to-purple-500 text-white p-3 py-2 m-6 rounded-full font-bold text-md shadow-lg transform transition-transform duration-100 animate-pulse">
@@ -454,13 +422,20 @@ const CourseCard = () => {
 
             {renderPaymentOptions()}
             {renderInstallmentDetails()}
-            <div className="flex justify-center space-x-4 text-sm text-gray-600 mb-4">
-              <NavLink to="/policies" className="hover:text-[#D62A91] transition-colors">
-                Refund Policy
-              </NavLink>
-              <NavLink to="/policies" className="hover:text-[#D62A91] transition-colors">
-                Deferral Policy
-              </NavLink>
+            <div className="border-t border-gray-200 pt-4 mb-6">
+              <div className="flex items-center justify-between">
+                <div className="text-sm text-gray-600">
+                  <p className="text-gray-800 font-medium mb-1">Need to Cancel or Defer?</p>
+                  <p className="text-gray-600 text-sm mb-2">Our policy: We offer a 10 day window for a Full Refund, no questions asked. Flexible deferral options available too.</p>
+                  <NavLink 
+                    to="/policies" 
+                    className="text-[#D62A91] hover:underline inline-flex items-center gap-1"
+                  >
+                    View our policy
+                    <FontAwesomeIcon icon={faAnglesRight} className="text-xs" />
+                  </NavLink>
+                </div>
+              </div>
             </div>
             {renderPaymentButtons()}
 
@@ -607,10 +582,6 @@ const CourseCard = () => {
           <li className="flex items-start gap-2 py-2"><FontAwesomeIcon icon={faAnglesRight} className="text-[#D62A91] mt-1  mx-1 md:mx-4 " /><p className="text-sm md:text-base"><b>Consultants, regulators, and policymakers</b> who are guiding organizations through digital transformation or shaping.</p></li>
         </ul>
 
-
-
-
-
         <div className="bg-white rounded-xl p-6 mt-8 relative z-0" data-aos="fade-up">
           <h2 className="text-xl md:text-2xl font-bold mb-10 text-blue-900 text-center">Learning Experience</h2>
           <div className="grid place-items-center grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-center">
@@ -640,10 +611,6 @@ const CourseCard = () => {
             </div>
           </div>
         </div>
-
-
-
-
 
         <div className="bg-white rounded-xl p-6 mt-8 relative z-0" data-aos="fade-up">
           <h2 className="text-xl md:text-2xl font-bold mb-10 text-blue-900 text-center">Designed for working Professionals</h2>
