@@ -85,7 +85,7 @@ export const CoursePurchasesProvider = ({ children }) => {
   // Initial load and user change
   useEffect(() => {
     if (user) {
-      fetchPurchases();
+    fetchPurchases();
     } else {
       setPurchases([]);
       clearCache();

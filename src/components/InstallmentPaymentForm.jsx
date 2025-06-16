@@ -17,7 +17,7 @@ import {
 import PropTypes from 'prop-types';
 import { errorMap } from '../utils/errorMap';
 import { ErrorScreen, SuccessScreen } from './PaymentStatusComponents';
-import { formatCurrency, calculatePerInstallmentAmount } from '../utils/installmentUtils';
+import { formatCurrency } from '../utils/installmentUtils';
 import { useCoursePurchases } from '../context/CoursePurchasesContext';
 import toast from 'react-hot-toast';
 
@@ -85,21 +85,20 @@ const InstallmentPaymentForm = ({
     e.preventDefault();
     if (!stripe || !elements || paymentStatus === 'processing') return;
 
-    const { error: elementsError } = await elements.submit();
-    if (elementsError) {
-      return;
-    }
-
-    if (retryCount >= 5) {
-      setError({
-        code: 'max_retries',
-        message: errorMap['max_retries'],
-        type: 'card_error',
-      });
-      return;
-    }
-
     try {
+      const { error: elementsError } = await elements.submit();
+      if (elementsError) {
+        throw elementsError;
+      }
+
+      if (retryCount >= 5) {
+        throw {
+          code: 'max_retries',
+          message: errorMap['max_retries'],
+          type: 'card_error',
+        };
+      }
+
       setPaymentStatus('processing');
       setError(null);
       setRetryCount(prev => prev + 1);
@@ -121,11 +120,7 @@ const InstallmentPaymentForm = ({
       });
 
       if (confirmError) {
-        throw {
-          code: confirmError.code,
-          message: confirmError.message,
-          type: confirmError.type,
-        };
+        throw confirmError;
       }
 
       // Handle successful payment
@@ -256,10 +251,8 @@ const InstallmentPaymentForm = ({
                 className="text-red-400 mr-3"
                 aria-hidden="true"
               />
-              <div>
-                <p className="text-sm text-red-700">
-                  {error.message}
-                </p>
+              <div className="text-sm text-red-700">
+                {error.message}
               </div>
             </div>
           </div>

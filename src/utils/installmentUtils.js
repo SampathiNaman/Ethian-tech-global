@@ -1,35 +1,62 @@
-// Calculate installment fee based on number of installments
-export const calculateInstallmentFee = (amount, numberOfInstallments) => {
-  let feePercentage = 0.0;
+// Payment configuration
+export const PAYMENT_CONFIG = {
+  // Base price for the course
+  basePrice: 900,
   
-  // Increase fee for longer terms
-  if (numberOfInstallments === 3) feePercentage = 0.015;
-  if (numberOfInstallments === 6) feePercentage = 0.02;
-  if (numberOfInstallments === 12) feePercentage = 0.025;
+  // Currency configuration
+  currency: 'USD',
   
-  return Math.ceil(amount * feePercentage);
+  // Installment configurations
+  installments: {
+    1: {
+      amount: 900,
+      label: 'Pay Full Amount',
+      highlight: 'Best Value',
+      description: 'One-time payment'
+    },
+    2: {
+      amount: 600,
+      label: '2 Monthly Installments',
+      highlight: 'Most Popular',
+      description: 'Flexible payment plan'
+    },
+    3: {
+      amount: 500,
+      label: '3 Monthly Installments',
+      highlight: 'Maximum Flexibility',
+      description: 'Extended payment period'
+    }
+  },
+
+  // Service identifier for the course
+  service: 'advanced_generative_ai_course',
+  
+  // Course identifier
+  courseId: 'advanced_generative_ai_course'
 };
 
-// Format fee percentage with 1 decimal point
-export const formatFeePercentage = (numberOfInstallments) => {
-  let feePercentage = 0.0;
-  
-  if (numberOfInstallments === 3) feePercentage = 0.015;
-  if (numberOfInstallments === 6) feePercentage = 0.02;
-  if (numberOfInstallments === 12) feePercentage = 0.025;
-  
-  return (feePercentage * 100).toFixed(1);
+// Calculate payment details for a given number of installments
+export const calculatePaymentDetails = (numberOfInstallments) => {
+  const installmentConfig = PAYMENT_CONFIG.installments[numberOfInstallments];
+  if (!installmentConfig) {
+    throw new Error(`Invalid number of installments: ${numberOfInstallments}`);
+  }
+
+  const perInstallmentAmount = installmentConfig.amount;
+  const totalAmount = perInstallmentAmount * numberOfInstallments;
+
+  return {
+    perInstallmentAmount,
+    totalAmount,
+    currency: PAYMENT_CONFIG.currency,
+    service: PAYMENT_CONFIG.service,
+    courseId: PAYMENT_CONFIG.courseId,
+    numberOfInstallments
+  };
 };
 
-// Calculate per installment amount including fee
-export const calculatePerInstallmentAmount = (amount, numberOfInstallments) => {
-  const fee = calculateInstallmentFee(amount, numberOfInstallments);
-  const totalAmount = amount + fee;
-  return Math.ceil(totalAmount / numberOfInstallments);
-};
-
-// Format currency
-export const formatCurrency = (amount, currency = 'USD') => {
+// Format currency helper
+export const formatCurrency = (amount, currency = PAYMENT_CONFIG.currency) => {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: currency,
@@ -38,30 +65,70 @@ export const formatCurrency = (amount, currency = 'USD') => {
   }).format(amount);
 };
 
+// Get installment options for UI
+export const getInstallmentOptions = () => {
+  return Object.entries(PAYMENT_CONFIG.installments).map(([value, config]) => ({
+    value: parseInt(value),
+    label: config.label,
+    highlight: config.highlight,
+    description: config.description
+  }));
+};
+
+// Get default payment details
+export const getDefaultPaymentDetails = () => ({
+  amount: PAYMENT_CONFIG.basePrice,
+  currency: PAYMENT_CONFIG.currency,
+  service: PAYMENT_CONFIG.service,
+  courseId: PAYMENT_CONFIG.courseId,
+  numberOfInstallments: 1
+});
+
+// Calculate installment fee based on number of installments
+export const calculateInstallmentFee = (amount, numberOfInstallments) => {
+  let feePercentage = 0.0;
+  
+  if (numberOfInstallments === 2) feePercentage = 0.20;
+  if (numberOfInstallments === 3) feePercentage = 0.40;
+  
+  return Math.ceil(amount * feePercentage);
+};
+
+// Format fee percentage with 1 decimal point
+export const formatFeePercentage = (numberOfInstallments) => {
+  let feePercentage = 0.0;
+  
+  if (numberOfInstallments === 2) feePercentage = 0.20;
+  if (numberOfInstallments === 3) feePercentage = 0.40;
+  
+  return (feePercentage * 100).toFixed(1);
+};
+
+// Calculate per installment amount including fee
+export const calculatePerInstallmentAmount = (amount, numberOfInstallments) => {
+  if (numberOfInstallments === 2) return 600;
+  if (numberOfInstallments === 3) return 500;
+  return amount;
+};
+
 // Available installment options
 export const INSTALLMENT_OPTIONS = [
   { 
     value: 1, 
     label: 'Pay Full Amount',
     highlight: 'Best Value',
-    description: 'Save on processing fees'
+    description: 'Enroll now!'
+  },
+  { 
+    value: 2, 
+    label: '2 Monthly Installments',
+    highlight: 'Most Popular',
+    description: 'Flexible payment plan'
   },
   { 
     value: 3, 
     label: '3 Monthly Installments',
-    highlight: 'Most Popular',
-    description: 'Lowest processing fee'
-  },
-  { 
-    value: 6, 
-    label: '6 Monthly Installments',
-    highlight: 'Flexible',
-    description: 'Extended payment period'
-  },
-  { 
-    value: 12, 
-    label: '12 Monthly Installments',
     highlight: 'Maximum Flexibility',
-    description: 'Longest payment period'
-  },
+    description: 'Extended payment period'
+  }
 ]; 
