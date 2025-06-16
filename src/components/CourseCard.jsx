@@ -55,6 +55,7 @@ const CourseCard = () => {
   const [isAutomatic, setIsAutomatic] = useState(true);
   const [showPaymentDetails, setShowPaymentDetails] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [showEnrollment, setShowEnrollment] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: ''
@@ -346,23 +347,15 @@ const CourseCard = () => {
 
     return (
       <div className="flex flex-col gap-4 mb-6">
-        <div className="flex flex-col sm:flex-row gap-3">
-          <button 
-            onClick={() => setShowPopup(true)}
-            className="flex-1 bg-white border-2 border-gray-300 text-gray-800 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors"
-          >
-            Download Brochure
-          </button>
-          <CoursePurchaseButton
-            courseId={paymentDetails.courseId}
-            price={selectedInstallments === 1 ? paymentDetails.perInstallmentAmount : paymentDetails.totalAmount}
-            currency={paymentDetails.currency}
-            service={paymentDetails.service}
-            className="flex-1"
-            selectedInstallments={selectedInstallments}
-            isAutomatic={isAutomatic}
-          />
-        </div>
+        <CoursePurchaseButton
+          courseId={paymentDetails.courseId}
+          price={selectedInstallments === 1 ? paymentDetails.perInstallmentAmount : paymentDetails.totalAmount}
+          currency={paymentDetails.currency}
+          service={paymentDetails.service}
+          className="w-full bg-[#D62A91] text-white px-6 py-3 rounded-lg font-medium hover:bg-pink-600 transition-colors"
+          selectedInstallments={selectedInstallments}
+          isAutomatic={isAutomatic}
+        />
         {purchaseStatus === 'in_progress' && nextPaymentInfo && (
           <div className="text-sm text-gray-600 text-center">
             Next payment due in {Math.ceil((nextPaymentInfo.nextPaymentDate - new Date()) / (1000 * 60 * 60 * 24))} days
@@ -394,50 +387,70 @@ const CourseCard = () => {
         <div className="grid lg:grid-cols-2 gap-8"  >
           {/* Left Content */}
           <div className="p-6 lg:p-8">
-
             <h2 className="text-3xl font-bold leading-tight mb-4">
               <span className="text-[#D62A91]">Advanced Generative AI</span>
               <br />
               <span className="text-gray-900">Certification Course</span>
             </h2>
 
-            <p className="text-gray-600 text-sm my-2">
-              Master the skills that shape the future of technology with the Advanced Certificate Program in Generative AI, a 5-month generative AI course by Ethiantech.
-            </p>
+            {!showEnrollment ? (
+              <>
+                <p className="text-gray-600 text-sm my-2">
+                  Master the skills that shape the future of technology with the Advanced Certificate Program in Generative AI, a 5-month generative AI course by Ethiantech.
+                </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-8">
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <p className="text-gray-500 text-sm mb-1">Type</p>
-                <p className="text-[#D62A91] font-semibold">Advanced Certificate</p>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <p className="text-gray-500 text-sm mb-1">Admission Deadline</p>
-                <p className="text-[#D62A91] font-semibold">15-June-2025</p>
-              </div>
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <p className="text-gray-500 text-sm mb-1">Duration</p>
-                <p className="text-[#D62A91] font-semibold">5 Months</p>
-              </div>
-            </div>
-
-            {renderPaymentOptions()}
-            {renderInstallmentDetails()}
-            <div className="border-t border-gray-200 pt-4 mb-6">
-              <div className="flex items-center justify-between">
-                <div className="text-sm text-gray-600">
-                  <p className="text-gray-800 font-medium mb-1">Need to Cancel or Defer?</p>
-                  <p className="text-gray-600 text-sm mb-2">Our policy: We offer a 10 day window for a Full Refund, no questions asked. Flexible deferral options available too.</p>
-                  <NavLink 
-                    to="/policies" 
-                    className="text-[#D62A91] hover:underline inline-flex items-center gap-1"
-                  >
-                    View our policy
-                    <FontAwesomeIcon icon={faAnglesRight} className="text-xs" />
-                  </NavLink>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-8">
+                  <div className="bg-gray-50 p-3 rounded-lg">
+                    <p className="text-gray-500 text-sm mb-1">Type</p>
+                    <p className="text-[#D62A91] font-semibold">Advanced Certificate</p>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded-lg">
+                    <p className="text-gray-500 text-sm mb-1">Admission Deadline</p>
+                    <p className="text-[#D62A91] font-semibold">15-June-2025</p>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded-lg">
+                    <p className="text-gray-500 text-sm mb-1">Duration</p>
+                    <p className="text-[#D62A91] font-semibold">5 Months</p>
+                  </div>
                 </div>
-              </div>
-            </div>
-            {renderPaymentButtons()}
+
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <button 
+                    onClick={() => setShowPopup(true)}
+                    className="flex-1 bg-white border-2 border-gray-300 text-gray-800 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+                  >
+                    Download Brochure
+                  </button>
+                  <button
+                    onClick={() => setShowEnrollment(true)}
+                    className="flex-1 bg-[#D62A91] text-white px-6 py-3 rounded-lg font-medium hover:bg-pink-600 transition-colors"
+                  >
+                    Enroll Now
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                {renderPaymentOptions()}
+                {renderInstallmentDetails()}
+                <div className="border-t border-gray-200 pt-4 mb-6">
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm text-gray-600">
+                      <p className="text-gray-800 font-medium mb-1">Need to Cancel or Defer?</p>
+                      <p className="text-gray-600 text-sm mb-2">Our policy: We offer a 10 day window for a Full Refund, no questions asked. Flexible deferral options available too.</p>
+                      <NavLink 
+                        to="/policies" 
+                        className="text-[#D62A91] hover:underline inline-flex items-center gap-1"
+                      >
+                        View our policy
+                        <FontAwesomeIcon icon={faAnglesRight} className="text-xs" />
+                      </NavLink>
+                    </div>
+                  </div>
+                </div>
+                {renderPaymentButtons()}
+              </>
+            )}
 
             <div className="space-y-2 mt-4">
               {purchaseStatus === 'completed' ? (
@@ -455,9 +468,6 @@ const CourseCard = () => {
                 <span className="text-lg">📞</span>
                 For enquiries: <span className="font-semibold">+1-443-675-8888</span> or <span className="font-semibold">info@ethiantech.com</span>
               </p>
-              {/* <p className="text-gray-500 text-sm flex items-center gap-2 ml-10">
-                or Mail us: <span className="font-semibold">info@ethiantech.com</span>
-              </p> */}
             </div>
           </div>
 
