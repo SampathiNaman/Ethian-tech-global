@@ -50,7 +50,7 @@ function Footer() {
         { to: "/services", label: "Services" },
         { to: "/training", label: "Training" },
         { to: "/contact", label: "Contact" },
-        { to: "/policies", label: "Policies" }
+        { to: "/policy", label: "Policies" }
     ];
 
     return (
@@ -120,7 +120,7 @@ function Footer() {
                     <div className="border-t border-gray-400 mt-10 pt-5">
                         <div className="flex flex-col md:flex-row md:justify-between items-center">
                             <div className="text-center md:text-left mb-5 md:mb-0">
-                                <NavLink to="/policies" className="text-sm text-gray-300 mr-5">Refund & Deferral Policy</NavLink>
+                                <NavLink to="/policy" className="text-sm text-gray-300 mr-5">Privacy Policy</NavLink>
                                 <a href="#" className="text-sm text-gray-300">Terms of Service</a>
                             </div>
                             <div className="text-center md:text-left mb-5 md:mb-0">

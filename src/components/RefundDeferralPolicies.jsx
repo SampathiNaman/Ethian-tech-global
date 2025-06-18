@@ -1,9 +1,9 @@
-import React from 'react';
-import PolicySection from '../components/PolicySection';
+import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileContract } from '@fortawesome/free-solid-svg-icons';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import { faFileContract, faShieldHalved } from '@fortawesome/free-solid-svg-icons';
+import { NavLink } from 'react-router-dom';
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const REFUND_POLICY = {
     title: "Refund Policy",
@@ -83,56 +83,100 @@ const POLICY_SUMMARY = {
     ]
   }; 
 
-const Policies = () => {
+const RefundDeferralPolicies = () => {
+  useEffect(() => {
+    AOS.init({ duration: 1300 });
+    AOS.refresh();
+  }, []);
+
+  const renderPolicySection = (policy) => (
+    <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+      <h2 className="text-2xl font-bold text-blue-900 mb-6">{policy.title}</h2>
+      <div className="space-y-6">
+        {policy.content.map((section, index) => (
+          <div 
+            key={index} 
+            className="border-b border-gray-200 pb-6 last:border-b-0"
+            id={section.title.toLowerCase().replace(/\s+/g, '-')}
+          >
+            <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+              <span className="text-[#D62A91]">{index + 1}.</span>
+              {section.title}
+            </h3>
+            <div className="text-gray-600 space-y-3">
+              {section.content.split('\n').map((line, i) => (
+                <p key={i} className="leading-relaxed">
+                  {line.startsWith('•') ? (
+                    <span className="flex items-start gap-2">
+                      <span className="text-[#D62A91]">•</span>
+                      <span>{line.substring(1).trim()}</span>
+                    </span>
+                  ) : (
+                    line
+                  )}
+                </p>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
   return (
-    <>
-      <Navbar />
-      <div className="min-h-screen bg-gray-50 py-12">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="mb-8">
+    <div className="min-h-screen bg-gray-50 py-12">
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="mb-8" data-aos="fade-up">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <h1 className="text-3xl font-bold text-blue-900 flex items-center gap-2">
               <FontAwesomeIcon icon={faFileContract} className="text-[#D62A91]" />
               Refund and Deferral Policy
             </h1>
-          </div>
-
-          {/* Policy Summary */}
-          <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-            <h2 className="text-2xl font-bold text-blue-900 mb-6">{POLICY_SUMMARY.title}</h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              {POLICY_SUMMARY.content.map((section, index) => (
-                <div key={index} className="space-y-4">
-                  <h3 className="text-lg font-semibold text-gray-800">{section.title}</h3>
-                  <ul className="space-y-2">
-                    {section.items.map((item, i) => (
-                      <li key={i} className="flex items-start">
-                        <span className="text-[#D62A91] mr-2">•</span>
-                        <span className="text-gray-600">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Detailed Policies */}
-          <div id="refund-policy">
-            <PolicySection title={REFUND_POLICY.title} content={REFUND_POLICY.content} />
-          </div>
-          <div id="deferral-policy">
-            <PolicySection title={DEFERRAL_POLICY.title} content={DEFERRAL_POLICY.content} />
-          </div>
-
-          {/* Last Updated */}
-          <div className="text-center text-gray-500 text-sm mt-8">
-            Last Updated: {new Date("2025-6-15").toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+            <NavLink 
+              to="/policy" 
+              className="inline-flex items-center gap-2 px-4 py-2 text-[#D62A91] hover:text-[#B91C7B] transition-colors duration-200 text-sm font-medium border border-[#D62A91] rounded-lg hover:bg-[#D62A91] hover:text-white"
+            >
+              <FontAwesomeIcon icon={faShieldHalved} />
+              View Privacy Policy
+            </NavLink>
           </div>
         </div>
+
+        {/* Policy Summary */}
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-8" data-aos="fade-up">
+          <h2 className="text-2xl font-bold text-blue-900 mb-6">{POLICY_SUMMARY.title}</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            {POLICY_SUMMARY.content.map((section, index) => (
+              <div key={index} className="space-y-4">
+                <h3 className="text-lg font-semibold text-gray-800">{section.title}</h3>
+                <ul className="space-y-2">
+                  {section.items.map((item, i) => (
+                    <li key={i} className="flex items-start">
+                      <span className="text-[#D62A91] mr-2">•</span>
+                      <span className="text-gray-600">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Detailed Policies */}
+        <div id="refund-policy" data-aos="fade-up">
+          {renderPolicySection(REFUND_POLICY)}
+        </div>
+        <div id="deferral-policy" data-aos="fade-up">
+          {renderPolicySection(DEFERRAL_POLICY)}
+        </div>
+
+        {/* Last Updated */}
+        <div className="text-center text-gray-500 text-sm mt-8" data-aos="fade-up">
+          Last Updated: {new Date("2025-6-15").toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+        </div>
       </div>
-      <Footer />
-    </>
+    </div>
   );
 };
 
-export default Policies; 
+export default RefundDeferralPolicies; 
