@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const AuthContext = createContext();
 
@@ -102,6 +103,10 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  const openForgotPasswordPopup = useCallback(() => {
+    setAuthPopupState('forgot-password');
+  }, []);
+
   const switchToLoginForm = useCallback(() => {
     setAuthPopupState('login');
   }, []);
@@ -118,10 +123,10 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider value={{
       user, login, logout, loading,
-      authPopupState, openLoginPopup, openSignupPopup, switchToLoginForm, switchToSignupForm, closeAuthPopup,
+      authPopupState, openLoginPopup, openSignupPopup, switchToLoginForm, switchToSignupForm, openForgotPasswordPopup, closeAuthPopup,
       pendingRedirect
     }}>
-      {children} 
+      {children}
     </AuthContext.Provider>
   );
 };
