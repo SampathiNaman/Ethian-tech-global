@@ -14,6 +14,7 @@ import InstallmentPayment from './pages/InstallmentPayment';
 import PaymentRedirect from './pages/PaymentRedirect';
 import LoginPopup from './components/LoginPopup';
 import SignupPopup from './components/SignupPopup';
+import ForgotPasswordPopup from './components/ForgotPasswordPopup';
 
 function App() {
   return (
@@ -63,7 +64,10 @@ function AppRoutes() {
                 <LoginPopup onClose={closeAuthPopup} onSwitchToSignup={switchToSignupForm} />
             )}
             {authPopupState === 'signup' && (
-                 <SignupPopup onClose={closeAuthPopup} onSwitchToLogin={switchToLoginForm} />
+                <SignupPopup onClose={closeAuthPopup} onSwitchToLogin={switchToLoginForm} />
+            )}
+            {authPopupState === 'forgot-password' && (
+                <ForgotPasswordPopup />
             )}
         </>
     );

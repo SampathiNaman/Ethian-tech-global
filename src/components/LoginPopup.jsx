@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
+import ForgotPasswordPopup from './ForgotPasswordPopup';
 
 const LoginPopup = ({ onSwitchToSignup }) => {
   const [formData, setFormData] = useState({
@@ -13,7 +14,9 @@ const LoginPopup = ({ onSwitchToSignup }) => {
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  const { login, authPopupState, closeAuthPopup } = useAuth();
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const { login, authPopupState, closeAuthPopup, openForgotPasswordPopup } = useAuth();
 
   if (authPopupState !== 'login') return null;
 
@@ -169,6 +172,10 @@ const LoginPopup = ({ onSwitchToSignup }) => {
     toast.error('Google login failed. Please try again.');
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-8 w-full max-w-md relative">
@@ -240,27 +247,49 @@ const LoginPopup = ({ onSwitchToSignup }) => {
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
                 Password
               </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${
-                  errors.password 
-                    ? 'border-red-500 focus:ring-red-500' 
-                    : 'border-gray-300 focus:ring-blue-500'
-                }`}
-                placeholder="Enter your password"
-                disabled={loading}
-                aria-invalid={!!errors.password}
-                aria-describedby={errors.password ? "password-error" : undefined}
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 ${
+                    errors.password 
+                      ? 'border-red-500 focus:ring-red-500' 
+                      : 'border-gray-300 focus:ring-blue-500'
+                  }`}
+                  placeholder="Enter your password"
+                  disabled={loading}
+                  aria-invalid={!!errors.password}
+                  aria-describedby={errors.password ? "password-error" : undefined}
+                />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  disabled={loading}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                </button>
+              </div>
               {errors.password && (
                 <p id="password-error" className="mt-1 text-sm text-red-500" role="alert">
                   {errors.password}
                 </p>
               )}
+            </div>
+
+            <div className="flex items-center justify-end">
+              <button
+                type="button"
+                onClick={openForgotPasswordPopup}
+                className="text-sm text-blue-600 hover:text-blue-500"
+                disabled={loading}
+              >
+                Forgot Password?
+              </button>
             </div>
 
             <button
@@ -297,6 +326,13 @@ const LoginPopup = ({ onSwitchToSignup }) => {
           </p>
         </div>
       </div>
+
+      {showForgotPassword && (
+        <ForgotPasswordPopup
+          onClose={() => setShowForgotPassword(false)}
+          onSwitchToLogin={() => setShowForgotPassword(false)}
+        />
+      )}
     </div>
   );
 };
