@@ -9,11 +9,13 @@ import Services from "./pages/Services"
 import Training from './pages/Training';
 import Payment from './pages/Payment';
 import Contact from "./pages/Contact";
-import Policies from './pages/Policies';
+import RefundDeferralPolicies from './pages/RefundDeferralPolicies';
+import Policy from './pages/Policy';
 import InstallmentPayment from './pages/InstallmentPayment';
 import PaymentRedirect from './pages/PaymentRedirect';
 import LoginPopup from './components/LoginPopup';
 import SignupPopup from './components/SignupPopup';
+import ForgotPasswordPopup from './components/ForgotPasswordPopup';
 
 function App() {
   return (
@@ -57,13 +59,17 @@ function AppRoutes() {
                 <Route path="/payment" element={<Payment />} />
                 <Route path="/payment-redirect" element={<PaymentRedirect />} />
                 <Route path="/installment-payment" element={<InstallmentPayment />} />
-                <Route path="/policies" element={<Policies />} />
+                <Route path="/refund-deferral-policies" element={<RefundDeferralPolicies />} />
+                <Route path="/policy" element={<Policy />} />
             </Routes>
             {authPopupState === 'login' && (
                 <LoginPopup onClose={closeAuthPopup} onSwitchToSignup={switchToSignupForm} />
             )}
             {authPopupState === 'signup' && (
                  <SignupPopup onClose={closeAuthPopup} onSwitchToLogin={switchToLoginForm} />
+            )}
+            {authPopupState === 'forgot-password' && (
+                <ForgotPasswordPopup />
             )}
         </>
     );
