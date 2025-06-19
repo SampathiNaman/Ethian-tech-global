@@ -384,9 +384,24 @@ const CourseCard = () => {
           </div>
         </div>
         
-        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8">
-          {/* Left Content */}
-          <div className="p-4 sm:p-6 lg:p-8 overflow-y-auto max-h-[calc(100vh-8rem)] sm:max-h-[calc(100vh-10rem)] lg:max-h-[calc(100vh-12rem)]">
+        <div className="grid lg:grid-cols-2 gap-0 lg:gap-8">
+          {/* Right Image Section - now comes first on mobile */}
+          <div className="relative h-64 sm:h-80 lg:h-full min-h-[300px] sm:min-h-[400px] max-h-[calc(100vh-8rem)] sm:max-h-[calc(100vh-10rem)] lg:max-h-[calc(100vh-12rem)] order-1 lg:order-2">
+            <img
+              src="AI_Course_img.jpg"
+              alt="Generative AI Course"
+              className="w-full h-full object-cover rounded-b-xl lg:rounded-r-xl lg:rounded-bl-none"
+            />
+            <div className="absolute bottom-3 sm:bottom-4 left-0 right-0 mx-auto bg-white bg-opacity-95 px-3 sm:px-4 py-2 rounded-lg shadow-lg max-w-[calc(100%-1.5rem)]">
+              <div className="flex flex-wrap gap-2 sm:gap-3 items-center text-xs sm:text-sm justify-center w-full text-center">
+                <span className="text-green-700 font-semibold whitespace-nowrap">100% Online</span>
+                <span className="text-[#D62A91] font-semibold whitespace-nowrap">4 weeks</span>
+                <span className="text-blue-900 font-semibold">Python Programming Refresher</span>
+              </div>
+            </div>
+          </div>
+          {/* Left Content - now comes second on mobile */}
+          <div className="p-4 sm:p-6 lg:p-8 overflow-y-auto max-h-[calc(100vh-8rem)] sm:max-h-[calc(100vh-10rem)] lg:max-h-[calc(100vh-12rem)] order-2 lg:order-1">
             <h2 className="text-2xl sm:text-3xl font-bold leading-tight mb-4 mt-4 sm:mt-0">
               <span className="text-[#D62A91]">Advanced Generative AI</span>
               <br />
@@ -454,36 +469,20 @@ const CourseCard = () => {
 
             <div className="space-y-2 mt-4">
               {purchaseStatus === 'completed' ? (
-                <p className="text-gray-600 text-xs sm:text-sm font-medium flex items-start gap-2">
-                  <span className="text-base sm:text-lg mt-0.5">📱</span>
+                <p className="text-gray-600 text-xs sm:text-sm font-medium flex items-center gap-2">
+                  <span className="text-base sm:text-lg">📱</span>
                   <span>You will be added to the course WhatsApp group shortly. Please keep your phone number updated.</span>
                 </p>
               ) : (
-                <p className="text-red-600 text-xs sm:text-sm font-medium flex items-start gap-2">
-                  <span className="text-base sm:text-lg mt-0.5">⚠️</span>
+                <p className="text-red-600 text-xs sm:text-sm font-medium flex items-center gap-2">
+                  <span className="text-base sm:text-lg">⚠️</span>
                   <span>Hurry! <b>862</b> people have already applied in last 1 month</span>
                 </p>
               )}
-              <p className="text-gray-500 text-xs sm:text-sm flex items-start gap-2">
-                <span className="text-base sm:text-lg mt-0.5">📞</span>
+              <p className="text-gray-500 text-xs sm:text-sm flex items-center gap-2">
+                <span className="text-base sm:text-lg">📞</span>
                 <span>For enquiries: <span className="font-semibold break-all">+1-443-675-8888</span> or <span className="font-semibold break-all">info@ethiantech.com</span></span>
               </p>
-            </div>
-          </div>
-
-          {/* Right Image Section */}
-          <div className="relative h-64 sm:h-80 lg:h-full min-h-[300px] sm:min-h-[400px] max-h-[calc(100vh-8rem)] sm:max-h-[calc(100vh-10rem)] lg:max-h-[calc(100vh-12rem)]">
-            <img
-              src="AI_Course_img.jpg"
-              alt="Generative AI Course"
-              className="w-full h-full object-cover rounded-b-xl lg:rounded-r-xl lg:rounded-bl-none"
-            />
-            <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 bg-white bg-opacity-95 px-3 sm:px-4 py-2 rounded-lg shadow-lg max-w-[calc(100%-1.5rem)]">
-              <div className="flex flex-wrap gap-2 sm:gap-3 items-center text-xs sm:text-sm">
-                <span className="text-green-700 font-semibold whitespace-nowrap">100% Online</span>
-                <span className="text-[#D62A91] font-semibold whitespace-nowrap">4 weeks</span>
-                <span className="text-blue-900 font-semibold">Python Programming Refresher</span>
-              </div>
             </div>
           </div>
         </div>
@@ -653,7 +652,7 @@ const CourseCard = () => {
             >
               {services.map((service, index) => (
                 <SwiperSlide key={index} className="flex justify-center">
-                  <div className="bg-white p-3 sm:p-4 mb-8 sm:mb-12 rounded-lg shadow-lg max-w-xs min-h-[250px] sm:min-h-[275px] md:min-h-[300px] flex flex-col justify-between hover:shadow-xl transition-shadow duration-300 ease-in-out transform hover:scale-[1.02] sm:hover:scale-[1.03]" data-aos="fade-up">
+                  <div className="bg-white p-3 sm:p-4 mb-8 sm:mb-12 rounded-lg shadow-lg max-w-xs min-h-[200px] sm:min-h-[275px] md:min-h-[300px] flex flex-col justify-between hover:shadow-xl transition-shadow duration-300 ease-in-out transform hover:scale-[1.02] sm:hover:scale-[1.03]" data-aos="fade-up">
                     <div className="text-center">
                       <FontAwesomeIcon icon={service.icon} className="text-[#D62A91] text-3xl sm:text-4xl md:text-5xl mx-auto py-3 sm:py-4 md:py-6" />
                       <h3 className="text-sm sm:text-base md:text-xl font-semibold text-gray-800 mt-3 sm:mt-4">
