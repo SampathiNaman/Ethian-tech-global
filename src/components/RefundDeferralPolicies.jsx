@@ -5,127 +5,16 @@ import { NavLink } from 'react-router-dom';
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-const REFUND_POLICY = {
-    title: "Refund Policy",
-    content: [
-      {
-        title: "Refund Eligibility",
-        content: "Students are eligible for a full refund of the course fee if they withdraw from the course within 7 days of the course start date, provided they have not accessed more than 20% of the course content."
-      },
-      {
-        title: "Refund Process",
-        content: "To request a refund, students must submit a formal request through the course platform or contact the course administrator. The request must include the reason for withdrawal and any supporting documentation."
-      },
-      {
-        title: "Refund Timeline",
-        content: "Refunds will be processed within 15 business days of the approved refund request. The refunded amount will be credited to the original payment method used for the course purchase."
-      },
-      {
-        title: "Non-Refundable Items",
-        content: "The following items are non-refundable:\n• Course materials and resources that have been accessed or downloaded\n• Any additional services or features purchased separately\n• Processing fees associated with the course purchase"
-      },
-      {
-        title: "Special Circumstances",
-        content: "In cases of medical emergencies or other extenuating circumstances, students may be eligible for a partial refund or credit towards a future course. Each case will be evaluated on an individual basis."
-      }
-    ]
-  };
-  
-const DEFERRAL_POLICY = {
-    title: "Deferral Policy",
-    content: [
-      {
-        title: "Deferral Eligibility",
-        content: "Students may request to defer their course enrollment to a future session under the following circumstances:\n• Medical emergencies\n• Military deployment\n• Natural disasters\n• Other extenuating circumstances"
-      },
-      {
-        title: "Deferral Process",
-        content: "To request a deferral, students must submit a formal request at least 14 days before the course start date. The request must include the reason for deferral and any supporting documentation."
-      },
-      {
-        title: "Deferral Timeline",
-        content: "Deferred students must enroll in a future course session within 12 months of their original course start date. Failure to do so will result in the forfeiture of the course fee."
-      },
-      {
-        title: "Deferral Limitations",
-        content: "Students are limited to one deferral per course purchase. Additional deferrals may be granted in exceptional circumstances at the discretion of the course administrator."
-      },
-      {
-        title: "Course Content Updates",
-        content: "Deferred students will be enrolled in the most current version of the course available at the time of their new start date. Course content and materials may differ from the original course version."
-      }
-    ]
-  };
-  
-const POLICY_SUMMARY = {
-    title: "Policy Summary",
-    content: [
-      {
-        title: "Refund Policy",
-        items: [
-          "Full refund within 7 days of course start",
-          "Must not access more than 20% of content",
-          "15 business days processing time",
-          "Non-refundable items: accessed materials, processing fees",
-          "Special circumstances considered individually"
-        ]
-      },
-      {
-        title: "Deferral Policy",
-        items: [
-          "Request 14 days before course start",
-          "Valid for 12 months from original start date",
-          "One deferral per course purchase",
-          "Medical, military, disaster circumstances",
-          "Current course version at new start date"
-        ]
-      }
-    ]
-  }; 
-
 const RefundDeferralPolicies = () => {
   useEffect(() => {
     AOS.init({ duration: 1300 });
     AOS.refresh();
   }, []);
 
-  const renderPolicySection = (policy) => (
-    <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-      <h2 className="text-2xl font-bold text-blue-900 mb-6">{policy.title}</h2>
-      <div className="space-y-6">
-        {policy.content.map((section, index) => (
-          <div 
-            key={index} 
-            className="border-b border-gray-200 pb-6 last:border-b-0"
-            id={section.title.toLowerCase().replace(/\s+/g, '-')}
-          >
-            <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-              <span className="text-[#D62A91]">{index + 1}.</span>
-              {section.title}
-            </h3>
-            <div className="text-gray-600 space-y-3">
-              {section.content.split('\n').map((line, i) => (
-                <p key={i} className="leading-relaxed">
-                  {line.startsWith('•') ? (
-                    <span className="flex items-start gap-2">
-                      <span className="text-[#D62A91]">•</span>
-                      <span>{line.substring(1).trim()}</span>
-                    </span>
-                  ) : (
-                    line
-                  )}
-                </p>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-4xl mx-auto px-4">
+        {/* Header */}
         <div className="mb-8" data-aos="fade-up">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <h1 className="text-3xl font-bold text-blue-900 flex items-center gap-2">
@@ -142,32 +31,92 @@ const RefundDeferralPolicies = () => {
           </div>
         </div>
 
-        {/* Policy Summary */}
+        {/* Refund Policy */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8" data-aos="fade-up">
-          <h2 className="text-2xl font-bold text-blue-900 mb-6">{POLICY_SUMMARY.title}</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            {POLICY_SUMMARY.content.map((section, index) => (
-              <div key={index} className="space-y-4">
-                <h3 className="text-lg font-semibold text-gray-800">{section.title}</h3>
-                <ul className="space-y-2">
-                  {section.items.map((item, i) => (
-                    <li key={i} className="flex items-start">
-                      <span className="text-[#D62A91] mr-2">•</span>
-                      <span className="text-gray-600">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          <h2 className="text-2xl font-bold text-blue-900 mb-6">Refund Policy</h2>
+          <div className="text-gray-600 space-y-4 leading-relaxed">
+            <p>
+              A Learner can claim a <span className="font-semibold text-[#D62A91]">100% refund</span> of the amount paid towards the Program by sending an email to <a href="mailto:info@ethiantech.com" className="text-[#D62A91] underline hover:text-blue-600">info@ethiantech.com</a> within <span className="font-semibold">10 days</span> from the date of the first class (i.e. the meet and greet session) of the relevant Program (“Refund Window”). No questions will be asked during this refund window.
+            </p>
+            <p>
+              <span className="font-semibold">No refund</span> will be possible after the expiry of the 10-day Refund Window. For the avoidance of doubt, a Learner will not be entitled to another Refund Window in the event of a cohort change or course deferral.
+            </p>
+            <p>
+              Refunds will only be made to the Learner’s bank account via NEFT/IMPS/RTGS or other suitable methods, as deemed fit by EthianTech. Learners may be required to provide supporting documents (such as a cancelled cheque) for account verification.
+            </p>
+            <p>
+              Refunds will be processed within <span className="font-semibold">30 business days</span> of receipt of all required information and documentation from the Learner.
+            </p>
+            <p className="font-semibold">Refunds will not be provided for:</p>
+            <ul className="list-disc ml-8 space-y-1">
+              <li>Lack of usage due to various reasons with the program after the Refund Window.</li>
+              <li>Any requests made after the Refund Window expires, regardless of course progress.</li>
+            </ul>
           </div>
         </div>
 
-        {/* Detailed Policies */}
-        <div id="refund-policy" data-aos="fade-up">
-          {renderPolicySection(REFUND_POLICY)}
+        {/* Deferral Policy */}
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-8" data-aos="fade-up">
+          <h2 className="text-2xl font-bold text-blue-900 mb-6">Deferral Policy</h2>
+          <div className="text-gray-600 space-y-6 leading-relaxed">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">A. Pre-Program Commencement Deferral</h3>
+              <ul className="list-disc ml-8 space-y-1">
+                <li>If a Learner is unable to commence the program due to unavoidable circumstances, they may defer to a future cohort by raising a request before the Program Commencement Date.</li>
+                <li>The Learner must pay <span className="font-semibold">50% of the Total Program Fee</span> (inclusive of taxes) upfront for the deferral request to be approved. Until this payment is made, the Learner will be assumed to continue in the same cohort.</li>
+                <li>The deferral is allowed only once and must be to a cohort scheduled to start within 1 year of the originally enrolled batch’s start date.</li>
+                <li>If the Learner fails to complete the payment before the original Program Commencement Date, the deferral request will expire, and the standard refund policy will apply.</li>
+                <li>The Learner will be charged based on the prevailing Total Program Fee of the new batch they opt for. No additional deferral fee will be charged.</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">B. Post-Program Commencement Deferral</h3>
+              <ul className="list-disc ml-8 space-y-1">
+                <li>Learners who are facing genuine challenges in continuing the course can request a deferral within <span className="font-semibold">7 days</span> of the Program Commencement Date.</li>
+                <li>A deferral fee of <span className="font-semibold">10% of the Total Program Fee</span> (inclusive of taxes) and any differential program fee (if applicable) between the current and deferred batch must be paid within 7 days of the deferral request.</li>
+                <li>Failure to complete payment within this 7-day window will result in the Learner continuing in the current cohort.</li>
+                <li>Upon successful payment, the Learner’s login will be disabled, and they will join the new cohort from the last graded assignment in the previous cohort. All progress and grades will carry forward.</li>
+                <li>Deferral requests will not be entertained once the cohort has concluded (i.e. after the last grace deadline).</li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div id="deferral-policy" data-aos="fade-up">
-          {renderPolicySection(DEFERRAL_POLICY)}
+
+        {/* Summary Table */}
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-8" data-aos="fade-up">
+          <h2 className="text-2xl font-bold text-blue-900 mb-6">Summary of Refund and Deferral</h2>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border border-gray-200 text-gray-700">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="px-4 py-2 border-b text-left">Scenario</th>
+                  <th className="px-4 py-2 border-b text-left">Fee Deducted / Requirement</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="px-4 py-2 border-b">Within 10 days of first class</td>
+                  <td className="px-4 py-2 border-b">100% refund, no questions asked</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-2 border-b">After 10 days of first class</td>
+                  <td className="px-4 py-2 border-b">No refund</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-2 border-b">Pre-Program Deferral</td>
+                  <td className="px-4 py-2 border-b">50% of Program Fee upfront, no additional deferral fee</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-2 border-b">Post-Program Deferral (within 7 days)</td>
+                  <td className="px-4 py-2 border-b">10% of Program Fee as deferral fee + differential fees</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-2">Post-Program Deferral (after 7 days)</td>
+                  <td className="px-4 py-2">Must continue in current cohort</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {/* Last Updated */}
