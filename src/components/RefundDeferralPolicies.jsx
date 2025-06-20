@@ -10,7 +10,7 @@ const REFUND_POLICY = {
     content: [
       {
         title: "Refund Eligibility",
-        content: "Students are eligible for a full refund of the course fee if they withdraw from the course within 7 days of the course start date, provided they have not accessed more than 20% of the course content."
+        content: "Students are eligible for a full refund of the course fee if they withdraw from the course within 10 days of the course start date, provided they have not accessed more than 20% of the course content."
       },
       {
         title: "Refund Process",
@@ -63,7 +63,7 @@ const POLICY_SUMMARY = {
       {
         title: "Refund Policy",
         items: [
-          "Full refund within 7 days of course start",
+          "Full refund within 10 days of course start",
           "Must not access more than 20% of content",
           "15 business days processing time",
           "Non-refundable items: accessed materials, processing fees",
