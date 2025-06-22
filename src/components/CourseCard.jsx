@@ -113,8 +113,8 @@ const CourseCard = () => {
   const handleDownload = () => {
     // Create a link element and trigger download
     const link = document.createElement('a');
-    link.href = '/Agentic-AI-and-GenAI-Course-Brochure.pdf';
-    link.download = 'Agentic-AI-and-GenAI-Course-Brochure.pdf';
+    link.href = '/Overview.pdf';
+    link.download = 'Overview.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
