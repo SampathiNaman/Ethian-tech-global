@@ -5,6 +5,84 @@ import { NavLink } from 'react-router-dom';
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+const REFUND_POLICY = {
+    title: "Refund Policy",
+    content: [
+      {
+        title: "Refund Eligibility",
+        content: "Students are eligible for a full refund of the course fee if they withdraw from the course within 10 days of the course start date, provided they have not accessed more than 20% of the course content."
+      },
+      {
+        title: "Refund Process",
+        content: "To request a refund, students must submit a formal request through the course platform or contact the course administrator. The request must include the reason for withdrawal and any supporting documentation."
+      },
+      {
+        title: "Refund Timeline",
+        content: "Refunds will be processed within 15 business days of the approved refund request. The refunded amount will be credited to the original payment method used for the course purchase."
+      },
+      {
+        title: "Non-Refundable Items",
+        content: "The following items are non-refundable:\n• Course materials and resources that have been accessed or downloaded\n• Any additional services or features purchased separately\n• Processing fees associated with the course purchase"
+      },
+      {
+        title: "Special Circumstances",
+        content: "In cases of medical emergencies or other extenuating circumstances, students may be eligible for a partial refund or credit towards a future course. Each case will be evaluated on an individual basis."
+      }
+    ]
+  };
+  
+const DEFERRAL_POLICY = {
+    title: "Deferral Policy",
+    content: [
+      {
+        title: "Deferral Eligibility",
+        content: "Students may request to defer their course enrollment to a future session under the following circumstances:\n• Medical emergencies\n• Military deployment\n• Natural disasters\n• Other extenuating circumstances"
+      },
+      {
+        title: "Deferral Process",
+        content: "To request a deferral, students must submit a formal request at least 14 days before the course start date. The request must include the reason for deferral and any supporting documentation."
+      },
+      {
+        title: "Deferral Timeline",
+        content: "Deferred students must enroll in a future course session within 12 months of their original course start date. Failure to do so will result in the forfeiture of the course fee."
+      },
+      {
+        title: "Deferral Limitations",
+        content: "Students are limited to one deferral per course purchase. Additional deferrals may be granted in exceptional circumstances at the discretion of the course administrator."
+      },
+      {
+        title: "Course Content Updates",
+        content: "Deferred students will be enrolled in the most current version of the course available at the time of their new start date. Course content and materials may differ from the original course version."
+      }
+    ]
+  };
+  
+const POLICY_SUMMARY = {
+    title: "Policy Summary",
+    content: [
+      {
+        title: "Refund Policy",
+        items: [
+          "Full refund within 10 days of course start",
+          "Must not access more than 20% of content",
+          "15 business days processing time",
+          "Non-refundable items: accessed materials, processing fees",
+          "Special circumstances considered individually"
+        ]
+      },
+      {
+        title: "Deferral Policy",
+        items: [
+          "Request 14 days before course start",
+          "Valid for 12 months from original start date",
+          "One deferral per course purchase",
+          "Medical, military, disaster circumstances",
+          "Current course version at new start date"
+        ]
+      }
+    ]
+  }; 
+
 const RefundDeferralPolicies = () => {
   useEffect(() => {
     AOS.init({ duration: 1300 });
