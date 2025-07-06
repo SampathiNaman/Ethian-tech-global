@@ -421,7 +421,7 @@ const CourseCard = () => {
                   </div>
                   <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
                     <p className="text-gray-500 text-xs sm:text-sm mb-1">Admission Deadline</p>
-                    <p className="text-[#D62A91] font-semibold text-sm sm:text-base">12-July-2025</p>
+                    <p className="text-[#D62A91] font-semibold text-sm sm:text-base">19-July-2025</p>
                   </div>
                   <div className="bg-gray-50 p-3 sm:p-4 rounded-lg sm:col-span-2 lg:col-span-1">
                     <p className="text-gray-500 text-xs sm:text-sm mb-1">Duration</p>
