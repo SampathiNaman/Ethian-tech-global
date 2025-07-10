@@ -4,7 +4,8 @@ import {
   useStripe, 
   useElements,
   PaymentElement,
-  LinkAuthenticationElement
+  LinkAuthenticationElement,
+  AddressElement
 } from '@stripe/react-stripe-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -20,6 +21,7 @@ import { ErrorScreen, SuccessScreen } from './PaymentStatusComponents';
 import { formatCurrency } from '../utils/installmentUtils';
 import { useCoursePurchases } from '../context/CoursePurchasesContext';
 import toast from 'react-hot-toast';
+import { useAuth } from '../context/AuthContext'; 
 
 const InstallmentPaymentForm = ({ 
   clientSecret,
@@ -31,6 +33,7 @@ const InstallmentPaymentForm = ({
   const elements = useElements();
   const navigate = useNavigate();
   const { startPaymentProcessing } = useCoursePurchases();
+  const { user } = useAuth(); 
   
   const [email, setEmail] = useState('');
   const [paymentStatus, setPaymentStatus] = useState('idle');
@@ -39,6 +42,8 @@ const InstallmentPaymentForm = ({
   const [isSettingUpRecurring, setIsSettingUpRecurring] = useState(false);
   const [isSubsequentPayment, setIsSubsequentPayment] = useState(false);
   const [requiresAction, setRequiresAction] = useState(false);
+  const [addressComplete, setAddressComplete] = useState(false);
+  const [consentChecked, setConsentChecked] = useState(false);
 
   // Check if this is a subsequent payment
   useEffect(() => {
@@ -52,6 +57,33 @@ const InstallmentPaymentForm = ({
   const amountFormatted = useMemo(() => 
     formatCurrency(paymentDetails.amount / paymentDetails.numberOfInstallments, paymentDetails.currency)
   , [paymentDetails]);
+
+  const paymentElementOptions = useMemo(() => ({
+    wallets: { applePay: 'auto', googlePay: 'auto' },
+    layout: { type: 'tabs', defaultCollapsed: false },
+    defaultValues: {
+      billingDetails: {
+        name: user?.name || '',
+        email: user?.email || '',
+        phone: user?.phoneNo || ''
+      }
+    }
+  }), [user]);
+
+  const addressElementOptions = useMemo(() => ({
+    mode: 'billing',
+    fields: { phone: 'always' },
+    validation: { phone: { required: 'always' } },
+    autocomplete: { mode: 'automatic' },
+    defaultValues: {
+      name: user?.name || '',
+      phone: user?.phoneNo || ''
+    }
+  }), [user]);
+
+  const handleAddressChange = (event) => {
+    setAddressComplete(event.complete);
+  };
 
   const handleRetry = () => {
     setPaymentStatus('idle');
@@ -84,6 +116,14 @@ const InstallmentPaymentForm = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!stripe || !elements || paymentStatus === 'processing') return;
+    if (!addressComplete) {
+      setError({ code: 'address_incomplete', message: 'Please complete your billing address and phone number.' });
+      return;
+    }
+    if (!consentChecked) {
+      setError({ code: 'consent_required', message: 'You must agree to the Terms of Service and Refund Policy to proceed.' });
+      return;
+    }
 
     try {
       const { error: elementsError } = await elements.submit();
@@ -108,12 +148,14 @@ const InstallmentPaymentForm = ({
         elements,
         clientSecret,
         confirmParams: {
-          receipt_email: email,
+          receipt_email: user?.email || '',
           return_url: `${window.location.origin}/payment-redirect`,
           payment_method_data: {
             billing_details: {
-              email: email,
-            },
+              name: user?.name || '',
+              email: user?.email || '',
+              phone: user?.phoneNo || ''
+            }
           },
         },
         redirect: 'if_required'
@@ -177,6 +219,15 @@ const InstallmentPaymentForm = ({
           />
         </div>
       </div>
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-700 mb-2">Billing Address</label>
+        <div className="border rounded-md p-2 min-h-[120px] overflow-visible">
+          <AddressElement
+            options={addressElementOptions}
+            onChange={handleAddressChange}
+          />
+        </div>
+      </div>
 
       <div className="mb-6">
         <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -184,10 +235,7 @@ const InstallmentPaymentForm = ({
         </label>
         <div className="border rounded-md p-2">
           <PaymentElement
-            options={{
-              wallets: { applePay: 'auto', googlePay: 'auto' },
-              layout: { type: 'tabs', defaultCollapsed: false },
-            }}
+            options={paymentElementOptions}
             onChange={(e) => {
               if (e.error) {
                 setError({
@@ -200,6 +248,20 @@ const InstallmentPaymentForm = ({
             className="[&_input]:p-2 [&_input]:border [&_input]:rounded-md"
           />
         </div>
+      </div>
+
+      <div className="mb-4 flex items-start">
+        <input
+          type="checkbox"
+          id="consent"
+          checked={consentChecked}
+          onChange={e => setConsentChecked(e.target.checked)}
+          className="mr-2 mt-1"
+          required
+        />
+        <label htmlFor="consent" className="text-sm text-gray-700 select-none">
+          I agree to the <a href="/policy" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">Terms of Service</a> and <a href="/refund-deferral-policies" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">Refund Policy</a>.
+        </label>
       </div>
 
       <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-4">

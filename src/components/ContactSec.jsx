@@ -122,7 +122,7 @@ return (
                             </div>
                         </div>
                         <div className='flex wrap items-center gap-4'>
-                            <a href="https://www.facebook.com" target="_blank" rel="noreferrer">
+                            <a href="https://www.facebook.com/profile.php?id=61578266693522" target="_blank" rel="noreferrer">
                                 <img src="facebook.png" alt="Facebook Icon" className='w-10' />
                             </a>
                             <a href="https://www.youtube.com" target="_blank" rel="noreferrer">

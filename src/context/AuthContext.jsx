@@ -27,8 +27,8 @@ export const AuthProvider = ({ children }) => {
         const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/auth/me`, {
           withCredentials: true
         });
-        setUser(response.data);
-        localStorage.setItem('user', JSON.stringify(response.data));
+        setUser(response.data.user);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
       } catch (error) {
         setUser(null);
         localStorage.removeItem('user');
