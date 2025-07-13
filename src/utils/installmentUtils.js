@@ -1,7 +1,7 @@
 // Payment configuration
 export const PAYMENT_CONFIG = {
   // Base price for the course
-  basePrice: 900,
+  basePrice: 750,
   
   // Currency configuration
   currency: 'USD',
@@ -9,19 +9,19 @@ export const PAYMENT_CONFIG = {
   // Installment configurations
   installments: {
     1: {
-      amount: 900,
+      amount: 750,
       label: 'Pay Full Amount',
       highlight: 'Best Value',
       description: 'One-time payment'
     },
     2: {
-      amount: 600,
+      amount: 450,
       label: '2 Monthly Installments',
       highlight: 'Most Popular',
       description: 'Flexible payment plan'
     },
     3: {
-      amount: 500,
+      amount: 350,
       label: '3 Monthly Installments',
       highlight: 'Maximum Flexibility',
       description: 'Extended payment period'
@@ -75,41 +75,6 @@ export const getInstallmentOptions = () => {
   }));
 };
 
-// Get default payment details
-export const getDefaultPaymentDetails = () => ({
-  amount: PAYMENT_CONFIG.basePrice,
-  currency: PAYMENT_CONFIG.currency,
-  service: PAYMENT_CONFIG.service,
-  courseId: PAYMENT_CONFIG.courseId,
-  numberOfInstallments: 1
-});
-
-// Calculate installment fee based on number of installments
-export const calculateInstallmentFee = (amount, numberOfInstallments) => {
-  let feePercentage = 0.0;
-  
-  if (numberOfInstallments === 2) feePercentage = 0.20;
-  if (numberOfInstallments === 3) feePercentage = 0.40;
-  
-  return Math.ceil(amount * feePercentage);
-};
-
-// Format fee percentage with 1 decimal point
-export const formatFeePercentage = (numberOfInstallments) => {
-  let feePercentage = 0.0;
-  
-  if (numberOfInstallments === 2) feePercentage = 0.20;
-  if (numberOfInstallments === 3) feePercentage = 0.40;
-  
-  return (feePercentage * 100).toFixed(1);
-};
-
-// Calculate per installment amount including fee
-export const calculatePerInstallmentAmount = (amount, numberOfInstallments) => {
-  if (numberOfInstallments === 2) return 600;
-  if (numberOfInstallments === 3) return 500;
-  return amount;
-};
 
 // Available installment options
 export const INSTALLMENT_OPTIONS = [

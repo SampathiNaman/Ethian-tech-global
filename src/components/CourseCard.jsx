@@ -6,7 +6,6 @@ import {
   calculatePaymentDetails, 
   formatCurrency, 
   getInstallmentOptions,
-  getDefaultPaymentDetails
 } from "../utils/installmentUtils";
 import { useCoursePurchases } from '../context/CoursePurchasesContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -62,11 +61,6 @@ const CourseCard = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
-  const coursePrice = 900; // Price in USD
-  const currency = 'USD';
-  const service = 'advanced_generative_ai_course';
-  const courseId = 'advanced_generative_ai_course';
 
   const purchaseStatus = getPurchaseStatus(PAYMENT_CONFIG.courseId);
   const nextPaymentInfo = getNextPaymentInfo(PAYMENT_CONFIG.courseId);
@@ -385,8 +379,7 @@ const CourseCard = () => {
         </div>
         
         <div className="grid lg:grid-cols-2 gap-0 lg:gap-8">
-          {/* Right Image Section - now comes first on mobile */}
-          <div className="relative h-64 sm:h-80 lg:h-full min-h-[300px] sm:min-h-[400px] max-h-[calc(100vh-8rem)] sm:max-h-[calc(100vh-10rem)] lg:max-h-[calc(100vh-12rem)] order-1 lg:order-2">
+          <div className="relative h-64 sm:h-80 lg:h-[500px] order-1 lg:order-2">
             <img
               src="AI_Course_img.jpg"
               alt="Generative AI Course"
@@ -400,8 +393,7 @@ const CourseCard = () => {
               </div>
             </div>
           </div>
-          {/* Left Content - now comes second on mobile */}
-          <div className="p-4 sm:p-6 lg:p-8 overflow-y-auto max-h-[calc(100vh-8rem)] sm:max-h-[calc(100vh-10rem)] lg:max-h-[calc(100vh-12rem)] order-2 lg:order-1">
+          <div className="p-4 sm:p-6 lg:p-8 order-2 lg:order-1">
             <h2 className="text-2xl sm:text-3xl font-bold leading-tight mb-4 mt-4 sm:mt-0">
               <span className="text-[#D62A91]">Advanced Generative AI</span>
               <br />
