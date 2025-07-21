@@ -1,54 +1,63 @@
-// Payment configuration
+// Static config (no hardcoded prices)
 export const PAYMENT_CONFIG = {
-  // Base price for the course
-  basePrice: 750,
-  
-  // Currency configuration
   currency: 'USD',
-  
-  // Installment configurations
+  service: 'advanced_generative_ai_course',
+  courseId: 'advanced_generative_ai_course',
   installments: {
     1: {
-      amount: 750,
       label: 'Pay Full Amount',
       highlight: 'Best Value',
       description: 'One-time payment'
     },
     2: {
-      amount: 450,
       label: '2 Monthly Installments',
       highlight: 'Most Popular',
       description: 'Flexible payment plan'
     },
     3: {
-      amount: 350,
       label: '3 Monthly Installments',
       highlight: 'Maximum Flexibility',
       description: 'Extended payment period'
     }
-  },
+  }
+};
 
-  // Service identifier for the course
-  service: 'advanced_generative_ai_course',
-  
-  // Course identifier
-  courseId: 'advanced_generative_ai_course'
+// Dynamic price mapping by currency and installment
+const DYNAMIC_PRICE_MAP = {
+  INR: {
+    1: 25000,
+    2: 15000,
+    3: 12000
+  },
+  USD: {
+    1: 750,
+    2: 450,
+    3: 350
+  }
+  // Add more currencies/countries here
+};
+
+export const getPriceForCurrencyOrCountry = ({ currency, countryCode }, numberOfInstallments = 1) => {
+  if (currency && DYNAMIC_PRICE_MAP[currency] && DYNAMIC_PRICE_MAP[currency][numberOfInstallments]) {
+    return DYNAMIC_PRICE_MAP[currency][numberOfInstallments];
+  }
+  // Default to USD pricing if not found
+  return DYNAMIC_PRICE_MAP.USD[numberOfInstallments];
 };
 
 // Calculate payment details for a given number of installments
-export const calculatePaymentDetails = (numberOfInstallments) => {
+export const calculatePaymentDetails = (numberOfInstallments, userCurrencyInfo = {}) => {
   const installmentConfig = PAYMENT_CONFIG.installments[numberOfInstallments];
   if (!installmentConfig) {
     throw new Error(`Invalid number of installments: ${numberOfInstallments}`);
   }
-
-  const perInstallmentAmount = installmentConfig.amount;
+  const price = getPriceForCurrencyOrCountry(userCurrencyInfo, numberOfInstallments);
+  const perInstallmentAmount = price;
   const totalAmount = perInstallmentAmount * numberOfInstallments;
-
   return {
     perInstallmentAmount,
     totalAmount,
-    currency: PAYMENT_CONFIG.currency,
+    currency: userCurrencyInfo.currency || PAYMENT_CONFIG.currency,
     service: PAYMENT_CONFIG.service,
     courseId: PAYMENT_CONFIG.courseId,
     numberOfInstallments

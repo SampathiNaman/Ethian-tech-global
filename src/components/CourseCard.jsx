@@ -18,6 +18,8 @@ import { NavLink } from "react-router-dom";
 import emailjs from '@emailjs/browser';
 import toast from 'react-hot-toast';
 import CoursePurchaseButton from './CoursePurchaseButton';
+import Cookies from 'js-cookie';
+import { useAuth } from '../context/AuthContext';
 
 const services = [
   {
@@ -47,9 +49,47 @@ const services = [
   },
 ];
 
+// Dummy mapping for country/currency to price
+const PRICE_MAP = {
+  INR: 500,
+  USD: 750,
+  EUR: 700,
+  default: 750
+};
+
+const fetchCurrencyInfo = async (isLoggedIn) => {
+  if (isLoggedIn) {
+    // Fetch from backend for logged-in user
+    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/currency`, { credentials: 'include' });
+    if (res.ok) return await res.json();
+    return null;
+  } else {
+    // Guest: check cookie first
+    const cookie = Cookies.get('guestCurrencyInfo');
+    if (cookie) {
+      try {
+        const parsed = JSON.parse(cookie);
+        if (parsed.timestamp && Date.now() - parsed.timestamp < 24 * 60 * 60 * 1000) {
+          return parsed;
+        }
+      } catch {}
+    }
+    // Fetch from backend guest endpoint
+    const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/guest/currency`);
+    if (res.ok) {
+      const data = await res.json();
+      const info = { ...data, timestamp: Date.now() };
+      Cookies.set('guestCurrencyInfo', JSON.stringify(info), { expires: 1 });
+      return info;
+    }
+    return { country: undefined, countryCode: 'US', currency: 'USD', timestamp: Date.now() };
+  }
+};
+
 const CourseCard = () => {
   const navigate = useNavigate();
   const { getPurchaseStatus, getNextPaymentInfo } = useCoursePurchases();
+  const { user } = useAuth();
   const [selectedInstallments, setSelectedInstallments] = useState(1);
   const [isAutomatic, setIsAutomatic] = useState(true);
   const [showPaymentDetails, setShowPaymentDetails] = useState(false);
@@ -61,6 +101,7 @@ const CourseCard = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [userCurrency, setUserCurrency] = useState({ country: undefined, countryCode: 'US', currency: 'USD' });
 
   const purchaseStatus = getPurchaseStatus(PAYMENT_CONFIG.courseId);
   const nextPaymentInfo = getNextPaymentInfo(PAYMENT_CONFIG.courseId);
@@ -71,6 +112,15 @@ const CourseCard = () => {
       setSelectedInstallments(nextPaymentInfo.totalInstallments);
     }
   }, [purchaseStatus, nextPaymentInfo]);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetchCurrencyInfo(!!user).then(info => {
+      if (isMounted && info) setUserCurrency(info);
+      if (user) Cookies.remove('guestCurrencyInfo'); // Clear guest cookie on login
+    });
+    return () => { isMounted = false; };
+  }, [user]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -147,7 +197,7 @@ const CourseCard = () => {
         <div className="relative">
           <div className="flex overflow-x-auto pb-4 gap-2 sm:gap-3 custom-scrollbar" style={{ scrollbarWidth: 'thin', scrollbarColor: '#e055a9 #f1f1f1' }}>
             {getInstallmentOptions().map(option => {
-              const paymentDetails = calculatePaymentDetails(option.value);
+              const paymentDetails = calculatePaymentDetails(option.value, userCurrency);
               const isInProgress = purchaseStatus === 'in_progress' && nextPaymentInfo;
               const isCurrentPlan = isInProgress && option.value === nextPaymentInfo?.totalInstallments;
               const isDisabled = isInProgress && !isCurrentPlan;
@@ -194,17 +244,17 @@ const CourseCard = () => {
                       {option.value === 1 ? (
                         <>
                           <span className="text-[#D62A91] font-medium block text-base sm:text-lg">
-                            {formatCurrency(paymentDetails.perInstallmentAmount)}
+                            {formatCurrency(paymentDetails.perInstallmentAmount, userCurrency.currency)}
                           </span>
                           <span className="text-gray-600 text-xs">{option.description}</span>
                         </>
                       ) : (
                         <>
                           <span className="text-gray-600 block">
-                            {formatCurrency(paymentDetails.perInstallmentAmount)}/mo
+                            {formatCurrency(paymentDetails.perInstallmentAmount, userCurrency.currency)}/mo
                           </span>
                           <span className="text-[#D62A91] font-medium block">
-                            Total: {formatCurrency(paymentDetails.totalAmount)}
+                            Total: {formatCurrency(paymentDetails.totalAmount, userCurrency.currency)}
                           </span>
                         </>
                       )}
@@ -227,7 +277,7 @@ const CourseCard = () => {
 
     const isInProgress = purchaseStatus === 'in_progress' && nextPaymentInfo;
     const currentInstallments = isInProgress ? nextPaymentInfo.totalInstallments : selectedInstallments;
-    const paymentDetails = calculatePaymentDetails(currentInstallments);
+    const paymentDetails = calculatePaymentDetails(currentInstallments, userCurrency);
 
     return (
       <div className="my-4">
@@ -240,14 +290,14 @@ const CourseCard = () => {
               <span className="text-xs sm:text-sm text-gray-600">Selected Plan</span>
               <span className="text-sm sm:text-lg font-semibold text-gray-900 truncate">
                 {currentInstallments === 1 
-                  ? formatCurrency(paymentDetails.perInstallmentAmount)
-                  : `${formatCurrency(paymentDetails.perInstallmentAmount)} × ${currentInstallments} months`
+                  ? formatCurrency(paymentDetails.perInstallmentAmount, userCurrency.currency)
+                  : `${formatCurrency(paymentDetails.perInstallmentAmount, userCurrency.currency)} × ${currentInstallments} months`
                 }
               </span>
             </div>
             {currentInstallments > 1 && (
               <span className="text-xs sm:text-sm text-gray-500 flex-shrink-0">
-                (Total: {formatCurrency(paymentDetails.totalAmount)})
+                (Total: {formatCurrency(paymentDetails.totalAmount, userCurrency.currency)})
               </span>
             )}
           </div>
@@ -264,17 +314,17 @@ const CourseCard = () => {
               {currentInstallments === 1 ? (
                 <div className="flex justify-between">
                   <span className="text-gray-600">Total Amount:</span>
-                  <span className="font-medium">{formatCurrency(paymentDetails.perInstallmentAmount)}</span>
+                  <span className="font-medium">{formatCurrency(paymentDetails.perInstallmentAmount, userCurrency.currency)}</span>
                 </div>
               ) : (
                 <>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Per Installment:</span>
-                    <span className="font-medium">{formatCurrency(paymentDetails.perInstallmentAmount)}</span>
+                    <span className="font-medium">{formatCurrency(paymentDetails.perInstallmentAmount, userCurrency.currency)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Total Amount:</span>
-                    <span className="font-medium">{formatCurrency(paymentDetails.totalAmount)}</span>
+                    <span className="font-medium">{formatCurrency(paymentDetails.totalAmount, userCurrency.currency)}</span>
                   </div>
                   {isInProgress && nextPaymentInfo && (
                     <>
@@ -337,7 +387,7 @@ const CourseCard = () => {
       );
     }
 
-    const paymentDetails = calculatePaymentDetails(selectedInstallments);
+    const paymentDetails = calculatePaymentDetails(selectedInstallments, userCurrency);
 
     return (
       <div className="flex flex-col gap-4 mb-6">
