@@ -342,25 +342,25 @@ const CourseCard = () => {
                       </div>
                     </div>
                     <div className="text-xs sm:text-sm space-y-1">
-                      <div className="text-gray-600">{option.description}</div>
+                      <p className="text-gray-600">{option.description}</p>
                         {appliedCoupon && discounted < paymentDetails.perInstallmentAmount ? (
-                          <p>
+                          <div>
                             <span className="line-through text-gray-400 mr-2">{formatCurrency(paymentDetails.perInstallmentAmount, userCurrency.currency)}</span>
-                            <span className="text-[#D62A91] font-bold">{formatCurrency(discounted, userCurrency.currency)}{option.value>1 && ` /mo`}</span>
-                          </p>
+                            <span className={`text-[#D62A91] ${option.value===1 && "text-sm sm:text-lg"} font-bold`}>{formatCurrency(discounted, userCurrency.currency)}{option.value>1 && ` /mo`}</span>
+                          </div>
                         ) : (
-                          <span className="text-[#D62A91] font-bold">{formatCurrency(paymentDetails.perInstallmentAmount, userCurrency.currency)}{option.value>1 && ` /mo`}</span>
+                          <p className={`text-[#D62A91] ${option.value===1 && "text-sm sm:text-lg"} font-bold`}>{formatCurrency(paymentDetails.perInstallmentAmount, userCurrency.currency)}{option.value>1 && ` /mo`}</p>
                         )}
                       {option.value > 1 && (
                         <div>
-                          <span className="text-gray-600">Total:</span>
+                          <span className="text-gray-600">Total: </span>
                           {appliedCoupon && totalDiscounted < paymentDetails.totalAmount ? (
                             <span>
                               <span className="line-through text-gray-400 mx-2">{formatCurrency(paymentDetails.totalAmount, userCurrency.currency)}</span>
-                              <span className="text-[#D62A91] font-bold">{formatCurrency(totalDiscounted, userCurrency.currency)}</span>
+                              <span className="text-[#D62A91] text-sm sm:text-lg font-bold">{formatCurrency(totalDiscounted, userCurrency.currency)}</span>
                             </span>
                           ) : (
-                            <span className="text-[#D62A91] font-bold">{formatCurrency(paymentDetails.totalAmount, userCurrency.currency)}</span>
+                            <span className="text-[#D62A91] text-sm sm:text-lg font-bold">{formatCurrency(paymentDetails.totalAmount, userCurrency.currency)}</span>
                           )}
                         </div>
                       )}
