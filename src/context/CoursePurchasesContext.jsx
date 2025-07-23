@@ -12,6 +12,7 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
 // Provider component
 export const CoursePurchasesProvider = ({ children }) => {
+
   const [purchases, setPurchases] = useState(() => {
     const cachedData = localStorage.getItem(CACHE_KEY);
     const timestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
@@ -180,6 +181,19 @@ export const CoursePurchasesProvider = ({ children }) => {
     };
   }, [purchases]);
 
+
+
+  const getCouponDetails = useCallback((courseId) => {
+    const purchase = purchases.find(p => p.courseId === courseId);
+    if (!purchase || !purchase.isInstallment || !purchase.coupon) return null;
+    return {
+      code: purchase.coupon.code,
+      type: purchase.coupon.type,
+      value: purchase.coupon.value,
+      discountAmount: purchase.discountAmount || null
+    };
+  }, [purchases]);
+
   const value = {
     purchases,
     loading,
@@ -187,6 +201,7 @@ export const CoursePurchasesProvider = ({ children }) => {
     getPurchaseStatus,
     getInstallmentDetails,
     getNextPaymentInfo,
+    getCouponDetails,
     refreshPurchases: () => fetchPurchases(true), // Force refresh
     startPaymentProcessing,
     stopPaymentProcessing,

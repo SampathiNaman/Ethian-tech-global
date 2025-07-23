@@ -106,3 +106,45 @@ export const INSTALLMENT_OPTIONS = [
     description: 'Extended payment period'
   }
 ]; 
+
+// Utility to build payment payload for backend
+export function buildPaymentPayload({
+  numberOfInstallments,
+  userCurrency,
+  appliedCoupon,
+  service,
+  courseId
+}) {
+  const paymentDetails = calculatePaymentDetails(numberOfInstallments, userCurrency);
+  const originalAmount = paymentDetails.perInstallmentAmount * numberOfInstallments;
+  let discountedAmount = originalAmount;
+
+  let couponMeta = undefined;
+  if (appliedCoupon) {
+    couponMeta = {
+      code: appliedCoupon.promoCode || appliedCoupon.code,
+      type: appliedCoupon.discountType || appliedCoupon.type,
+      value: appliedCoupon.discountValue || appliedCoupon.value,
+      couponId: appliedCoupon.couponId,
+      promoCode: appliedCoupon.promoCode,
+    };
+    if (couponMeta.type === 'percent') {
+      discountedAmount = Math.round(originalAmount * (1 - couponMeta.value / 100));
+    } else if (couponMeta.type === 'amount') {
+      discountedAmount = originalAmount - couponMeta.value;
+    }
+  }
+
+  return {
+    amount: discountedAmount,
+    originalAmount,
+    currency: paymentDetails.currency,
+    numberOfInstallments,
+    service,
+    courseId,
+    metadata: {
+      product_type: service,
+      ...(couponMeta && { coupon: couponMeta })
+    }
+  };
+} 

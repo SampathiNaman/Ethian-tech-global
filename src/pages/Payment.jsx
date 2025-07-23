@@ -61,31 +61,16 @@ const Payment = () => {
       return;
     }
 
-    const { amount, currency, service, courseId } = location.state;
-
-    if (!amount || !currency || !service || !courseId) {
-      setError('Invalid payment details');
-      setLoading(false);
-      return;
-    }
-
     setLoading(true);
     setError(null);
     if (abortControllerRef.current) abortControllerRef.current.abort();
     const controller = new AbortController();
     abortControllerRef.current = controller;
-
+    
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/api/payments/create-intent`,
-        {
-          amount,
-          currency,
-          metadata: {
-            product_type: service,
-            course_id: courseId
-          },
-        },
+        location.state, // Send the full payload as built by CoursePurchaseButton
         {
           headers: {
             'Content-Type': 'application/json',

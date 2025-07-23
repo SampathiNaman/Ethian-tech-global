@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import { buildPaymentPayload } from '../utils/installmentUtils';
 
 const CoursePurchaseButton = ({ 
   courseId,
@@ -14,6 +15,8 @@ const CoursePurchaseButton = ({
   className = '',
   selectedInstallments = 1,
   isAutomatic = true,
+  appliedCoupon = null,
+  userCurrency = {},
 }) => {
   const navigate = useNavigate();
   const { user, openLoginPopup } = useAuth();
@@ -23,16 +26,16 @@ const CoursePurchaseButton = ({
   const handlePurchaseClick = async () => {
     // If not logged in, show login popup
     if (!user) {
-      const paymentDetails = {
-        amount: price,
-        currency,
+      const paymentPayload = buildPaymentPayload({
         numberOfInstallments: selectedInstallments,
-        isAutomatic,
+        userCurrency,
+        appliedCoupon,
         service,
         courseId
-      };
+      });
+      paymentPayload.isAutomatic = isAutomatic;
       const redirectPath = selectedInstallments === 1 ? '/payment' : '/installment-payment';
-      openLoginPopup(redirectPath, paymentDetails);
+      openLoginPopup(redirectPath, paymentPayload);
       return;
     }
 
@@ -42,33 +45,34 @@ const CoursePurchaseButton = ({
         withCredentials: true
       });
 
-      const paymentDetails = {
-        amount: price,
-        currency,
+      const paymentPayload = buildPaymentPayload({
         numberOfInstallments: selectedInstallments,
-        isAutomatic,
+        userCurrency,
+        appliedCoupon,
         service,
         courseId
-      };
+      });
+      paymentPayload.isAutomatic = isAutomatic;
 
+      // Pass the full payload to navigation or API
       if (selectedInstallments === 1) {
-        navigate('/payment', { state: paymentDetails });
+        navigate('/payment', { state: paymentPayload });
       } else {
-        navigate('/installment-payment', { state: paymentDetails });
+        navigate('/installment-payment', { state: paymentPayload });
       }
     } catch (error) {
       // If session is invalid, show login popup
       if (error.response?.status === 401) {
-        const paymentDetails = {
-          amount: price,
-          currency,
+        const paymentPayload = buildPaymentPayload({
           numberOfInstallments: selectedInstallments,
-          isAutomatic,
+          userCurrency,
+          appliedCoupon,
           service,
           courseId
-        };
+        });
+        paymentPayload.isAutomatic = isAutomatic;
         const redirectPath = selectedInstallments === 1 ? '/payment' : '/installment-payment';
-        openLoginPopup(redirectPath, paymentDetails);
+        openLoginPopup(redirectPath, paymentPayload);
       }
     }
   };
@@ -137,7 +141,9 @@ CoursePurchaseButton.propTypes = {
   service: PropTypes.string.isRequired,
   className: PropTypes.string,
   selectedInstallments: PropTypes.number,
-  isAutomatic: PropTypes.bool
+  isAutomatic: PropTypes.bool,
+  appliedCoupon: PropTypes.object,
+  userCurrency: PropTypes.object
 };
 
 export default CoursePurchaseButton; 

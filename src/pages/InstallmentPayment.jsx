@@ -62,14 +62,6 @@ const InstallmentPayment = () => {
       return;
     }
 
-    const { amount, currency, service, courseId, numberOfInstallments, isAutomatic } = location.state;
-
-    if (!amount || !currency || !service || !courseId || !numberOfInstallments) {
-      setError('Invalid payment details');
-      setLoading(false);
-      return;
-    }
-
     setLoading(true);
     setError(null);
     if (abortControllerRef.current) abortControllerRef.current.abort();
@@ -79,22 +71,7 @@ const InstallmentPayment = () => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/api/payments/create-installment`,
-        {
-          amount,
-          currency,
-          numberOfInstallments,
-          isAutomatic,
-          metadata: {
-            product_type: service,
-            course_id: courseId,
-            is_installment: true,
-            installment_details: {
-              total_installments: numberOfInstallments,
-              current_installment: 1,
-              is_automatic: isAutomatic
-            }
-          }
-        },
+        location.state, // Send the full payload as built by CoursePurchaseButton
         {
           headers: {
             'Content-Type': 'application/json',
