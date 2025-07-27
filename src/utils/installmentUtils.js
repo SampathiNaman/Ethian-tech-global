@@ -249,22 +249,26 @@ export function buildPaymentPayload({
   courseId
 }) {
   const paymentDetails = calculatePaymentDetails(numberOfInstallments, userCurrency);
-  const originalAmount = paymentDetails.perInstallmentAmount * numberOfInstallments;
+  let originalAmount = paymentDetails.totalAmount;
   let discountedAmount = originalAmount;
-
+  
   let couponMeta = undefined;
+  
   if (appliedCoupon) {
+    // Both referral and regular coupons use the same coupon structure
     couponMeta = {
-      code: appliedCoupon.promoCode || appliedCoupon.code,
-      type: appliedCoupon.discountType || appliedCoupon.type,
-      value: appliedCoupon.discountValue || appliedCoupon.value,
-      couponId: appliedCoupon.couponId,
-      promoCode: appliedCoupon.promoCode,
+      couponId: appliedCoupon.couponId, // null for referrals, actual ID for coupons
+      couponCode: appliedCoupon.couponCode, // referral code for referrals, coupon code for coupons
+      discountType: appliedCoupon.discountType,
+      discountValue: appliedCoupon.discountValue,
+      isReferral: appliedCoupon.isReferral // Flag to distinguish between referral and coupon
     };
-    if (couponMeta.type === 'percent') {
-      discountedAmount = Math.round(originalAmount * (1 - couponMeta.value / 100));
-    } else if (couponMeta.type === 'amount') {
-      discountedAmount = originalAmount - couponMeta.value;
+    
+    // Calculate discount
+    if (appliedCoupon.discountType === 'percent') {
+      discountedAmount = Math.round(originalAmount * (1 - appliedCoupon.discountValue / 100));
+    } else if (appliedCoupon.discountType === 'amount') {
+      discountedAmount = originalAmount - appliedCoupon.discountValue;
     }
   }
 
@@ -277,7 +281,7 @@ export function buildPaymentPayload({
     courseId,
     metadata: {
       product_type: service,
-      ...(couponMeta && { coupon: couponMeta })
+      ...(couponMeta && { coupon: couponMeta }) // Send unified coupon structure
     }
   };
 } 

@@ -18,6 +18,7 @@ import PaymentRedirect from './pages/PaymentRedirect';
 import LoginPopup from './components/LoginPopup';
 import SignupPopup from './components/SignupPopup';
 import ForgotPasswordPopup from './components/ForgotPasswordPopup';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function App() {
   // Wake up backend on app load
@@ -38,8 +39,9 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <Toaster
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <div className="App">
+        <Toaster
           position="top-right"
           reverseOrder={false}
           gutter={24}
@@ -61,6 +63,7 @@ function App() {
           </AuthProvider>
       </BrowserRouter>
     </div>
+    </GoogleOAuthProvider>
   );
 }
 

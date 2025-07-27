@@ -16,12 +16,12 @@ import {
   faCheckCircle
 } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
-import { errorMap } from '../utils/errorMap';
 import { ErrorScreen, SuccessScreen } from './PaymentStatusComponents';
 import { formatCurrency } from '../utils/installmentUtils';
 import { useCoursePurchases } from '../context/CoursePurchasesContext';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext'; 
+import { normalizeError, handlePaymentError } from '../utils/errorMap';
 
 const InstallmentPaymentForm = ({ 
   clientSecret,
@@ -95,19 +95,8 @@ const InstallmentPaymentForm = ({
     navigate('/training', { replace: true });
   };
 
-  const handlePaymentError = (error) => {
-    let code = error.code || (error.type ? error.type.replace(/\s+/g, '_').toLowerCase() : undefined);
-    let message = error.message || 'Payment processing failed';
-    
-    if (!code || !errorMap[code]) {
-      code = 'unknown_error';
-    }
-    
-    setError({
-      code,
-      message: errorMap[code] || message,
-    });
-    
+  const handlePaymentErrorWrapper = (error) => {
+    setError(handlePaymentError(error));
     if (onPaymentError) {
       onPaymentError(error);
     }
@@ -117,26 +106,24 @@ const InstallmentPaymentForm = ({
     e.preventDefault();
     if (!stripe || !elements || paymentStatus === 'processing') return;
     if (!addressComplete) {
-      setError({ code: 'address_incomplete', message: 'Please complete your billing address and phone number.' });
+      setError(normalizeError({ code: 'address_incomplete', message: 'Please complete your billing address and phone number.' }));
       return;
     }
     if (!consentChecked) {
-      setError({ code: 'consent_required', message: 'You must agree to the Terms of Service and Refund Policy to proceed.' });
+      setError(normalizeError({ code: 'consent_required', message: 'You must agree to the Terms of Service and Refund Policy to proceed.' }));
       return;
     }
 
     try {
       const { error: elementsError } = await elements.submit();
       if (elementsError) {
-        throw elementsError;
+        handlePaymentErrorWrapper(elementsError);
+        return;
       }
 
       if (retryCount >= 5) {
-        throw {
-          code: 'max_retries',
-          message: errorMap['max_retries'],
-          type: 'card_error',
-        };
+        setError(normalizeError({ code: 'max_retries', message: 'Maximum retry attempts reached. Please start over.' }));
+        return;
       }
 
       setPaymentStatus('processing');
@@ -162,7 +149,9 @@ const InstallmentPaymentForm = ({
       });
 
       if (confirmError) {
-        throw confirmError;
+        handlePaymentErrorWrapper(confirmError);
+        setPaymentStatus('failed');
+        return;
       }
 
       // Handle successful payment
@@ -184,7 +173,7 @@ const InstallmentPaymentForm = ({
       }
     } catch (err) {
       setPaymentStatus('failed');
-      handlePaymentError(err);
+      handlePaymentErrorWrapper(err);
     }
   };
 
@@ -238,10 +227,7 @@ const InstallmentPaymentForm = ({
             options={paymentElementOptions}
             onChange={(e) => {
               if (e.error) {
-                setError({
-                  code: e.error.code,
-                  message: e.error.message
-                });
+                setError(handlePaymentError(e));
               }
               else if (e.complete) setError(null);
             }}
@@ -272,7 +258,7 @@ const InstallmentPaymentForm = ({
             aria-hidden="true"
           />
           <div>
-            <p className="text-sm text-blue-700">
+            <div className="text-sm text-blue-700">
               {paymentDetails.numberOfInstallments === 1 ? (
                 'You will be charged the full amount now.'
               ) : (
@@ -299,7 +285,7 @@ const InstallmentPaymentForm = ({
                   )}
                 </>
               )}
-            </p>
+            </div>
           </div>
         </div>
       </div>
@@ -377,7 +363,7 @@ const InstallmentPaymentForm = ({
         )}
         {paymentStatus === 'succeeded' && (
           <div className="flex flex-col items-center justify-center min-h-[200px]">
-            <SuccessScreen onClose={() => navigate('/training', { replace: true })} />
+            <SuccessScreen onClose={handleClose} />
           </div>
         )}
         {paymentStatus === 'failed' && error && (

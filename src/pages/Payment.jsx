@@ -9,6 +9,7 @@ import { ErrorScreen } from '../components/PaymentStatusComponents';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useCoursePurchases } from '../context/CoursePurchasesContext';
+import { handlePaymentError, normalizeError } from '../utils/errorMap';
 
 const RETRY_LIMIT = 5;
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
@@ -56,7 +57,7 @@ const Payment = () => {
 
   const createPaymentIntent = useCallback(async () => {
     if (!location.state) {
-      setError('Missing payment details');
+      setError(normalizeError({ code: 'missing_payment_details', message: 'Missing payment details' }));
       setLoading(false);
       return;
     }
@@ -70,7 +71,7 @@ const Payment = () => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/api/payments/create-intent`,
-        location.state, // Send the full payload as built by CoursePurchaseButton
+        location.state,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -83,7 +84,7 @@ const Payment = () => {
       );
 
       if (!response.data?.clientSecret) {
-        throw new Error('Invalid response from server');
+        throw new Error('Invalid response from server: Missing client secret');
       }
 
       if (isMountedRef.current) {
@@ -92,7 +93,8 @@ const Payment = () => {
       }
     } catch (err) {
       if (isMountedRef.current) {
-        setError(err.message || 'An error occurred while creating the payment intent.');
+        const normalizedError = handlePaymentError(err, 'payment_intent_creation');
+        setError(normalizedError);
         setClientSecret('');
       }
     } finally {
@@ -102,7 +104,7 @@ const Payment = () => {
 
   useEffect(() => {
     if (!location.state) {
-      setError('Invalid payment details. Go back and try again.');
+      setError(normalizeError({ code: 'invalid_payment_details', message: 'Invalid payment details. Go back and try again.' }));
       setLoading(false);
       return;
     }
@@ -114,11 +116,12 @@ const Payment = () => {
 
   const handleRetry = () => {
     if (retryCount >= RETRY_LIMIT) {
-      setError('Maximum retry attempts reached. Please start over.');
+      setError(normalizeError({ code: 'max_retries', message: 'Maximum retry attempts reached. Please start over.' }));
       return;
     }
     setRetryCount((prev) => prev + 1);
     setError(null);
+    setIdempotencyKey(uuidv4());
     createPaymentIntent();
   };
 
@@ -129,8 +132,8 @@ const Payment = () => {
   const renderContent = () => {
     if (loading) return <Spinner />;
     if (error) return <ErrorScreen error={error} onRetry={handleRetry} onClose={() => navigate(-1)} />;
-    if (!location.state) return <ErrorScreen error="Missing payment details. Please start over." onRetry={() => navigate(-1)} onClose={() => navigate(-1)} />;
-    if (!clientSecret) return <ErrorScreen error="Failed to initialize payment. Please try again." onRetry={handleRetry} onClose={() => navigate(-1)} />;
+    if (!location.state) return <ErrorScreen error={normalizeError({ code: 'missing_payment_details', message: 'Missing payment details. Please start over.' })} onClose={() => navigate(-1)} />;
+    if (!clientSecret) return <ErrorScreen error={normalizeError({ code: 'payment_initialization_failed', message: 'Failed to initialize payment. Please try again.' })} onClose={() => navigate(-1)} />;
 
     return (
       <div className="payment-section w-full max-w-xl px-2 sm:px-0">

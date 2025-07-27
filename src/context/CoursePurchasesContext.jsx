@@ -155,6 +155,7 @@ export const CoursePurchasesProvider = ({ children }) => {
     }
 
     const purchase = purchases.find(p => p.courseId === courseId);
+    
     if (!purchase) return 'none';
     return purchase.purchaseStatus;
   }, [purchases, paymentSuccess]);
@@ -166,18 +167,29 @@ export const CoursePurchasesProvider = ({ children }) => {
 
   const getNextPaymentInfo = useCallback((courseId) => {
     const purchase = purchases.find(p => p.courseId === courseId);
+    
     if (!purchase || !purchase.isInstallment) return null;
 
     const { installmentDetails, remainingAmount } = purchase;
+    
     if (!installmentDetails) return null;
 
+    // Handle different field names in the purchase object
+    const nextPaymentDate = purchase.nextInstallmentDue || installmentDetails.nextPaymentDate;
+    const completedInstallments = installmentDetails.completedInstallments || 0;
+    const nextInstallmentNumber = completedInstallments + 1;
+    
+    // Calculate next payment amount if not provided
+    const remainingInstallments = installmentDetails.totalInstallments - completedInstallments;
+    const nextPaymentAmount = installmentDetails.nextPaymentAmount || Math.ceil(remainingAmount / remainingInstallments);
+
     return {
-      nextInstallmentNumber: installmentDetails.nextInstallmentNumber,
-      nextPaymentDate: new Date(installmentDetails.nextPaymentDate),
+      nextInstallmentNumber,
+      nextPaymentDate: new Date(nextPaymentDate),
       remainingAmount,
       isAutomatic: installmentDetails.isAutomatic,
       totalInstallments: installmentDetails.totalInstallments,
-      nextPaymentAmount: installmentDetails.nextPaymentAmount
+      nextPaymentAmount
     };
   }, [purchases]);
 
@@ -185,11 +197,13 @@ export const CoursePurchasesProvider = ({ children }) => {
 
   const getCouponDetails = useCallback((courseId) => {
     const purchase = purchases.find(p => p.courseId === courseId);
-    if (!purchase || !purchase.isInstallment || !purchase.coupon) return null;
+    if (!purchase || !purchase.coupon) return null;
     return {
-      code: purchase.coupon.code,
-      type: purchase.coupon.type,
-      value: purchase.coupon.value,
+      couponId: purchase.coupon.couponId || null, // Handle null couponId for referrals
+      couponCode: purchase.coupon.couponCode,
+      discountType: purchase.coupon.discountType,
+      discountValue: purchase.coupon.discountValue,
+      isReferral: purchase.coupon.isReferral,
       discountAmount: purchase.discountAmount || null
     };
   }, [purchases]);

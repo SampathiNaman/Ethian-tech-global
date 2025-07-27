@@ -20,8 +20,26 @@ const CoursePurchaseButton = ({
 }) => {
   const navigate = useNavigate();
   const { user, openLoginPopup } = useAuth();
-  const { getPurchaseStatus, paymentSuccess } = useCoursePurchases();
+  const { getPurchaseStatus, paymentSuccess, getCouponDetails } = useCoursePurchases();
   const purchaseStatus = getPurchaseStatus(courseId);
+
+  // Get auto-applied coupon for in-progress installments
+  const getAutoAppliedCoupon = () => {
+    if (purchaseStatus === 'in_progress') {
+      const existingCoupon = getCouponDetails(courseId);
+      if (existingCoupon) {
+        return {
+          couponId: existingCoupon.couponId || null, // Use actual couponId if available
+          couponCode: existingCoupon.couponCode,
+          discountType: existingCoupon.discountType,
+          discountValue: existingCoupon.discountValue,
+          isReferral: existingCoupon.isReferral,
+          message: 'Existing discount applied'
+        };
+      }
+    }
+    return appliedCoupon;
+  };
 
   const handlePurchaseClick = async () => {
     // If not logged in, show login popup
@@ -29,7 +47,7 @@ const CoursePurchaseButton = ({
       const paymentPayload = buildPaymentPayload({
         numberOfInstallments: selectedInstallments,
         userCurrency,
-        appliedCoupon,
+        appliedCoupon: getAutoAppliedCoupon(),
         service,
         courseId
       });
@@ -46,18 +64,18 @@ const CoursePurchaseButton = ({
       });
 
       const paymentPayload = buildPaymentPayload({
-        numberOfInstallments: selectedInstallments,
+      numberOfInstallments: selectedInstallments,
         userCurrency,
-        appliedCoupon,
-        service,
-        courseId
+        appliedCoupon: getAutoAppliedCoupon(),
+      service,
+      courseId
       });
       paymentPayload.isAutomatic = isAutomatic;
 
       // Pass the full payload to navigation or API
-      if (selectedInstallments === 1) {
+    if (selectedInstallments === 1) {
         navigate('/payment', { state: paymentPayload });
-      } else {
+    } else {
         navigate('/installment-payment', { state: paymentPayload });
       }
     } catch (error) {
@@ -66,7 +84,7 @@ const CoursePurchaseButton = ({
         const paymentPayload = buildPaymentPayload({
           numberOfInstallments: selectedInstallments,
           userCurrency,
-          appliedCoupon,
+          appliedCoupon: getAutoAppliedCoupon(),
           service,
           courseId
         });

@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { SuccessScreen, ErrorScreen } from '../components/PaymentStatusComponents';
 import { useCoursePurchases } from '../context/CoursePurchasesContext';
+import { normalizeError } from '../utils/errorMap';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -19,7 +20,7 @@ const PaymentRedirect = () => {
     const clientSecret = searchParams.get('payment_intent_client_secret');
     if (!clientSecret) {
       setStatus('failed');
-      setError('Missing payment intent client secret.');
+      setError(normalizeError({ code: 'missing_client_secret', message: 'Missing payment intent client secret.' }));
       return;
     }
 
@@ -28,7 +29,7 @@ const PaymentRedirect = () => {
       if (!stripe) {
         if (isMounted) {
           setStatus('failed');
-          setError('Stripe failed to load.');
+          setError(normalizeError({ code: 'stripe_load_failed', message: 'Stripe failed to load.' }));
         }
         return;
       }
@@ -40,11 +41,14 @@ const PaymentRedirect = () => {
           startPaymentProcessing();
         } else {
           setStatus('failed');
-          setError(paymentIntent?.last_payment_error || paymentIntent?.last_payment_error?.message || 'Payment failed after redirect.');
+          const errorMessage = paymentIntent?.last_payment_error?.message || 
+                             paymentIntent?.last_payment_error || 
+                             'Payment failed after redirect.';
+          setError(normalizeError({ code: 'payment_failed', message: errorMessage }));
         }
-      } catch {
+      } catch (err) {
         setStatus('failed');
-        setError('Failed to retrieve payment status.');
+        setError(normalizeError({ code: 'payment_status_retrieval_failed', message: 'Failed to retrieve payment status.' }));
       }
     });
     return () => { isMounted = false; };

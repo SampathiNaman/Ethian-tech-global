@@ -14,10 +14,10 @@ import {
   faInfoCircle
 } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
-import { errorMap } from '../utils/errorMap';
 import { ErrorScreen, SuccessScreen } from './PaymentStatusComponents';
 import { useCoursePurchases } from '../context/CoursePurchasesContext';
 import { useAuth } from '../context/AuthContext'; 
+import { normalizeError, handlePaymentError } from '../utils/errorMap';
 
 const PaymentForm = ({ 
   clientSecret,
@@ -56,20 +56,6 @@ const PaymentForm = ({
     setRetryCount(retry => retry + 1);
   }
 
-  const handlePaymentError = (error) => {
-    let code = error.code || (error.type ? error.type.replace(/\s+/g, '_').toLowerCase() : undefined);
-    let message = error.message || 'Payment processing failed';
-    
-    if (!code || !errorMap[code]) {
-      code = 'unknown_error';
-    }
-    
-    setError({
-      code,
-      message: errorMap[code] || message,
-    });
-  };
-
   const handleAddressChange = (event) => {
     setAddressComplete(event.complete);
   };
@@ -101,24 +87,22 @@ const PaymentForm = ({
     e.preventDefault();
     if (!stripe || !elements || paymentStatus === 'processing') return;
     if (!addressComplete) {
-      setError({ code: 'address_incomplete', message: 'Please complete your billing address and phone number.' });
+      setError(normalizeError({ code: 'address_incomplete', message: 'Please complete your billing address and phone number.' }));
+      return;
     }
     if (!consentChecked) {
-      setError({ code: 'consent_required', message: 'You must agree to the Terms of Service and Refund Policy to proceed.' });
+      setError(normalizeError({ code: 'consent_required', message: 'You must agree to the Terms of Service and Refund Policy to proceed.' }));
       return;
     }
 
     const { error: elementsError } = await elements.submit();
     if (elementsError) {
+      setError(handlePaymentError(elementsError));
       return;
     }
 
     if (retryCount >= 5) {
-      setError({
-        code: 'max_retries_reached',
-        message: 'Maximum retry attempts reached. Please start over.',
-        type: 'card_error',
-      });
+      setError(normalizeError({ code: 'max_retries_reached', message: 'Maximum retry attempts reached. Please start over.' }));
       return;
     }
 
@@ -145,11 +129,9 @@ const PaymentForm = ({
       });
 
       if (confirmError) {
-        throw {
-          code: confirmError.code,
-          message: confirmError.message,
-          type: confirmError.type,
-        };
+        setError(handlePaymentError(confirmError));
+        setPaymentStatus('failed');
+        return;
       }
 
       if (paymentIntent?.status === 'succeeded' || paymentIntent?.status === 'processing') {
@@ -165,7 +147,7 @@ const PaymentForm = ({
       }
     } catch (err) {
       setPaymentStatus('failed');
-      handlePaymentError(err);
+      setError(handlePaymentError(err));
     }
   };
 
@@ -203,10 +185,7 @@ const PaymentForm = ({
             options={paymentElementOptions}
             onChange={(e) => {
               if (e.error) {
-                setError({
-                  code: e.error.code,
-                  message: e.error.message
-                });
+                setError(handlePaymentError(e));
               }
               else if (e.complete) setError(null);
             }}
