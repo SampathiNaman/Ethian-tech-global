@@ -357,7 +357,47 @@ const CourseCard = () => {
         )}
       </div>
     );
-      }
+  }
+
+  const renderReferralCode = () => {
+    // Only show referral code if user is logged in, has no purchases, and no coupon is applied
+    if (!user || 
+        purchaseStatus !== 'none' || 
+        appliedCoupon || 
+        !user.referralCode) {
+      return null;
+    }
+
+    const handleCopyCode = () => {
+      navigator.clipboard.writeText(user.referralCode);
+      toast.success('Referral code copied!');
+    };
+
+    return (
+      <div className="mb-4 p-3 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg">
+        <div className="flex-1 flex items-center justify-between gap-2 mb-2">
+          <p className="text-sm font-medium text-gray-800">
+            Share your referral code
+          </p>
+          <div className="flex items-center gap-2">
+            <code className="bg-white px-3 py-1 rounded border text-sm font-mono text-nowrap text-blue-600 border-blue-300">
+              {user.referralCode}
+            </code>
+            <button
+              onClick={handleCopyCode}
+              className="text-blue-600 hover:text-blue-800 text-xs font-medium"
+            >
+              Copy
+            </button>
+          </div>
+        </div>
+        <p className="text-xs text-gray-600">
+          You get <span className="font-semibold text-green-600">15% off. </span>
+          Your friends gets <span className="font-semibold text-green-600">10% off</span>
+        </p>
+      </div>
+    );
+  }
 
   const renderAutoAppliedCoupon = () => {
     // Show auto-applied coupon for in-progress installments OR when referrer coupon is auto-applied
@@ -725,7 +765,7 @@ const CourseCard = () => {
               </div>
                   <div className="bg-gray-50 p-3 sm:p-4 rounded-lg">
                     <p className="text-gray-500 text-xs sm:text-sm mb-1">Admission Deadline</p>
-                    <p className="text-[#D62A91] font-semibold text-sm sm:text-base">19-July-2025</p>
+                    <p className="text-[#D62A91] font-semibold text-sm sm:text-base">9-Aug-2025</p>
               </div>
                   <div className="bg-gray-50 p-3 sm:p-4 rounded-lg sm:col-span-2 lg:col-span-1">
                     <p className="text-gray-500 text-xs sm:text-sm mb-1">Duration</p>
@@ -752,6 +792,7 @@ const CourseCard = () => {
               <div className="space-y-4">
             {renderPaymentOptions()}
                 {renderCouponInput()}
+                {renderReferralCode()}
                 {renderAutoAppliedCoupon()}
             {renderInstallmentDetails()}
                 <div className="border-t border-gray-200 pt-4 mb-6">

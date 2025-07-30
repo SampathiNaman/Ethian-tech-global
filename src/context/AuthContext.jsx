@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect, useCallback } from 'rea
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import Cookies from 'js-cookie';
 
 const AuthContext = createContext();
 
@@ -30,14 +31,45 @@ export const AuthProvider = ({ children }) => {
         setUser(response.data.user);
         localStorage.setItem('user', JSON.stringify(response.data.user));
       } catch (error) {
-        setUser(null);
-        localStorage.removeItem('user');
+        logout('Session expired. Please log in again.');
       } finally {
         setLoading(false);
       }
     };
     checkAuth();
   }, []);
+
+
+  const logout = async (message = null) => {
+    try {
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/logout`, {}, {
+        withCredentials: true
+      });
+
+      // If user logged in with Google, also sign out from Google
+      const googleAuth = window.google?.accounts?.oauth2;
+      if (googleAuth) {
+        try {
+          await googleAuth.revoke(user?.email);
+        } catch (err) {
+        }
+      }
+    } catch (error) {
+    } finally {
+      setUser(null);
+      localStorage.removeItem('user');
+      Cookies.remove('guestCurrencyInfo'); 
+      
+      if (message) {
+        toast.info(message);
+      }
+
+      // Only navigate if we're not already on the home page
+      if (window.location.pathname !== '/') {
+        navigate('/');
+      }
+    }
+  };
 
   const login = useCallback(async (userData) => {
     setUser(userData);
@@ -60,7 +92,6 @@ export const AuthProvider = ({ children }) => {
           navigate(pendingRedirect.path, { state: pendingRedirect.state });
         }
       } catch (error) {
-        console.error('Error checking purchase status:', error);
         // On error, proceed with redirect to ensure user can attempt purchase
         navigate(pendingRedirect.path, { state: pendingRedirect.state });
       }
@@ -70,20 +101,6 @@ export const AuthProvider = ({ children }) => {
     }
     setPendingRedirect(null);
   }, [navigate, pendingRedirect]);
-
-  const logout = useCallback(async () => {
-    try {
-      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/logout`, {}, {
-        withCredentials: true
-      });
-    } catch (error) {
-      console.error('Logout error:', error);
-    } finally {
-      setUser(null);
-      localStorage.removeItem('user');
-      navigate('/');
-    }
-  }, [navigate]);
 
   const openLoginPopup = useCallback((redirectPath = null, redirectState = null) => {
     setAuthPopupState('login');
