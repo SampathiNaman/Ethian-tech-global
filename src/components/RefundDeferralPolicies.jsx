@@ -63,7 +63,7 @@ const POLICY_SUMMARY = {
       {
         title: "Refund Policy",
         items: [
-          "Full refund within 10 days of course start",
+          "Full refund within 14 days of course start",
           "Must not access more than 20% of content",
           "15 business days processing time",
           "Non-refundable items: accessed materials, processing fees",
@@ -73,7 +73,7 @@ const POLICY_SUMMARY = {
       {
         title: "Deferral Policy",
         items: [
-          "Request 14 days before course start",
+          "Request 14 days after course start",
           "Valid for 12 months from original start date",
           "One deferral per course purchase",
           "Medical, military, disaster circumstances",

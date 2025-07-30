@@ -98,12 +98,15 @@ function Footer() {
                                     <div className='flex flex-col'>
                                         <div className="flex items-center gap-2">
                                             <img src="america.png" alt="American Flag Icon" className='w-6' />
-                                            <a href="tel:+14436758888" className="cursor-pointer">+1-443-675-8888 </a>
+                                            <a href="tel:+14435186186" className="cursor-pointer">+1-443-518-6186 </a>
                                         </div>
                                         <div className="flex items-center gap-2">
                                             <img src="india.png" alt="Indian Falg Icon" className='w-6' />
                                             <a href="tel:+917977571286 " className="cursor-pointer">+91-79775-71286 </a>
-
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <img src="whatsapp.png" alt="WhatsApp Icon" className='w-6' />
+                                            <a href="https://wa.me/14435186186" target="_blank" rel="noreferrer" className="cursor-pointer">+1-443-518-6186 </a>
                                         </div>
                                     </div>
                                 </div>

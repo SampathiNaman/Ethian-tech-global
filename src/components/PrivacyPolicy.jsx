@@ -116,7 +116,8 @@ To exercise any of these rights, please contact us using the contact information
 Ethian Global Tech LLC
 8433 Oak Bush Ter, Columbia, MD 21045, USA
 Email: info@ethiantech.com
-Phone: 443-675-8888`
+Phone: +1-443-518-6186
+WhatsApp: +1-443-518-6186`
   }
 ];
 

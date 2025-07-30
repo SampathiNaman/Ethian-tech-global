@@ -141,7 +141,7 @@ const CourseCard = () => {
           message: response.data.message
         });
         toast.success(response.data.message || 'Coupon applied!');
-      }
+    }
     } catch (error) {
       setAppliedCoupon(null);
       toast.error(error.response?.data?.message || 'Invalid code');
@@ -246,6 +246,38 @@ const CourseCard = () => {
     }
   }, [purchaseStatus, getCouponDetails]);
 
+  // Auto-apply referrer coupon for eligible users
+  useEffect(() => {
+    const checkReferrerEligibility = async () => {
+      if (!user || purchaseStatus !== 'none') {
+        return;
+      }
+
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/api/payments/referrer-coupon/${PAYMENT_CONFIG.courseId}`,
+          { withCredentials: true }
+        );
+
+        if (response.data.valid) {
+          setAppliedCoupon({
+            couponId: null,
+            couponCode: response.data.couponCode,
+            discountType: response.data.discountType,
+            discountValue: response.data.discountValue,
+            isReferral: false, // This is a referrer coupon, not a referral code
+            message: response.data.message
+          });
+          setAutoAppliedCoupon(true);
+          toast.success(response.data.message || 'Referrer discount applied!');
+        }
+      } catch (error) {
+      }
+    };
+
+    checkReferrerEligibility();
+  }, [user, purchaseStatus]);
+
   useEffect(() => {
     let isMounted = true;
     fetchCurrencyInfo(!!user).then(info => {
@@ -256,11 +288,12 @@ const CourseCard = () => {
   }, [user]);
 
   const renderCouponInput = () => {
-    // Hide coupon input for completed, in progress, pending, or processing payments
+    // Hide coupon input for completed, in progress, pending, processing payments, or when auto-applied coupon exists
     if (purchaseStatus === 'completed' || 
         purchaseStatus === 'in_progress' || 
         purchaseStatus === 'pending' || 
-        purchaseStatus === 'processing') {
+        purchaseStatus === 'processing' ||
+        (autoAppliedCoupon && appliedCoupon)) {
       return null;
     }
     
@@ -324,10 +357,11 @@ const CourseCard = () => {
         )}
       </div>
     );
-  } 
+      }
 
   const renderAutoAppliedCoupon = () => {
-    if (purchaseStatus === 'in_progress' && appliedCoupon) {
+    // Show auto-applied coupon for in-progress installments OR when referrer coupon is auto-applied
+    if ((purchaseStatus === 'in_progress' && appliedCoupon) || (autoAppliedCoupon && appliedCoupon)) {
       // Determine styling based on coupon type
       const isReferral = appliedCoupon.isReferral;
       const bgColor = isReferral ? 'bg-blue-50' : 'bg-green-50';
@@ -335,7 +369,14 @@ const CourseCard = () => {
       const textColor = isReferral ? 'text-blue-800' : 'text-green-800';
       const iconColor = isReferral ? 'text-blue-500' : 'text-green-500';
       const labelColor = isReferral ? 'text-blue-600' : 'text-green-600';
-      const labelText = isReferral ? '(Auto-applied Referral)' : '(Auto-applied Coupon)';
+      
+      // Determine label text based on context
+      let labelText = '';
+      if (purchaseStatus === 'in_progress') {
+        labelText = isReferral ? '(Auto-applied Referral)' : '(Auto-applied Coupon)';
+    } else {
+        labelText = isReferral ? '(Auto-applied Referral)' : '(Auto-applied Referrer Discount)';
+      }
       
       return (
         <div className="mb-4 w-full">
@@ -577,8 +618,8 @@ const CourseCard = () => {
                           </span>
                         </div>
                       </label>
-                </div>
-              )}
+                    </div>
+                  )}
             </div>
           </div>
         )}
@@ -728,7 +769,7 @@ const CourseCard = () => {
                     </div>
             </div>
           </div>
-                {renderPaymentButtons()}
+            {renderPaymentButtons()}
               </div>
             )}
 
@@ -737,11 +778,11 @@ const CourseCard = () => {
                 <p className="text-gray-600 text-xs sm:text-sm font-medium flex items-center gap-2">
                   <span className="text-base sm:text-lg">📱</span>
                   <span>You will be added to the course WhatsApp group shortly. Please keep your phone number updated.</span>
-                </p>
+              </p>
               )}
               <p className="text-gray-500 text-xs sm:text-sm flex items-center gap-2">
                 <span className="text-base sm:text-lg">📞</span>
-                <span>For enquiries: <span className="font-semibold break-all">+1-443-675-8888</span> or <span className="font-semibold break-all">info@ethiantech.com</span></span>
+                <span>For enquiries, call/whatsApp <span className="font-semibold">+1-443-518-6186</span> or Email <span className="font-semibold">info@ethiantech.com</span></span>
               </p>
             </div>
           </div>

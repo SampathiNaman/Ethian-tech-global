@@ -110,11 +110,15 @@ return (
                         <div className='space-y-4'>
                             <div className='flex items-center space-x-2'>
                                 <img src="america.png" alt="American Flag Icon" className='w-6' />
-                                <a href="tel:+14436758888" className="text-base cursor-pointer">+1443-675-8888</a>
+                                <a href="tel:+14435186186" className="text-base cursor-pointer">+1443-518-6186</a>
                             </div>
                             <div className='flex items-center space-x-2'>
                                 <img src="india.png" alt="Indian Falg Icon" className='w-6' />
                                 <a href="tel:+917977571286 " className="text-base cursor-pointer">+91-7977571286 </a>
+                            </div>
+                            <div className='flex items-center space-x-2'>
+                                <img src="whatsapp.png" alt="WhatsApp Icon" className='w-6' />
+                                <a href="https://wa.me/14435186186" target="_blank" rel="noreferrer" className="text-base cursor-pointer">+1443-518-6186</a>
                             </div>
                             <div className='flex items-center space-x-2'>
                                 <img src="gmail.png" alt="Email Icon" className='w-6' />
