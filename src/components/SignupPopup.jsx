@@ -46,8 +46,6 @@ const SignupPopup = ({ onSwitchToLogin }) => {
     // Email validation
     if (!formData.email) {
       newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
     }
 
     // Phone validation
