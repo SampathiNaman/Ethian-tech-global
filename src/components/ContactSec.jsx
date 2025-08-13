@@ -135,7 +135,7 @@ return (
                             <a href="https://www.twitter.com" target="_blank" rel="noreferrer">
                                 <img src="twitter.png" alt="Twitter Icon" className='w-10' />
                             </a>
-                            <a href="https://www.linkedin.com" target="_blank" rel="noreferrer">
+                            <a href="https://www.linkedin.com/company/107843324/admin/dashboard" target="_blank" rel="noreferrer">
                                 <img src="linkedin.png" alt="LinkedIn Icon" className='w-10' />
                             </a>
                         </div>
