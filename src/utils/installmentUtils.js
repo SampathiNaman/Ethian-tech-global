@@ -159,7 +159,7 @@ export const FX_RATES = {
 };
 
 
-const BASE_USD = {1: 750, 2: 450, 3: 350};
+const BASE_USD = {1: 499, 2: 548, 3: 599};
 
 const DYNAMIC_PRICE_MAP = {};
 for (const [cur, rate] of Object.entries(FX_RATES)) {
