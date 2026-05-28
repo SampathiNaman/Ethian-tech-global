@@ -6,6 +6,7 @@ import OurCourses from '../components/OurCourses';
 import CourseCard from '../components/CourseCard';
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { Helmet } from 'react-helmet-async';
 
 function Training() {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ function Training() {
 
     return (
         <>
-        <head>
+        <Helmet>
             <title>Our Services - Ethian Tech Global</title>
             <meta name="description" content="Discover the range of services offered by Ethian Tech Global. From IT consulting to web development, we provide comprehensive solutions for your business." />
             <meta name="keywords" content="Ethian Tech Global Services, IT Consulting, Web Development, Mobile App Development, AI Solutions, Cloud Migration, DevOps, Product Consulting, UI/UX Design" />
@@ -27,7 +28,7 @@ function Training() {
             <meta property="og:image" content="services-image.webp" />
             <meta property="og:url" content="https://www.ethiantechglobal.com/services" />
             <meta name="twitter:card" content="summary_large_image" />
-        </head>
+        </Helmet>
         <Navbar />
         <main className="main-content">
                 <CourseCard />

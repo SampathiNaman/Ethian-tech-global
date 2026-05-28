@@ -1022,7 +1022,7 @@ const CourseCard = () => {
           <iframe
             src={`https://www.youtube-nocookie.com/embed/8E7BuB3yJwk?rel=0&modestbranding=1&playsinline=1`}
             title="Advanced Generative AI - Course Intro"
-            frameborder="0"
+            frameBorder="0"
             loading="lazy"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"

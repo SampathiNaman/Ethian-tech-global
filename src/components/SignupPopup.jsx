@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
+import GoogleSignInButton from './GoogleSignInButton';
 
 const SignupPopup = ({ onSwitchToLogin }) => {
   const [formData, setFormData] = useState({
@@ -165,8 +166,13 @@ const SignupPopup = ({ onSwitchToLogin }) => {
         resetForm();
       }
     } catch (error) {
-      console.error('Google signup error:', error);
-      toast.error('Google signup failed. Please try again.');
+      if (error.response?.status === 409) {
+        toast.error('This email is associated with a different Google account');
+      } else if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error('Google signup failed. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -199,20 +205,12 @@ const SignupPopup = ({ onSwitchToLogin }) => {
         <h2 className="text-2xl font-bold text-center mb-6">Create Account</h2>
         
         <div className="space-y-4">
-          <div className="flex justify-center">
-          <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}
-              onError={handleGoogleError}
-              useOneTap
-              width="100%"
-              size="large"
-              theme="outline"
-              shape="rectangular"
-              text="signup_with"
-            />
-          </GoogleOAuthProvider>
-          </div>
+          <GoogleSignInButton
+            onSuccess={handleGoogleSuccess}
+            onError={handleGoogleError}
+            text="signup_with"
+            disabled={loading}
+          />
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">

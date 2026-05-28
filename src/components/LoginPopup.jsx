@@ -1,11 +1,12 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import ForgotPasswordPopup from './ForgotPasswordPopup';
+import GoogleSignInButton from './GoogleSignInButton';
 
 const LoginPopup = ({ onSwitchToSignup }) => {
   const [formData, setFormData] = useState({
@@ -146,6 +147,9 @@ const LoginPopup = ({ onSwitchToSignup }) => {
       
       if (error.response) {
         switch (error.response.status) {
+          case 409:
+            toast.error('This email is associated with a different Google account');
+            break;
           case 401:
             toast.error('Google authentication failed');
             break;
@@ -191,20 +195,12 @@ const LoginPopup = ({ onSwitchToSignup }) => {
         <h2 className="text-2xl font-bold text-center mb-6">Welcome Back</h2>
         
         <div className="space-y-4">
-          <div className="flex justify-center">
-          <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}
-              onError={handleGoogleError}
-              useOneTap
-              width="100%"
-              size="large"
-              theme="outline"
-              shape="rectangular"
-              text="continue_with"
-            />
-          </GoogleOAuthProvider>
-          </div>
+          <GoogleSignInButton
+            onSuccess={handleGoogleSuccess}
+            onError={handleGoogleError}
+            text="continue_with"
+            disabled={loading}
+          />
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
@@ -315,7 +311,7 @@ const LoginPopup = ({ onSwitchToSignup }) => {
           </form>
 
           <p className="text-center text-sm text-gray-600">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <button
               onClick={onSwitchToSignup}
               className="text-blue-600 hover:text-blue-800 font-medium"

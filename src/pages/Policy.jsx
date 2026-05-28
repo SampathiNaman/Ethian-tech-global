@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PrivacyPolicy from '../components/PrivacyPolicy';
@@ -13,7 +14,7 @@ function Policy() {
 
     return (
         <>
-            <head>
+            <Helmet>
                 <title>Privacy Policy - Ethian Tech Global</title>
                 <meta name="description" content="Learn about Ethian Tech Global's privacy policy and how we protect your personal information. Understand our data collection, usage, and protection practices." />
                 <meta name="keywords" content="Privacy Policy, Data Protection, Personal Information, Ethian Tech Global, IT Consulting Privacy" />
@@ -24,7 +25,7 @@ function Policy() {
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="robots" content="index, follow" />
                 <link rel="canonical" href="https://www.ethiantechglobal.com/policy" />
-            </head>
+            </Helmet>
             <Navbar />
             <main>
                 <PrivacyPolicy />

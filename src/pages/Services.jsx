@@ -2,6 +2,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import OurServices from '../components/OurServices'
 import { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -12,7 +13,7 @@ function Services() {
     }, []);
     return (
         <>
-            <head>
+            <Helmet>
                 <title>Our Services - Ethian Tech Global</title>
                 <meta name="description" content="Discover the range of services offered by Ethian Tech Global. From IT consulting to web development, we provide comprehensive solutions for your business." />
                 <meta name="keywords" content="Ethian Tech Global Services, IT Consulting, Web Development, Mobile App Development, AI Solutions, Cloud Migration, DevOps, Product Consulting, UI/UX Design" />
@@ -21,7 +22,7 @@ function Services() {
                 <meta property="og:image" content="services-image.webp" />
                 <meta property="og:url" content="https://www.ethiantechglobal.com/services" />
                 <meta name="twitter:card" content="summary_large_image" />
-            </head>
+            </Helmet>
             <Navbar />
             <main>
                 <OurServices />

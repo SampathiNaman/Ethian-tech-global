@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { Helmet } from 'react-helmet-async';
 import { NavLink } from 'react-router-dom'
 
 import Navbar from '../components/Navbar'
@@ -16,7 +17,7 @@ function About() {
     }, []);
     return (
         <>
-            <head>
+            <Helmet>
                 <title>About Us - Ethian Tech Global</title>
                 <meta name="description" content="Learn more about Ethian Tech Global, our mission, vision, and why we are the best choice for your IT solutions." />
                 <meta name="keywords" content="About Ethian Tech Global, IT Solutions, Mission, Vision, Expert Team" />
@@ -25,7 +26,7 @@ function About() {
                 <meta property="og:image" content="about-us.webp" />
                 <meta property="og:url" content="https://www.ethiantechglobal.com/about" />
                 <meta name="twitter:card" content="summary_large_image" />
-            </head>
+            </Helmet>
             <Navbar />
             <main>
                 <AboutCom />

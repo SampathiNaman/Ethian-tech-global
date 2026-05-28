@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import RefundDeferralPolicies from '../components/RefundDeferralPolicies';
@@ -13,7 +14,7 @@ function RefundDeferralPoliciesPage() {
 
     return (
         <>
-            <head>
+            <Helmet>
                 <title>Refund & Deferral Policy - Ethian Tech Global</title>
                 <meta name="description" content="Learn about Ethian Tech Global's refund and deferral policies for our training courses. Understand eligibility, processes, and timelines for refunds and course deferrals." />
                 <meta name="keywords" content="Refund Policy, Deferral Policy, Course Refund, Training Refund, Course Deferral, Ethian Tech Global Policies" />
@@ -24,7 +25,7 @@ function RefundDeferralPoliciesPage() {
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="robots" content="index, follow" />
                 <link rel="canonical" href="https://www.ethiantechglobal.com/refund-deferral-policies" />
-            </head>
+            </Helmet>
             <Navbar />
             <main>
                 <RefundDeferralPolicies />

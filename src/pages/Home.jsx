@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -17,7 +18,7 @@ function Home() {
 
     return (
         <>
-            <head>
+            <Helmet>
                 <title>Ethian Tech Global - Innovate Transform Accelerate</title>
                 <meta name="description" content="Your IT Partner for a Digital Future, Tailored for your Growth." />
                 <meta name="keywords" content="IT Consulting, Web Development, Mobile App Development, AI Solutions, Cloud Migration, DevOps, Product Consulting, UI/UX Design" />
@@ -26,7 +27,7 @@ function Home() {
                 <meta property="og:image" content="landingPageImg.webp" />
                 <meta property="og:url" content="https://www.ethiantechglobal.com" />
                 <meta name="twitter:card" content="summary_large_image" />
-            </head>
+            </Helmet>
 
             <Navbar />
             <header className='bg-cover bg-no-repeat bg-center sm:w-full h-[70vh]' style={{ backgroundImage: "url('landing-page.webp')" }}>

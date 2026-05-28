@@ -19,6 +19,7 @@ import LoginPopup from './components/LoginPopup';
 import SignupPopup from './components/SignupPopup';
 import ForgotPasswordPopup from './components/ForgotPasswordPopup';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import { HelmetProvider } from 'react-helmet-async';
 
 function App() {
   // Wake up backend on app load
@@ -39,7 +40,8 @@ function App() {
   }, []);
 
   return (
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+    <HelmetProvider>
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
       <div className="App">
         <Toaster
           position="top-right"
@@ -62,8 +64,9 @@ function App() {
               </CoursePurchasesProvider>
           </AuthProvider>
       </BrowserRouter>
-    </div>
-    </GoogleOAuthProvider>
+      </div>
+      </GoogleOAuthProvider>
+    </HelmetProvider>
   );
 }
 
