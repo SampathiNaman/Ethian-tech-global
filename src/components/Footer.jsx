@@ -4,7 +4,7 @@ import emailjs from '@emailjs/browser'
 import { toast } from 'react-hot-toast'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faEnvelope, faLocationDot, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { faFacebook, faYoutube, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faYoutube, faTwitter, faLinkedin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
 function Footer() {
     const [subscribing, setSubscribing] = useState(false);
@@ -95,20 +95,11 @@ function Footer() {
                                 </div>
                                 <div className="flex items-center md:justify-start mb-2">
                                     <FontAwesomeIcon icon={faPhone} className='text-xl mr-4' />
-                                    <div className='flex flex-col'>
-                                        <div className="flex items-center gap-2">
-                                            <img src="america.png" alt="American Flag Icon" className='w-6' />
-                                            <a href="tel:+14435186186" className="cursor-pointer">+1-443-518-6186 </a>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            <img src="india.png" alt="Indian Falg Icon" className='w-6' />
-                                            <a href="tel:+917977571286 " className="cursor-pointer">+91-79775-71286 </a>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                            <img src="whatsapp.png" alt="WhatsApp Icon" className='w-6' />
-                                            <a href="https://wa.me/14435186186" target="_blank" rel="noreferrer" className="cursor-pointer">+1-443-518-6186 </a>
-                                        </div>
-                                    </div>
+                                    <a href="tel:+14436758888" className="cursor-pointer">+1-443-675-8888 </a>
+                                </div>
+                                <div className="flex items-center md:justify-start mb-2">
+                                    <FontAwesomeIcon icon={faWhatsapp} className='text-xl mr-4' />
+                                    <a href="https://wa.me/14436758888" target="_blank" rel="noreferrer" className="cursor-pointer">+1-443-675-8888 </a>
                                 </div>
                                 <div className="flex items-center md:justify-start">
                                     <FontAwesomeIcon icon={faEnvelope} className='text-xl mr-4' />

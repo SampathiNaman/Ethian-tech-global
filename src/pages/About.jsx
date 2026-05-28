@@ -30,7 +30,8 @@ function About() {
             <Navbar />
             <main>
                 <AboutCom />
-                <Members />
+                {/* Not needed for now */}
+                {/* <Members /> */}
                 <OurPartners />
             </main>
             

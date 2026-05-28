@@ -823,7 +823,7 @@ const CourseCard = () => {
               )}
               <p className="text-gray-500 text-xs sm:text-sm flex items-center gap-2">
                 <span className="text-base sm:text-lg">📞</span>
-                <span>For enquiries, call/whatsApp <span className="font-semibold">+1-443-518-6186</span> or Email <span className="font-semibold">info@ethiantech.com</span></span>
+                <span>For enquiries, call/whatsApp <span className="font-semibold">+1-443-675-8888</span> or Email <span className="font-semibold">info@ethiantech.com</span></span>
               </p>
             </div>
           </div>
@@ -1015,21 +1015,6 @@ const CourseCard = () => {
           </NavLink>
         </div>
 
-      </div>
-
-      <div className="mt-4 p-3 sm:p-4" data-aos="fade-up">
-        <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
-          <iframe
-            src={`https://www.youtube-nocookie.com/embed/8E7BuB3yJwk?rel=0&modestbranding=1&playsinline=1`}
-            title="Advanced Generative AI - Course Intro"
-            frameBorder="0"
-            loading="lazy"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0, borderRadius: '10px' }}
-          />
-        </div>
       </div>
 
     </div>

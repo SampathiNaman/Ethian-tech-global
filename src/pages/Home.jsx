@@ -43,7 +43,8 @@ function Home() {
             <main>
                 <OurServices />
                 <WhyChooseUs />
-                <Members />
+                {/* Not needed for now */}
+                {/* <Members />s */}
                 <div className='w-11/12 sm:w-5/6 lg:w-4/5 max-w-screen-lg mx-auto my-8 px-6 pb-6 md:px-8 md:pb-12 flex flex-col items-center md:flex-row justify-center gap-8' data-aos="fade-up">
                     <p className='font-sans text-blue-900 text-lg md:text-xl space-y-1 font-semibold'>
                         Got a Tech Skill? Interested in a Career with us?
