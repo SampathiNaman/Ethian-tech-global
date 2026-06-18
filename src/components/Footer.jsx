@@ -118,7 +118,7 @@ function Footer() {
                                 <a href="#" className="text-sm text-gray-300">Terms of Service</a>
                             </div>
                             <div className="text-center md:text-left mb-5 md:mb-0">
-                                <p className="text-sm text-gray-300">© 2025. Ethian Tech. Ltd. All rights reserved.</p>
+                                <p className="text-sm text-gray-300">© 2025. Ethian Tech. LLC. All rights reserved.</p>
                             </div>
                             <div className="flex space-x-5">
                                 <a href="https://www.facebook.com/profile.php?id=61578266693522" className="text-gray-300 text-2xl hover:text-[#D62A91] hover:scale-125 ease-in-out duration-200"><FontAwesomeIcon icon={faFacebook} className='text-2xl' /></a>
