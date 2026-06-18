@@ -131,11 +131,19 @@ const LoginPopup = ({ onSwitchToSignup }) => {
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
       setLoading(true);
-      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/google`, {
-        credential: credentialResponse.credential
-      }, {
-        withCredentials: true
-      });
+      
+      // DECISION: Using ID Token (Credential) Flow for faster login
+      // - Pros: Fast, no consent screen on subsequent logins, simple
+      // - Cons: Cannot fetch phone number from Google People API
+      // - Phone number is fetched during signup via auth-code flow
+      // - This is acceptable because phone is already captured at registration
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/auth/google/login`,
+        {
+          credential: credentialResponse.credential
+        },
+        { withCredentials: true }
+      );
 
       if (response.data.message === 'Login successful') {
         login(response.data.user);
